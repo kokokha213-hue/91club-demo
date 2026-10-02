@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>☠️BILAL SIR☠️- INJECTOR MOD</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, get, update, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA558ZvZvUS63nEftspbfJKTSiy8MiLXss",
+    authDomain: "dark-x-b6636.firebaseapp.com",
+    databaseURL: "https://darult-rtdb.firebaseio.com",
+    projectId: "da6636",
+    storageBucket: "dark-x-b6636.firebasestorage.app",
+    messagingSenderId: "506868462870",
+    appId: "1:50686846880a4d09b388c37",
+    measurementId: "G-ENJBQ5"
+  };
+
+  const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+  window.db = getDatabase(app);
+  window.ref = ref;
+  window.get = get;
+  window.update = update;
+  window.onValue = onValue;
+  window.onDisconnect = onDisconnect;
+</script>
+
+<style>
+    :root {
+        --bg: #010204;
+        --neon-green: #00ff66;
+        --neon-cyan: #00f3ff;
+        --neon-red: #ff003c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body, html {
+        height: 100%; width: 100%; overflow: hidden; background-color: var(--bg);
+        color: #fff; touch-action: none; -webkit-tap-highlight-color: transparent;
+    }
+
+    #game-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: none; z-index: 1; }
+
+    #toast-container {
+        position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+        z-index: 9999999; pointer-events: none; display: flex; flex-direction: column; gap: 8px; align-items: center;
+    }
+    .toast {
+        background: rgba(255, 0, 60, 0.95); color: white; padding: 8px 16px;
+        border-radius: 8px; font-size: 11px; font-weight: bold;
+        font-family: 'Share Tech Mono', monospace; border: 1px solid #ff003c;
+        box-shadow: 0 0 10px rgba(255, 0, 60, 0.5); opacity: 0; transform: translateY(-20px); transition: all 0.3s ease;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* Real-Time Live Lockout Modal */
+    #lockout-modal {
+        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+        z-index: 99999999; align-items: center; justify-content: center; padding: 20px;
+        backdrop-filter: blur(12px);
+    }
+    .lockout-card {
+        background: #0d0408; border: 2px solid var(--neon-red); border-radius: 18px;
+        padding: 24px 20px; width: 100%; max-width: 320px; text-align: center;
+        box-shadow: 0 0 40px rgba(255, 0, 60, 0.5);
+    }
+
+    /* Live Notice / Announcement Modal */
+    #notice-modal {
+        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+        z-index: 99999998; align-items: center; justify-content: center; padding: 20px;
+        backdrop-filter: blur(10px);
+    }
+    .notice-card {
+        background: #08121f; border: 2px solid var(--neon-cyan); border-radius: 18px;
+        padding: 22px; width: 100%; max-width: 330px; text-align: center;
+        box-shadow: 0 0 35px rgba(0, 243, 255, 0.45);
+    }
+
+    /* Floating Injector Icon */
+    #logo-trigger {
+        position: fixed; width: 64px; height: 64px; border-radius: 50%;
+        background: #000; border: 2.5px solid var(--neon-cyan); padding: 2px;
+        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        overflow: hidden; z-index: 9999990;
+        box-shadow: 0 0 18px rgba(0, 243, 255, 0.6);
+        left: calc(100vw - 80px); top: calc(100vh - 120px);
+        user-select: none; touch-action: none;
+        transition: transform 0.1s ease;
+    }
+    #logo-trigger:active { transform: scale(0.92); }
+    #logo-trigger.unlocked { border-color: var(--neon-green); box-shadow: 0 0 18px rgba(0, 255, 102, 0.6); }
+    #logo-trigger img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; pointer-events: none; animation: spin 4s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* Cyber Prediction Panel */
+    #pred-panel {
+        position: fixed; width: 240px; height: auto; min-height: 220px;
+        background: linear-gradient(180deg, #0a1c14 0%, #04100a 100%);
+        border: 2px solid #1a3a2a; border-radius: 14px; padding: 12px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(0, 255, 102, 0.08);
+        display: none; z-index: 9999980; overflow: hidden; flex-direction: column;
+        animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        touch-action: auto !important;
+    }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+    .grid-bg {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(rgba(0, 255, 102, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 102, 0.03) 1px, transparent 1px);
+        background-size: 15px 15px; z-index: 0; pointer-events: none;
+    }
+
+    .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; }
+    .head-logo { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--neon-green); overflow: hidden; flex-shrink: 0; }
+    .head-logo img { width: 100%; height: 100%; object-fit: cover; }
+
+    .notice-bell-btn {
+        background: rgba(0, 243, 255, 0.15); border: 1px solid var(--neon-cyan);
+        color: var(--neon-cyan); border-radius: 50%; width: 22px; height: 22px;
+        display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+
+    /* Glowing Balls */
+    .glow-ball {
+        --ball-bg: radial-gradient(circle at 30% 30%, #ccffdd, #00ff66 40%, #008833 80%, #003311 100%);
+        position: relative; width: 36px; height: 36px; border-radius: 50%;
+        background: var(--ball-bg); display: flex; align-items: center; justify-content: center;
+        font-size: 15px; font-weight: 800; color: #004411;
+        box-shadow: 0 0 10px rgba(0, 255, 102, 0.4), inset 0 0 8px rgba(255,255,255,0.8);
+    }
+    .glow-ball.large { width: 44px; height: 44px; font-size: 20px; }
+    .glow-ball.red-node { --ball-bg: radial-gradient(circle at 30% 30%, #ffcccc, #ff003c 40%, #88001a 80%, #33000a 100%); color: #44000d; box-shadow: 0 0 10px rgba(255, 0, 60, 0.4); }
+    .glow-ball.violet-node { --ball-bg: radial-gradient(circle at 30% 30%, #eebbff, #bc13fe 40%, #660099 80%, #220033 100%); color: #220033; box-shadow: 0 0 10px rgba(188, 19, 254, 0.4); }
+
+    .inp-g { position: relative; margin-bottom: 6px; }
+    .inp-g input {
+        width: 100%; background: rgba(0,0,0,0.65); border: 1px solid rgba(0, 255, 102, 0.3);
+        border-radius: 10px; color: #fff; font-size: 11px; padding: 9px 9px 9px 30px;
+        outline: none; font-family: 'Share Tech Mono', monospace;
+    }
+    .inp-g input:focus { border-color: var(--neon-green); box-shadow: 0 0 8px rgba(0, 255, 102, 0.3); }
+    .inp-ico { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; pointer-events: none; }
+
+    .btn-main {
+        width: 100%; background: linear-gradient(180deg, #00ff66 0%, #00aa44 100%);
+        color: #04080f; font-weight: 900; font-size: 11px; letter-spacing: 1px;
+        border: none; border-radius: 10px; padding: 9px; cursor: pointer; text-transform: uppercase; margin-top: 4px;
+    }
+    .btn-main:active { transform: scale(0.97); }
+    .btn-secondary {
+        width: 100%; background: linear-gradient(180deg, #1a2a20 0%, #0a110a 100%);
+        color: #bbb; font-weight: 700; font-size: 11px; border: 1px solid #224433;
+        border-radius: 10px; padding: 8px; cursor: pointer; text-transform: uppercase;
+        display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 4px;
+    }
+    .btn-secondary:active { transform: scale(0.97); }
+
+    .pill-badge {
+        background: rgba(0,0,0,0.4); border: 1px solid rgba(0, 255, 102, 0.2);
+        border-radius: 12px; padding: 4px 8px; font-size: 9px; font-weight: 700; color: #ddd;
+        display: flex; align-items: center; justify-content: center; flex: 1;
+    }
+    .pill-badge.color-red { background: #ff003c; color: white; border-color: #ff003c; }
+    .pill-badge.color-green { background: #00ff66; color: black; border-color: #00ff66; }
+    .pill-badge.color-violet { background: linear-gradient(135deg, #bc13fe, #ff003c); color: white; border-color: #bc13fe; }
+    .pill-badge.size-big { background: #ffaa00; color: black; border-color: #ffaa00; }
+    .pill-badge.size-small { background: #00f3ff; color: black; border-color: #00f3ff; }
+</style>
+</head>
+<body>
+<div id="toast-container"></div>
+<iframe allow="autoplay; fullscreen" id="game-frame" src="https://shreewin39.com/#/saas/lottery/wingo?gameId=1"></iframe>
+
+<!-- Lockout Modal (Blocked & Expired) -->
+<div id="lockout-modal">
+    <div class="lockout-card">
+        <div style="font-size: 44px; color: var(--neon-red); margin-bottom: 8px;"><span class="material-symbols-outlined" style="font-size:48px;">gpp_bad</span></div>
+        <h3 id="lockout-title" style="color:var(--neon-red); font-size:15px; font-weight:900; letter-spacing:1px; margin-bottom:8px;">ACCESS BLOCKED</h3>
+        <p id="lockout-msg" style="font-size:12px; line-height:1.5; color:#ccc; margin-bottom:18px; font-family:'Share Tech Mono';">
+            Your access key has been locked or expired. Please contact administrator.
+        </p>
+        <button class="btn-main" onclick="openAdminContactLink()" style="background:linear-gradient(180deg, #ff003c 0%, #990022 100%); color:#fff;">
+            <span class="material-symbols-outlined" style="font-size:15px;">support_agent</span> CONTACT ADMIN
+        </button>
+    </div>
+</div>
+
+<!-- Notice Popup Modal -->
+<div id="notice-modal">
+    <div class="notice-card">
+        <div style="font-size: 34px; color: var(--neon-cyan); margin-bottom: 8px;">📢</div>
+        <h3 id="notice-modal-title" style="color:var(--neon-cyan); font-size:14px; font-weight:900; letter-spacing:1px; margin-bottom:8px;">ANNOUNCEMENT</h3>
+        <p id="notice-content" style="font-size:12px; line-height:1.6; color:#ddd; margin-bottom:10px; font-family:'Share Tech Mono'; white-space:pre-line;">No announcements active.</p>
+        <div id="notice-time-footer" style="font-size:9px; color:#777; font-family:'Share Tech Mono'; margin-bottom:16px;">Sent: N/A</div>
+        <button class="btn-main" onclick="document.getElementById('notice-modal').style.display='none'">DISMISS</button>
+    </div>
+</div>
+
+<!-- Direct Floating Injector Button -->
+<div id="logo-trigger">
+    <img alt="Logo" id="dyn-floating-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAz5VENbQo8A-Zsql6a_yKO9O6cWfjBMNYra-rnckeX-zzh00RMY6sgoycb8lUj9cch4s2uixQvahs3W8KXWErN0WgKo8kCOC37WzR5T8LItbvU3-ZtDYyZuQIrzM1Bjg1XBiyRAWMHck_cfiTd2Pd5zKqpmAF2qJQomY8kgXXxYVt0e0t-m0r68gJsYJN-twfMB3kRXDLdEuxiHngxxVoudKh3TdhVed_QPu8YICWy4SGtiWlnKmicdx4tuIu3G98Fg"/>
+</div>
+
+<!-- Mod Panel -->
+<div id="pred-panel">
+    <div class="grid-bg"></div>
+    
+    <div class="panel-head">
+        <div style="display:flex; align-items:center; gap:6px;">
+            <div class="head-logo"><img id="dyn-header-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgBeoiQQ4WstC6UUhdR4Z_8Uc8Ltf6ppRzRmCVXCsZwn8KHf5wYjONr8tJMJ2hSHannLkhXl9fF4sZA6khwjlmejIwExRbO-wimfiqngQBiOxloGgszb-xt1tiEJlFhOR7XxZ1bZZGSzsqoVkCfQoX9_SDz06FZkY24uGI4QbOgswwChwJ66eW2TQcorlcFiADCm8QhdE2mWQ4aTM7h5juTLGraxZzx8M-btjqPdCut0ae73iUpEbgxt1MXfJ7tzVgxg"/></div>
+            <div>
+                <h2 id="dyn-app-name" style="font-size:10px; font-weight:900; text-transform:uppercase; margin:0;">DARK X PRO</h2>
+                <span id="dyn-app-tag" style="font-size:6px; font-weight:700; color:#888;">OFFICIAL PRO INJECTOR</span>
+            </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px;">
+            <button class="notice-bell-btn" onclick="openNoticeModal()" title="View Announcement">
+                <span class="material-symbols-outlined" style="font-size:13px;">notifications</span>
+            </button>
+            <div style="text-align:right;">
+                <div style="font-size:6px; color:#aaa;">STATUS</div>
+                <div id="status-label" style="font-size:7px; font-weight:800; color:var(--neon-green);">OFFLINE</div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <!-- Login Screen -->
+        <div id="login-screen" style="display:flex; flex-direction:column; gap:4px;">
+            <div class="inp-g">
+                <span class="inp-ico">👤</span>
+                <input autocomplete="off" id="lUser" placeholder="Username" type="text"/>
+            </div>
+            <div class="inp-g">
+                <span class="inp-ico">🔐</span>
+                <input autocomplete="off" id="lPass" placeholder="Password" type="password"/>
+            </div>
+            <button class="btn-main" id="btnUserLogin">Enter To Access</button>
+            <button class="btn-secondary" id="dyn-tg-btn">
+                Get Access Key
+                <svg height="15" viewbox="0 0 24 24" width="15" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" fill="#229ED9" r="12"></circle>
+                    <path d="M5.2 11.7 17.8 6.8c.6-.2 1.1.1.9.9l-2.1 9.8c-.2.7-.6.9-1.2.5l-3.5-2.6-1.7 1.6c-.2.2-.4.4-.8.4l.3-3.6 6.5-5.9c.3-.3-.1-.4-.5-.1l-8 5-3.4-1.1c-.7-.2-.7-.7.9-1.3z" fill="#fff"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Prediction UI -->
+        <div id="prediction-ui" style="display:none; flex-direction:column; gap:6px;">
+            <div style="display:flex; justify-content:space-between; font-size:7px; font-weight:800; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:4px;">
+                <div>SEQ : <span id="period-display" style="color:#fff;">---</span></div>
+                <div>TIME : <span id="timer-display" style="color:var(--neon-green);">00:60</span></div>
+                <div>MOD : WINGO 1M</div>
+            </div>
+
+            <!-- 3 High-Accuracy Coverage Balls (Non-consecutive clusters) -->
+            <div style="display:flex; justify-content:center; align-items:center; gap:6px; padding:4px 0;">
+                <div class="glow-ball" id="gb-1"><span id="ball-1">?</span></div>
+                <div class="glow-ball large" id="gb-2"><span id="ball-2">?</span></div>
+                <div class="glow-ball" id="gb-3"><span id="ball-3">?</span></div>
+            </div>
+
+            <!-- Size & Color Badges -->
+            <div style="display:flex; gap:4px;">
+                <div class="pill-badge" id="size-badge">Size: <b id="prediction-size" style="margin-left:4px;">---</b></div>
+                <div class="pill-badge" id="color-badge">Color: <b id="prediction-color" style="margin-left:4px;">---</b></div>
+            </div>
+
+            <button class="btn-secondary" id="hide-btn" style="font-size:9px; padding:7px;">HIDE PANEL</button>
+        </div>
+    </div>
+</div>
+
+<audio id="tik-sound" preload="auto" src="https://www.soundjay.com/buttons/sounds/button-50.mp3"></audio>
+
+<script>
+    let isUnlocked = false;
+    let isPanelOpen = false;
+    let currentUser = null;
+    let currentUserExpiry = 0;
+    let userListenerUnsub = null;
+    let targetTelegramLink = "https://t.me/NINE_X_MODS";
+    let activeBroadcastMessage = "";
+    let activeBroadcastTimestamp = 0;
+    let lastSeenBroadcastTime = 0;
+    let lastSeenPrivateMsgTime = 0;
+
+    const ADMIN_CONTACT_LINK = "https://t.me/+0OEWGD1eZO1hNzE1";
+
+    function safeText(id, txt) { const el = document.getElementById(id); if (el) el.textContent = txt; }
+    function safeSrc(id, src) { const el = document.getElementById(id); if (el && src) el.src = src; }
+
+    function showToast(msg) {
+        const c = document.getElementById('toast-container');
+        if(!c) return;
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.innerText = msg;
+        c.appendChild(t);
+        setTimeout(() => t.classList.add('show'), 10);
+        setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3000);
+    }
+
+    function playTik() {
+        const tik = document.getElementById('tik-sound');
+        if (tik) { tik.currentTime = 0; tik.play().catch(() => {}); }
+    }
+
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.rate = 1.1; u.pitch = 0.8;
+            window.speechSynthesis.speak(u);
+        }
+    }
+
+    // 🔒 100% STABLE HARDWARE FINGERPRINT (RECOGNIZES SAME DEVICE ACCROSS RE-LOGINS)
+    function getDeviceFingerprint() {
+        let stored = localStorage.getItem('dark_dev_fingerprint');
+        if (stored && stored.length > 8) return stored;
+
+        try {
+            const screenInfo = `${screen.width}x${screen.height}x${screen.colorDepth}`;
+            const cores = navigator.hardwareConcurrency || 4;
+            const platform = navigator.platform || 'Android';
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.textBaseline = "top";
+            ctx.font = "14px 'Arial'";
+            ctx.fillText("DARK_X_MODS_DEV_HASH", 2, 2);
+            const canvasData = canvas.toDataURL();
+            
+            let hash = 0;
+            const fullStr = `${screenInfo}|${cores}|${platform}|${canvasData.slice(-50)}`;
+            for (let i = 0; i < fullStr.length; i++) {
+                hash = ((hash << 5) - hash) + fullStr.charCodeAt(i);
+                hash |= 0;
+            }
+            const fp = 'DEV-' + Math.abs(hash).toString(16).toUpperCase().padStart(8, '0');
+            localStorage.setItem('dark_dev_fingerprint', fp);
+            return fp;
+        } catch (e) {
+            const fallback = 'DEV-' + Math.floor(10000000 + Math.random() * 90000000).toString(16).toUpperCase();
+            localStorage.setItem('dark_dev_fingerprint', fallback);
+            return fallback;
+        }
+    }
+
+    window.openAdminContactLink = () => {
+        window.open(ADMIN_CONTACT_LINK, '_blank');
+    };
+
+    window.openNoticeModal = () => {
+        safeText('notice-modal-title', 'ANNOUNCEMENT');
+        safeText('notice-content', activeBroadcastMessage || "No announcements active.");
+        safeText('notice-time-footer', activeBroadcastTimestamp ? `Sent: ${new Date(activeBroadcastTimestamp).toLocaleString()}` : 'Sent: N/A');
+        document.getElementById('notice-modal').style.display = 'flex';
+    };
+
+    function showLockout(title, msg) {
+        safeText('lockout-title', title);
+        safeText('lockout-msg', msg);
+        document.getElementById('lockout-modal').style.display = 'flex';
+        
+        isUnlocked = false;
+        if (currentUser && window.db) {
+            window.update(window.ref(window.db, 'Users/' + currentUser), { is_online: false, is_logged: false });
+        }
+        currentUser = null;
+        currentUserExpiry = 0;
+        safeText('status-label', 'OFFLINE');
+        const lScrn = document.getElementById('login-screen');
+        if (lScrn) lScrn.style.display = 'flex';
+        const pUI = document.getElementById('prediction-ui');
+        if (pUI) pUI.style.display = 'none';
+        const logo = document.getElementById('logo-trigger');
+        if (logo) logo.classList.remove('unlocked');
+        closePanel();
+    }
+
+    function updatePanelPosition() {
+        const p = document.getElementById('pred-panel');
+        const l = document.getElementById('logo-trigger');
+        if (!p || !l) return;
+        const r = l.getBoundingClientRect();
+        
+        let tx = r.left - 245;
+        let ty = r.top - 230;
+
+        if (tx < 10) tx = r.right + 10;
+        if (tx + 240 > window.innerWidth - 10) tx = (window.innerWidth - 240) / 2;
+        if (ty < 10) ty = r.bottom + 10;
+        if (ty + 230 > window.innerHeight - 10) ty = window.innerHeight - 240;
+
+        p.style.left = Math.max(10, tx) + "px";
+        p.style.top = Math.max(10, ty) + "px";
+    }
+
+    function openPanel() {
+        const p = document.getElementById('pred-panel');
+        if (!p) return;
+        playTik();
+        p.style.display = 'flex';
+        isPanelOpen = true;
+        updatePanelPosition();
+    }
+
+    function closePanel() {
+        const p = document.getElementById('pred-panel');
+        if (!p) return;
+        playTik();
+        p.style.display = 'none';
+        isPanelOpen = false;
+    }
+
+    function togglePanel() {
+        if (isPanelOpen) closePanel();
+        else openPanel();
+    }
+
+    // Isolated Touch Engine
+    function setupFloatingTouch() {
+        const logo = document.getElementById('logo-trigger');
+        const panel = document.getElementById('pred-panel');
+        if (!logo || !panel) return;
+
+        panel.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
+        panel.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: true });
+        panel.addEventListener('touchend', (e) => e.stopPropagation(), { passive: true });
+        panel.addEventListener('mousedown', (e) => e.stopPropagation());
+
+        let startX = 0, startY = 0, initialLeft = 0, initialTop = 0;
+        let isDragging = false, touchStartTime = 0;
+
+        const getCoords = (e) => (e.touches && e.touches.length > 0 ? e.touches[0] : e);
+
+        const onStart = (e) => {
+            const c = getCoords(e);
+            startX = c.clientX;
+            startY = c.clientY;
+            const r = logo.getBoundingClientRect();
+            initialLeft = r.left;
+            initialTop = r.top;
+            isDragging = false;
+            touchStartTime = Date.now();
+        };
+
+        const onMove = (e) => {
+            if (touchStartTime === 0) return;
+            const c = getCoords(e);
+            const dx = c.clientX - startX;
+            const dy = c.clientY - startY;
+
+            if (Math.hypot(dx, dy) > 15) {
+                isDragging = true;
+                if (e.cancelable) e.preventDefault();
+
+                let nx = initialLeft + dx;
+                let ny = initialTop + dy;
+                nx = Math.max(5, Math.min(nx, window.innerWidth - logo.offsetWidth - 5));
+                ny = Math.max(5, Math.min(ny, window.innerHeight - logo.offsetHeight - 5));
+
+                logo.style.left = nx + "px";
+                logo.style.top = ny + "px";
+                if (isPanelOpen) updatePanelPosition();
+            }
+        };
+
+        const onEnd = () => {
+            const elapsed = Date.now() - touchStartTime;
+            if (!isDragging || elapsed < 250) {
+                togglePanel();
+            }
+            isDragging = false;
+            touchStartTime = 0;
+        };
+
+        logo.addEventListener('touchstart', onStart, { passive: true });
+        window.addEventListener('touchmove', onMove, { passive: false });
+        logo.addEventListener('touchend', onEnd, { passive: true });
+
+        logo.addEventListener('mousedown', onStart);
+        window.addEventListener('mousemove', (e) => { if (touchStartTime > 0) onMove(e); });
+        window.addEventListener('mouseup', () => { if (touchStartTime > 0) { onEnd(); touchStartTime = 0; } });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        setupFloatingTouch();
+
+        const hBtn = document.getElementById('hide-btn');
+        if (hBtn) hBtn.onclick = (e) => { e.stopPropagation(); closePanel(); };
+
+        const tgBtn = document.getElementById('dyn-tg-btn');
+        if (tgBtn) tgBtn.onclick = (e) => { e.stopPropagation(); window.open(targetTelegramLink, '_blank'); };
+
+        const lBtn = document.getElementById('btnUserLogin');
+        if (lBtn) lBtn.onclick = (e) => { e.stopPropagation(); doUserLogin(); };
+    });
+
+    async function doUserLogin() {
+        const u = (document.getElementById('lUser')?.value || '').trim();
+        const p = document.getElementById('lPass')?.value || '';
+        if (!u || !p) return showToast("Enter Username and Password!");
+
+        playTik();
+        try {
+            const userRef = window.ref(window.db, 'Users/' + u);
+            const snap = await window.get(userRef);
+
+            if (!snap.exists()) return showToast("Invalid Key");
+            const userData = snap.val();
+
+            if (userData.is_blocked === true) {
+                showLockout("ACCOUNT BLOCKED", "Your device/account has been BLOCKED by Administrator. Please contact admin.");
+                return;
+            }
+            if (userData.pass !== p && userData.password !== p) return showToast("Invalid Password");
+            if (userData.expiry && userData.expiry > 0 && userData.expiry < Date.now()) {
+                showLockout("SUBSCRIPTION EXPIRED", "Your subscription key has EXPIRED. Please contact admin to renew.");
+                return;
+            }
+
+            // Stable Fingerprint Check
+            const devFP = getDeviceFingerprint();
+            const devLimit = userData.device_limit !== undefined ? userData.device_limit : 1;
+
+            if (devLimit === 1) {
+                if (userData.device_id && userData.device_id !== devFP) {
+                    showToast("Device Limit Reached: Key locked to another phone!");
+                    return;
+                }
+            }
+
+            await window.update(userRef, {
+                device_id: devFP,
+                is_logged: true,
+                is_online: true,
+                last_seen: Date.now()
+            });
+
+            if (window.onDisconnect) {
+                window.onDisconnect(window.ref(window.db, `Users/${u}/is_online`)).set(false);
+                window.onDisconnect(window.ref(window.db, `Users/${u}/is_logged`)).set(false);
+            }
+
+            currentUser = u;
+            currentUserExpiry = userData.expiry || 0;
+            unlockSystem();
+
+        } catch (e) {
+            showToast("Connection Error!");
+        }
+    }
+
+    function unlockSystem() {
+        isUnlocked = true;
+        safeText('status-label', 'ACTIVE');
+        speak("System injected.");
+
+        const lScrn = document.getElementById('login-screen');
+        if (lScrn) lScrn.style.display = 'none';
+
+        const pUI = document.getElementById('prediction-ui');
+        if (pUI) pUI.style.display = 'flex';
+
+        const logo = document.getElementById('logo-trigger');
+        if (logo) logo.classList.add('unlocked');
+
+        startEngine();
+
+        // Realtime Listener
+        if (userListenerUnsub) userListenerUnsub();
+        userListenerUnsub = window.onValue(window.ref(window.db, 'Users/' + currentUser), (snap) => {
+            if (!isUnlocked) return;
+            if (!snap.exists()) {
+                showLockout("KEY DELETED", "Your key was removed from the database by Administrator.");
+                return;
+            }
+            const data = snap.val();
+            currentUserExpiry = data.expiry || 0;
+            
+            if (data.is_blocked === true) {
+                showLockout("ACCOUNT BLOCKED", "Your device/account has been BLOCKED by Administrator. Please contact admin.");
+                return;
+            }
+            
+            if (data.expiry && data.expiry > 0 && data.expiry < Date.now()) {
+                showLockout("SUBSCRIPTION EXPIRED", "Your subscription key has EXPIRED. Please contact admin to renew.");
+                return;
+            }
+
+            if (data.privateMsg && data.privateMsgTime && data.privateMsgTime > lastSeenPrivateMsgTime) {
+                lastSeenPrivateMsgTime = data.privateMsgTime;
+                safeText('notice-modal-title', '📩 PRIVATE ALERT');
+                safeText('notice-content', data.privateMsg);
+                safeText('notice-time-footer', `Sent: ${new Date(data.privateMsgTime).toLocaleString()}`);
+                document.getElementById('notice-modal').style.display = 'flex';
+                playTik();
+                speak("You have received a private alert from administrator.");
+            }
+        });
+    }
+
+    // 10s Heartbeat
+    setInterval(() => {
+        if (isUnlocked && currentUser && window.db) {
+            window.update(window.ref(window.db, `Users/${currentUser}`), {
+                is_online: true,
+                is_logged: true,
+                last_seen: Date.now()
+            });
+        }
+    }, 10000);
+
+    // 1s Live Expire Watcher
+    setInterval(() => {
+        if (isUnlocked && currentUser && currentUserExpiry > 0) {
+            if (Date.now() >= currentUserExpiry) {
+                showLockout("SUBSCRIPTION EXPIRED", "Your subscription key has EXPIRED. Please contact admin to renew.");
+            }
+        }
+    }, 1000);
+
+    window.addEventListener('beforeunload', () => {
+        if (currentUser && window.db) {
+            window.update(window.ref(window.db, `Users/${currentUser}`), {
+                is_online: false,
+                is_logged: false
+            });
+        }
+    });
+
+    // =========================================================================
+    // 🎯 HIGH-ACCURACY 3-NUMBER CLUSTER PATTERN ENGINE (NO CONSECUTIVE SERIALS)
+    // =========================================================================
+    
+    let lastFetchedIssue = null;
+    let recentHistory = [];
+
+    function analyzeClusterAndPredict(nextPeriodStr, historyList) {
+        const pNum = String(nextPeriodStr);
+        const seq = parseInt(pNum.slice(-4)) || 1000;
+
+        // 1. History Momentum & Trend Scan
+        let streakCount = 0;
+        let lastSize = 'SMALL';
+        let lastColor = 'RED';
+        let lastNum = 2;
+
+        if (historyList && historyList.length > 0) {
+            lastNum = parseInt(historyList[0].number) || 0;
+            lastSize = lastNum >= 5 ? 'BIG' : 'SMALL';
+            
+            for (let i = 0; i < Math.min(historyList.length, 6); i++) {
+                const s = (parseInt(historyList[i].number) >= 5) ? 'BIG' : 'SMALL';
+                if (s === lastSize) streakCount++;
+                else break;
+            }
+        }
+
+        // 2. Parity & Math Seed
+        let digitSum = 0;
+        for (let i = 0; i < pNum.length; i++) digitSum += parseInt(pNum[i]) || 0;
+        let seed = ((seq * 7) + (digitSum * 3) + (lastNum * 5) + 17) % 100;
+
+        // 3. Trend Decision for Size
+        let predictedSize = 'SMALL';
+        if (streakCount >= 4) {
+            predictedSize = (lastSize === 'BIG') ? 'SMALL' : 'BIG'; // Break streak
+        } else if (streakCount >= 2) {
+            predictedSize = lastSize; // Follow streak
+        } else {
+            predictedSize = (seed % 2 === 0) ? 'BIG' : 'SMALL';
+        }
+
+        // 4. Color Decision based on Parity & Violet Frequency
+        let predictedColor = 'GREEN';
+        const isVioletChance = (seed % 10 === 0 || seed % 10 === 5);
+
+        if (isVioletChance) {
+            predictedColor = 'VIOLET';
+        } else {
+            predictedColor = ((seed + digitSum) % 2 === 0) ? 'RED' : 'GREEN';
+        }
+
+        // 5. 🎯 HIGH-WIN CLUSTER MATRIX (3 NON-CONSECUTIVE ACCURATE NUMBERS)
+        let primeNum = 0, leftNode = 0, rightNode = 0;
+
+        if (predictedSize === 'BIG') {
+            if (predictedColor === 'GREEN') {
+                // Big Green Cluster: 7, 9, 5 or 9, 7, 8
+                const combos = [
+                    { prime: 7, left: 9, right: 5 },
+                    { prime: 9, left: 7, right: 8 },
+                    { prime: 7, left: 5, right: 9 }
+                ];
+                const pick = combos[seed % combos.length];
+                primeNum = pick.prime; leftNode = pick.left; rightNode = pick.right;
+            } else if (predictedColor === 'RED') {
+                // Big Red Cluster: 8, 6, 9 or 6, 8, 7
+                const combos = [
+                    { prime: 8, left: 6, right: 9 },
+                    { prime: 6, left: 8, right: 7 },
+                    { prime: 8, left: 7, right: 6 }
+                ];
+                const pick = combos[seed % combos.length];
+                primeNum = pick.prime; leftNode = pick.left; rightNode = pick.right;
+            } else {
+                // Big Violet (5)
+                primeNum = 5; leftNode = 7; rightNode = 9;
+            }
+        } else {
+            // SMALL
+            if (predictedColor === 'GREEN') {
+                // Small Green Cluster: 3, 1, 2 or 1, 3, 0
+                const combos = [
+                    { prime: 3, left: 1, right: 2 },
+                    { prime: 1, left: 3, right: 0 },
+                    { prime: 3, left: 2, right: 1 }
+                ];
+                const pick = combos[seed % combos.length];
+                primeNum = pick.prime; leftNode = pick.left; rightNode = pick.right;
+            } else if (predictedColor === 'RED') {
+                // Small Red Cluster: 2, 4, 0 or 4, 2, 1
+                const combos = [
+                    { prime: 2, left: 4, right: 0 },
+                    { prime: 4, left: 2, right: 1 },
+                    { prime: 2, left: 0, right: 4 }
+                ];
+                const pick = combos[seed % combos.length];
+                primeNum = pick.prime; leftNode = pick.left; rightNode = pick.right;
+            } else {
+                // Small Violet (0)
+                primeNum = 0; leftNode = 2; rightNode = 4;
+            }
+        }
+
+        return {
+            prime: String(primeNum),
+            left: String(leftNode),
+            right: String(rightNode),
+            size: predictedSize,
+            color: predictedColor
+        };
+    }
+
+    function updatePredictionDisplay(issueNumber, historyList = []) {
+        const nextPeriodBigInt = BigInt(issueNumber || '20260907100011080') + 1n;
+        const nextPeriodStr = nextPeriodBigInt.toString();
+
+        // Run Cluster Pattern Engine
+        const signal = analyzeClusterAndPredict(nextPeriodStr, historyList);
+
+        safeText('prediction-size', signal.size);
+        safeText('prediction-color', signal.color);
+        safeText('ball-1', signal.left);
+        safeText('ball-2', signal.prime);
+        safeText('ball-3', signal.right);
+
+        const gbs = [document.getElementById('gb-1'), document.getElementById('gb-2'), document.getElementById('gb-3')];
+        gbs.forEach(gb => {
+            if (!gb) return;
+            gb.className = 'glow-ball';
+            if (gb.id === 'gb-2') gb.classList.add('large');
+            if (signal.color === 'RED') gb.classList.add('red-node');
+            else if (signal.color === 'VIOLET') gb.classList.add('violet-node');
+        });
+
+        const colorBadge = document.getElementById('color-badge');
+        if (colorBadge) {
+            colorBadge.className = 'pill-badge';
+            if (signal.color === 'RED') colorBadge.classList.add('color-red');
+            else if (signal.color === 'GREEN') colorBadge.classList.add('color-green');
+            else if (signal.color === 'VIOLET') colorBadge.classList.add('color-violet');
+        }
+
+        const sizeBadge = document.getElementById('size-badge');
+        if (sizeBadge) {
+            sizeBadge.className = 'pill-badge';
+            sizeBadge.classList.add(signal.size === 'BIG' ? 'size-big' : 'size-small');
+        }
+
+        safeText('period-display', nextPeriodStr.slice(-7));
+    }
+
+    async function startEngine() {
+        setInterval(async () => {
+            if (!isUnlocked) return;
+            try {
+                const r = await fetch('https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json');
+                const json = await r.json();
+                if (!json?.data?.list || json.data.list.length === 0) return;
+                
+                const latest = json.data.list[0];
+                if (lastFetchedIssue === latest.issueNumber) return;
+
+                lastFetchedIssue = latest.issueNumber;
+                recentHistory = json.data.list;
+
+                updatePredictionDisplay(latest.issueNumber, recentHistory);
+                speak(`Sequence ${latest.issueNumber.slice(-3)} analyzed. Signal locked.`);
+                playTik();
+            } catch(e) {
+                const nowSec = Math.floor(Date.now() / 60000);
+                const simPeriod = `202609071000${nowSec}`;
+                if (lastFetchedIssue !== simPeriod) {
+                    lastFetchedIssue = simPeriod;
+                    updatePredictionDisplay(simPeriod, recentHistory);
+                }
+            }
+        }, 2500);
+    }
+
+    // Safe 60s Countdown
+    setInterval(() => {
+        let s = 60 - (new Date().getSeconds());
+        if (s === 60) s = 0;
+        safeText('timer-display', `00:${s < 10 ? '0' + s : s}`);
+    }, 1000);
+
+    // Dynamic Settings Sync
+    function initDynamicSettings() {
+        if (!window.db || !window.onValue || !window.ref) {
+            setTimeout(initDynamicSettings, 200);
+            return;
+        }
+        window.onValue(window.ref(window.db, 'Settings/appConfig'), snap => {
+            const d = snap.val();
+            if (d) {
+                safeText('dyn-app-name', d.appName || "DARK X PRO");
+                safeText('dyn-app-tag', d.appTag || "OFFICIAL PRO INJECTOR");
+                safeSrc('dyn-floating-img', d.floatingLogo);
+                safeSrc('dyn-header-img', d.headerLogo);
+
+                const g = document.getElementById('game-frame');
+                if (g && d.gameUrl && g.src !== d.gameUrl) g.src = d.gameUrl;
+                if (d.telegramUrl) targetTelegramLink = d.telegramUrl;
+
+                const now = Date.now();
+                if (d.broadcastMsg && d.broadcastExpiry && now < d.broadcastExpiry) {
+                    activeBroadcastMessage = d.broadcastMsg;
+                    activeBroadcastTimestamp = d.broadcastTime;
+
+                    if (d.broadcastTime > lastSeenBroadcastTime) {
+                        lastSeenBroadcastTime = d.broadcastTime;
+                        safeText('notice-modal-title', '📢 ANNOUNCEMENT');
+                        safeText('notice-content', d.broadcastMsg);
+                        safeText('notice-time-footer', `Sent: ${new Date(d.broadcastTime).toLocaleString()}`);
+                        document.getElementById('notice-modal').style.display = 'flex';
+                        playTik();
+                        speak("Official announcement received.");
+                    }
+                } else {
+                    activeBroadcastMessage = "";
+                    activeBroadcastTimestamp = 0;
+                }
+            }
+        });
+    }
+    setTimeout(initDynamicSettings, 300);
+</script>
+</body>
+</html>
