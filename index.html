@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>☠️BILAL SIR☠️- INJECTOR MOD</title>
+<title>☠️ BILAL SIR ☠️ - INJECTOR MOD</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
@@ -13,16 +13,15 @@
   import { getDatabase, ref, get, update, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyA558ZvZvUS63nEftspbfJKTSiy8MiLXss",
-    authDomain: "dark-x-b6636.firebaseapp.com",
-    databaseURL: "https://darult-rtdb.firebaseio.com",
-    projectId: "da6636",
-    storageBucket: "dark-x-b6636.firebasestorage.app",
-    messagingSenderId: "506868462870",
-    appId: "1:50686846880a4d09b388c37",
-    measurementId: "G-ENJBQ5"
-  };
-
+  apiKey: "AIzaSyBGv8P1R8TCQtT3aeg9JU6AlpAcTLhA-5M",
+  authDomain: "bilal-sir-pro-trader.firebaseapp.com",
+  databaseURL: "https://bilal-sir-pro-trader-default-rtdb.firebaseio.com",
+  projectId: "bilal-sir-pro-trader",
+  storageBucket: "bilal-sir-pro-trader.firebasestorage.app",
+  messagingSenderId: "9097928202",
+  appId: "1:9097928202:web:4f3c1824ed5f74371ac9f3",
+  measurementId: "G-ZHX2VJ8JE8"
+};
   const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   window.db = getDatabase(app);
   window.ref = ref;
@@ -286,13 +285,13 @@
     let currentUser = null;
     let currentUserExpiry = 0;
     let userListenerUnsub = null;
-    let targetTelegramLink = "https://t.me/NINE_X_MODS";
+    let targetTelegramLink = "https://chat.whatsapp.com/BwqRpeDP5Z41QhBC6CSz9N";
     let activeBroadcastMessage = "";
     let activeBroadcastTimestamp = 0;
     let lastSeenBroadcastTime = 0;
     let lastSeenPrivateMsgTime = 0;
 
-    const ADMIN_CONTACT_LINK = "https://t.me/+0OEWGD1eZO1hNzE1";
+    const ADMIN_CONTACT_LINK = "https://wa.me/923449322566";
 
     function safeText(id, txt) { const el = document.getElementById(id); if (el) el.textContent = txt; }
     function safeSrc(id, src) { const el = document.getElementById(id); if (el && src) el.src = src; }
@@ -336,7 +335,7 @@
             const ctx = canvas.getContext('2d');
             ctx.textBaseline = "top";
             ctx.font = "14px 'Arial'";
-            ctx.fillText("DARK_X_MODS_DEV_HASH", 2, 2);
+            ctx.fillText("BILAL SIR PRO TRADER", 2, 2);
             const canvasData = canvas.toDataURL();
             
             let hash = 0;
@@ -356,7 +355,7 @@
     }
 
     window.openAdminContactLink = () => {
-        window.open(ADMIN_CONTACT_LINK, '_blank');
+        window.open(ADMIN_CONTACT_LINK, 'https://wa.me/923449322566');
     };
 
     window.openNoticeModal = () => {
