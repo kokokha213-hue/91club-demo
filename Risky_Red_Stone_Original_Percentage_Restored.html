@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Risky Red Stone | WinGo Pattern Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           DESIGN SYSTEM: CYBER RED STONE + NEON GLOWS
+           ============================================================ */
+        :root {
+            --bg-black: transparent;
+            --bg-card: rgba(8, 12, 18, 0.75);
+            --bg-dark-red: rgba(18, 3, 8, 0.8);
+            --neon-red: #ff1744;
+            --neon-red-glow: rgba(255, 23, 68, 0.45);
+            --cyan-neon: #00f2fe;
+            --cyan-glow: rgba(0, 242, 254, 0.35);
+            --green-win: #00ff88;
+            --green-glow: rgba(0, 255, 136, 0.45);
+            --gold-vip: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.45);
+            --jackpot-purple: #c084fc;
+            --jackpot-glow: rgba(192, 132, 252, 0.45);
+            --text-white: #ffffff;
+            --text-dim: #cbd5e1;
+            --text-muted: #94a3b8;
+            --font-cyber: 'Orbitron', -apple-system, sans-serif;
+            --font-tech: 'Rajdhani', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -2;
+            filter: brightness(1) contrast(1.05);
+            pointer-events: none;
+        }
+
+        body {
+            background-color: #000;
+            font-family: var(--font-tech);
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 10px 8px 90px 8px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(rgba(255, 23, 68, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 254, 0.02) 1px, transparent 1px);
+            background-size: 26px 26px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ============================================================
+           LOGIN OVERLAY
+           ============================================================ */
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 4, 7, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 360px;
+            background: rgba(12, 16, 24, 0.9);
+            border: 1.5px solid rgba(255, 23, 68, 0.4);
+            border-top: 2px solid var(--neon-red);
+            border-bottom: 2px solid var(--cyan-neon);
+            border-radius: 20px;
+            padding: 30px 22px;
+            box-shadow: 0 0 35px var(--neon-red-glow), 0 0 25px var(--cyan-glow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+        }
+
+        .login-title {
+            font-family: var(--font-cyber);
+            font-size: 13px;
+            font-weight: 900;
+            color: #FFFFFF;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-red-glow);
+        }
+
+        .login-subtitle {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--cyan-neon);
+            margin-top: -8px;
+        }
+
+        .login-input-wrap {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .login-input {
+            width: 100%;
+            height: 48px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 23, 68, 0.4);
+            border-radius: 12px;
+            color: var(--cyan-neon);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 2px;
+            padding: 0 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .login-input:focus {
+            border-color: var(--cyan-neon);
+            box-shadow: 0 0 15px var(--cyan-glow);
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.6), rgba(0, 242, 254, 0.4));
+            border: 1px solid var(--neon-red);
+            border-radius: 12px;
+            color: #FFFFFF;
+            font-family: var(--font-cyber);
+            font-size: 11.5px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 0 20px var(--neon-red-glow);
+            transition: all 0.25s ease;
+        }
+
+        .login-btn:active {
+            transform: scale(0.96);
+            filter: brightness(1.2);
+        }
+
+        .login-error {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            color: var(--neon-red);
+            display: none;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================================
+           APP SHELL
+           ============================================================ */
+        .app-container {
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .view-panel {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .view-panel.active-view {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================================
+           TOP HEADER
+           ============================================================ */
+        .top-header-bar {
+            background: rgba(6, 12, 18, 0.75);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 23, 68, 0.3);
+            border-top: 1px solid rgba(0, 242, 254, 0.5);
+            border-radius: 14px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .header-user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--green-win);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--green-win);
+            animation: pulseLive 1.5s infinite;
+        }
+
+        @keyframes pulseLive {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.4; }
+        }
+
+        .header-user-title {
+            font-family: var(--font-cyber);
+            font-size: 11px;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .header-user-title span {
+            color: var(--neon-red);
+            font-style: italic;
+        }
+
+        .vip-gold-pill {
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid var(--gold-vip);
+            color: var(--gold-vip);
+            font-family: var(--font-cyber);
+            font-size: 9.5px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        /* ============================================================
+           PERIOD & TIMER
+           ============================================================ */
+        .period-control-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .period-pill-box {
+            flex: 1;
+            background: rgba(6, 14, 20, 0.78);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            border-radius: 12px;
+            padding: 9px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+        }
+
+        .period-pill-label {
+            font-family: var(--font-cyber);
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #ffd700;
+            letter-spacing: 1px;
+            margin-right: 6px;
+        }
+
+        .period-pill-val {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--green-win);
+            letter-spacing: 0.8px;
+        }
+
+        .copy-icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 13px;
+            cursor: pointer;
+            margin-left: 6px;
+            transition: color 0.2s;
+        }
+
+        .copy-icon-btn:active {
+            color: var(--cyan-neon);
+            transform: scale(0.9);
+        }
+
+        .timer-pill-box {
+            background: rgba(6, 14, 20, 0.78);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.45);
+            border-radius: 12px;
+            padding: 9px 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+        }
+
+        .timer-digits {
+            font-family: var(--font-cyber);
+            font-size: 15px;
+            font-weight: 900;
+            color: var(--green-win);
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px var(--green-glow);
+        }
+
+        .timer-sec-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-dim);
+        }
+
+        /* ============================================================
+           PREDICTION CARD
+           ============================================================ */
+        .prediction-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(255, 23, 68, 0.4);
+            border-radius: 18px;
+            padding: 20px 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 23, 68, 0.15);
+        }
+
+        .pred-card-title {
+            font-family: var(--font-cyber);
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--cyan-neon);
+            letter-spacing: 2px;
+        }
+
+        .pred-huge-signal {
+            font-family: var(--font-cyber);
+            font-size: 44px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: var(--green-win);
+            text-shadow: 0 0 20px var(--green-win);
+            transition: all 0.3s ease;
+        }
+
+        .pred-huge-signal.signal-small {
+            color: var(--neon-red);
+            text-shadow: 0 0 20px var(--neon-red);
+        }
+
+        .pred-numbers-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .pred-numbers-row span {
+            background: rgba(0, 242, 254, 0.12);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            color: var(--cyan-neon);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        /* ---- pattern badge (DRAGON / ZIGZAG) ---- */
+        .pattern-badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .pattern-badge {
+            font-family: var(--font-cyber);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(255, 215, 0, 0.12);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            color: #ffd700;
+            text-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pattern-badge.dragon {
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+            background: rgba(255, 23, 68, 0.15);
+            text-shadow: 0 0 8px var(--neon-red-glow);
+        }
+
+        .pattern-badge.zigzag {
+            border-color: var(--cyan-neon);
+            color: var(--cyan-neon);
+            background: rgba(0, 242, 254, 0.12);
+            text-shadow: 0 0 8px var(--cyan-glow);
+        }
+
+        .pattern-badge .emoji {
+            font-size: 13px;
+        }
+
+        /* ============================================================
+           PATTERN ADVISER — WORKING CONFIRM SHOT
+           ============================================================ */
+        .master-adviser-card {
+            background: rgba(8, 4, 18, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1.5px solid rgba(192, 132, 252, 0.35);
+            border-radius: 18px;
+            padding: 18px 16px 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 30px rgba(192, 132, 252, 0.10);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .master-adviser-card::before {
+            content: "";
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(192, 132, 252, 0.05), transparent 60%);
+            pointer-events: none;
+        }
+
+        .master-adviser-card>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        .master-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .master-title {
+            font-family: var(--font-cyber);
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--jackpot-purple);
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .master-title .crown {
+            color: var(--gold-vip);
+            font-size: 14px;
+        }
+
+        .master-title .badge-5bet {
+            font-size: 8px;
+            background: rgba(255, 215, 0, 0.12);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: var(--gold-vip);
+            padding: 1px 8px;
+            border-radius: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .master-status-badge {
+            font-family: var(--font-cyber);
+            font-size: 8.5px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .master-status-badge.confirm {
+            background: rgba(0, 255, 136, 0.15);
+            border: 1px solid var(--green-win);
+            color: var(--green-win);
+            box-shadow: 0 0 25px var(--green-glow);
+            animation: pulseConfirm 1.8s infinite;
+        }
+
+        @keyframes pulseConfirm {
+            0%, 100% { box-shadow: 0 0 15px var(--green-glow); }
+            50% { box-shadow: 0 0 35px var(--green-glow); }
+        }
+
+        .master-status-badge.wait {
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: var(--gold-vip);
+        }
+
+        .master-status-badge.no-bet {
+            background: rgba(255, 23, 68, 0.08);
+            border: 1px solid rgba(255, 23, 68, 0.2);
+            color: var(--text-muted);
+        }
+
+        .master-signal-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 8px 0 6px;
+        }
+
+        .master-signal-text {
+            font-family: var(--font-cyber);
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .master-signal-text.big {
+            color: var(--cyan-neon);
+            text-shadow: 0 0 40px var(--cyan-glow);
+        }
+
+        .master-signal-text.small {
+            color: var(--jackpot-purple);
+            text-shadow: 0 0 40px var(--jackpot-glow);
+        }
+
+        .master-signal-text.wait {
+            color: var(--gold-vip);
+            text-shadow: 0 0 30px var(--gold-glow);
+            font-size: 24px;
+        }
+
+        .master-confidence-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 4px;
+            padding: 0 4px;
+            min-width: 0;
+        }
+
+        .master-confidence-label {
+            font-family: var(--font-mono);
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            min-width: 56px;
+        }
+
+        .master-meter-bg {
+            flex: 1 1 120px;
+            min-width: 45px;
+            max-width: 300px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .master-meter-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--jackpot-purple), var(--cyan-neon), var(--green-win));
+            transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .master-confidence-pct {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-white);
+            min-width: 44px;
+            text-align: right;
+        }
+
+        .master-reasons-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px 8px;
+            justify-content: center;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            min-height: 28px;
+        }
+
+        .master-reason-tag {
+            font-family: var(--font-tech);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-dim);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 3px 14px;
+            letter-spacing: 0.2px;
+            transition: all 0.2s;
+        }
+
+        .master-reason-tag.highlight {
+            color: var(--cyan-neon);
+            border-color: rgba(0, 242, 254, 0.15);
+            background: rgba(0, 242, 254, 0.06);
+        }
+
+        .master-reason-tag.warn {
+            color: var(--gold-vip);
+            border-color: rgba(255, 215, 0, 0.12);
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .master-reason-tag.purple {
+            color: var(--jackpot-purple);
+            border-color: rgba(192, 132, 252, 0.12);
+            background: rgba(192, 132, 252, 0.05);
+        }
+
+        .master-no-signal-msg {
+            text-align: center;
+            font-family: var(--font-tech);
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 4px 0 2px;
+            letter-spacing: 0.3px;
+        }
+
+        .master-no-signal-msg strong {
+            color: var(--gold-vip);
+            font-weight: 700;
+        }
+
+        .master-bet-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .master-bet-counter .count {
+            font-weight: 800;
+            font-size: 14px;
+            color: var(--gold-vip);
+        }
+
+        .master-bet-counter .count.green {
+            color: var(--green-win);
+        }
+
+        /* ============================================================
+           HISTORY TABLE
+           ============================================================ */
+        .history-card-container {
+            background: rgba(3, 7, 10, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(0, 242, 254, 0.35);
+            border-top: 2px solid var(--cyan-neon);
+            border-radius: 18px;
+            padding: 14px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 242, 254, 0.15);
+            min-height: 480px;
+        }
+
+        .table-scroll-wrap {
+            width: 100%;
+            overflow-y: auto;
+            max-height: 520px;
+            padding-right: 2px;
+        }
+
+        .table-scroll-wrap::-webkit-scrollbar {
+            width: 3px;
+        }
+        .table-scroll-wrap::-webkit-scrollbar-thumb {
+            background: rgba(0, 242, 254, 0.4);
+            border-radius: 2px;
+        }
+
+        .custom-history-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .custom-history-table th {
+            font-family: var(--font-mono);
+            font-size: 9.5px;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 8px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .custom-history-table td {
+            padding: 11px 4px;
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: middle;
+        }
+
+        .history-row {
+            animation: rowSlideIn 0.35s ease forwards;
+        }
+
+        @keyframes rowSlideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .col-prd {
+            color: #94a3b8;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+        .col-lvl {
+            color: #e2e8f0;
+            font-weight: 700;
+            font-size: 10px;
+        }
+        .col-pred {
+            font-family: var(--font-cyber);
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .col-pred.pred-big {
+            color: #ffd700;
+        }
+        .col-pred.pred-small {
+            color: var(--cyan-neon);
+        }
+        .col-num {
+            color: #cbd5e1;
+            font-weight: 800;
+            font-size: 11.5px;
+        }
+
+        .res-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-family: var(--font-cyber);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .res-badge.res-wait {
+            color: #ffd700;
+            text-shadow: 0 0 8px var(--gold-glow);
+        }
+        .res-badge.res-win {
+            color: var(--green-win);
+            text-shadow: 0 0 8px var(--green-glow);
+        }
+        .res-badge.res-loss {
+            color: var(--neon-red);
+            text-shadow: 0 0 8px var(--neon-red-glow);
+        }
+        .res-badge.res-jackpot {
+            color: #ffd700;
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        /* ============================================================
+           SUMMARY STRIP
+           ============================================================ */
+        .history-bottom-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background: rgba(4, 10, 14, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 10px 8px;
+            margin-top: 4px;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-family: var(--font-cyber);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+        }
+        .summary-item.item-win .val {
+            color: var(--green-win);
+            text-shadow: 0 0 8px var(--green-glow);
+        }
+        .summary-item.item-loss .val {
+            color: #e2e8f0;
+        }
+        .summary-item.item-jack .val {
+            color: var(--jackpot-purple);
+            text-shadow: 0 0 8px var(--jackpot-glow);
+        }
+        .summary-item.item-total .val {
+            color: #ffd700;
+            text-shadow: 0 0 8px var(--gold-glow);
+        }
+
+        /* ============================================================
+           BOTTOM NAV
+           ============================================================ */
+        .nav-floating-wrap {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            pointer-events: none;
+            padding: 0 10px;
+        }
+
+        .bottom-navbar {
+            pointer-events: auto;
+            width: 100%;
+            max-width: 420px;
+            background: rgba(5, 12, 16, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.2px solid rgba(255, 23, 68, 0.35);
+            border-radius: 32px;
+            padding: 6px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 23, 68, 0.2);
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-cyber);
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 6px 8px;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            transition: all 0.2s ease;
+            min-width: 52px;
+        }
+
+        .nav-btn .nav-icon {
+            font-size: 15px;
+        }
+
+        .nav-btn.active-tab {
+            color: #ffd700;
+            text-shadow: 0 0 8px var(--gold-glow);
+        }
+        .nav-btn.active-tab .nav-icon {
+            color: #ffd700;
+        }
+
+        .nav-center-predict {
+            position: relative;
+            top: -12px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1a1e12 0%, #060b08 100%);
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px var(--gold-glow);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 0;
+            min-width: unset;
+        }
+
+        .nav-center-predict .nav-icon {
+            font-size: 20px;
+        }
+        .nav-center-predict span:not(.nav-icon) {
+            font-size: 7px;
+            font-weight: 800;
+            margin-top: -2px;
+        }
+
+        .nav-center-predict:active {
+            transform: scale(0.92);
+            box-shadow: 0 0 28px rgba(255, 215, 0, 0.8);
+        }
+
+
+        @media (max-width: 380px) {
+            .master-signal-text { font-size: 24px; }
+            .master-signal-text.wait { font-size: 18px; }
+            .master-title { font-size: 9.5px; }
+            .pred-huge-signal { font-size: 34px; }
+        }
+    
+
+        /* ============================================================
+           SINGLE-SCREEN DASHBOARD REDESIGN
+           The live history source stays intact; remote Telegram/popup injection was removed.
+           ============================================================ */
+        :root {
+            --bg-card: rgba(10, 17, 25, .88);
+            --text-dim: #c4ceda;
+            --text-muted: #91a0b3;
+        }
+        html { min-height: 100%; background: #05070b; }
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: block;
+            padding: 14px 18px 18px;
+            background: radial-gradient(ellipse at 15% 0%, rgba(255,23,68,.10), transparent 32%),
+                        radial-gradient(ellipse at 100% 22%, rgba(0,242,254,.08), transparent 35%), #05070b;
+            overflow-x: hidden;
+        }
+        .bg-video { opacity: .16; filter: brightness(.42) saturate(.75); }
+        body::before { opacity: .32; background-size: 32px 32px; }
+        .app-container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(420px, .95fr);
+            grid-template-rows: auto auto minmax(0, 1fr);
+            align-items: start;
+            gap: 14px;
+        }
+        .top-header-bar {
+            grid-column: 1 / -1;
+            grid-row: 1;
+            min-height: 64px;
+            padding: 13px 18px;
+            border-color: rgba(255,255,255,.12);
+            border-top-color: rgba(0,242,254,.6);
+            border-radius: 16px;
+            background: rgba(8,13,20,.88);
+            box-shadow: 0 12px 34px rgba(0,0,0,.24);
+        }
+        .header-user-title { font-size: 15px; letter-spacing: 1.35px; }
+        .header-user-title span { color: #fff; font-style: normal; }
+        .header-right-group { display:flex; align-items:center; justify-content:flex-end; gap:10px; }
+        .feed-status {
+            display:inline-flex; align-items:center; gap:7px; padding:7px 10px;
+            border-radius:999px; font:700 10px var(--font-mono); letter-spacing:.45px;
+            border:1px solid rgba(255,255,255,.13); color:#d7e2ed; background:rgba(255,255,255,.04);
+        }
+        .feed-status::before { content:""; width:7px; height:7px; border-radius:50%; background:#a5adbb; }
+        .feed-status.online { color:#6effbb; border-color:rgba(0,255,136,.32); background:rgba(0,255,136,.07); }
+        .feed-status.online::before { background:#00ff88; box-shadow:0 0 10px #00ff88; }
+        .feed-status.offline { color:#ff8ea2; border-color:rgba(255,23,68,.34); background:rgba(255,23,68,.07); }
+        .feed-status.offline::before { background:#ff1744; }
+        .vip-gold-pill { font-size:10px; padding:7px 11px; white-space:nowrap; }
+        .period-control-row { grid-column:1 / -1; grid-row:2; gap:12px; }
+        .period-pill-box, .timer-pill-box { min-height:54px; padding:11px 15px; border-radius:14px; }
+        .period-pill-label { font-size:11px; }
+        .period-pill-val { font-size:13px; overflow-wrap:anywhere; }
+        .timer-digits { font-size:18px; }
+        #homeView { grid-column:1; grid-row:3; }
+        #historyView { grid-column:2; grid-row:3; }
+        .view-panel, .view-panel.active-view { display:flex; min-width:0; gap:14px; animation:fadeIn .28s ease both; }
+        .prediction-card, .master-adviser-card, .history-card-container {
+            border-color:rgba(255,255,255,.12);
+            border-radius:18px;
+            box-shadow:0 12px 32px rgba(0,0,0,.24);
+        }
+        .prediction-card {
+            min-height:228px;
+            justify-content:center;
+            padding:23px 20px;
+            gap:14px;
+            background:linear-gradient(150deg, rgba(12,20,30,.96), rgba(10,8,18,.92));
+            border-top:2px solid rgba(0,242,254,.66);
+        }
+        .pred-card-title { font-size:13px; letter-spacing:2.2px; }
+        .pred-huge-signal { font-size:clamp(42px, 4vw, 58px); line-height:1.12; letter-spacing:3px; }
+        .pred-numbers-row { font-size:12px; }
+        .pred-numbers-row span { padding:6px 10px; }
+        .prediction-note { max-width:520px; color:#9eabbb; font:500 11px var(--font-tech); line-height:1.5; }
+        .master-adviser-card {
+            padding:20px;
+            background:linear-gradient(145deg, rgba(13,10,23,.96), rgba(7,12,20,.96));
+            border-top:2px solid rgba(192,132,252,.55);
+        }
+        .master-title { font-size:12px; }
+        .master-signal-display { min-height:84px; }
+        .master-signal-text { font-size:clamp(30px, 3vw, 40px); }
+        .master-confidence-label { min-width:108px; font-size:9px; line-height:1.2; }
+        .master-confidence-note { margin-top:7px; color:#9eabbb; font:500 10px var(--font-tech); line-height:1.45; overflow-wrap:anywhere; }
+        #backtestSummary { color:#cbd5e1; font-variant-numeric:tabular-nums; }
+        .master-meter-bg { max-width:none; height:8px; }
+        .master-confidence-pct { font-size:13px; }
+        .master-reasons-row { justify-content:flex-start; }
+        .master-reason-tag { font-size:11px; padding:5px 10px; }
+        .master-no-signal-msg { font-size:12px; line-height:1.5; }
+        .master-bet-counter { font-size:10px; flex-wrap:wrap; text-align:center; }
+        .history-card-container {
+            min-height:0;
+            height:clamp(530px, calc(100dvh - 170px), 760px);
+            padding:14px;
+            gap:10px;
+            background:rgba(7,12,18,.93);
+            border-top:2px solid var(--cyan-neon);
+        }
+        .table-scroll-wrap { max-height:none; flex:1; min-height:0; overflow:auto; }
+        .custom-history-table th { position:sticky; top:0; z-index:2; background:#0a111a; font-size:10px; }
+        .custom-history-table td { padding:13px 5px; font-size:12px; }
+        .col-pred { font-size:11px; }
+        .history-bottom-summary { flex-shrink:0; margin-top:0; padding:13px 8px; gap:5px; background:rgba(255,255,255,.025); }
+        .summary-item { gap:5px; font-size:10px; }
+        .summary-item .val { font-size:12px; }
+        /* One dashboard; no tabs, secondary screens or login lock. */
+        .login-overlay, .nav-floating-wrap, #gameView, #profileView { display:none !important; }
+        input, textarea, td, th { user-select:text; }
+        button { font:inherit; }
+        @media (max-width: 980px) {
+            body { padding:10px; }
+            .app-container { grid-template-columns:minmax(0,1fr); grid-template-rows:auto; gap:11px; }
+            .top-header-bar, .period-control-row { grid-column:1; grid-row:auto; }
+            #homeView { grid-column:1; grid-row:3; }
+            #historyView { grid-column:1; grid-row:4; }
+            .view-panel, .view-panel.active-view { gap:11px; }
+            .history-card-container { height:530px; min-height:530px; }
+            .prediction-card { min-height:205px; }
+        }
+        @media (max-width: 520px) {
+            body { padding:8px 8px 12px; }
+            .app-container { gap:9px; }
+            .top-header-bar { min-height:58px; padding:10px 11px; gap:8px; }
+            .header-user-info { gap:7px; }
+            .header-user-title { font-size:11px; letter-spacing:.4px; }
+            .header-right-group { gap:5px; flex-wrap:wrap; }
+            .feed-status { font-size:8px; padding:6px 7px; letter-spacing:0; }
+            .vip-gold-pill { font-size:8px; padding:6px 7px; letter-spacing:0; }
+            .period-control-row { gap:7px; }
+            .period-pill-box, .timer-pill-box { padding:9px 10px; min-height:50px; }
+            .period-pill-label { font-size:8px; letter-spacing:.4px; }
+            .period-pill-val { font-size:10px; letter-spacing:0; }
+            .timer-digits { font-size:15px; }
+            .timer-sec-label { font-size:8px; }
+            .prediction-card { padding:19px 13px; gap:12px; }
+            .pred-card-title { font-size:10px; letter-spacing:1.2px; }
+            .pred-huge-signal { font-size:38px; }
+            .prediction-note { font-size:10px; }
+            .master-adviser-card { padding:15px 12px; }
+            .master-header-row { align-items:flex-start; gap:7px; }
+            .master-title { font-size:9px; letter-spacing:.5px; flex-wrap:wrap; }
+            .master-status-badge { font-size:7px; padding:4px 7px; white-space:nowrap; }
+            .master-signal-text { font-size:29px; }
+            .master-confidence-row { gap:7px; }
+            .master-confidence-label { min-width:80px; font-size:8px; }
+            .master-meter-bg { min-width:35px; }
+            .master-confidence-pct { min-width:45px; font-size:11px; white-space:nowrap; }
+            .master-reason-tag { font-size:10px; padding:4px 8px; }
+            .history-card-container { height:470px; min-height:470px; padding:9px 6px; }
+            .custom-history-table th { font-size:8px; letter-spacing:.4px; padding:8px 2px; }
+            .custom-history-table td { padding:10px 2px; font-size:10px; }
+            .res-badge { font-size:7px; letter-spacing:0; }
+            .summary-item { font-size:8px; gap:3px; letter-spacing:0; }
+            .history-bottom-summary { padding:10px 4px; }
+            .summary-item .val { font-size:10px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+        }
+
+
+        /* ============================================================
+           READABLE TYPOGRAPHY + LIVE BIG/SMALL PERCENTAGE LINE
+           ============================================================ */
+        body { font-size: 16px; line-height: 1.5; }
+        .header-user-title { font-size: clamp(12px, 1.15vw, 16px); }
+        .feed-status { font-size: 11px; }
+        .vip-gold-pill { font-size: 11px; }
+        .period-pill-label { font-size: 12px; }
+        .period-pill-val { font-size: 14px; }
+        .timer-digits { font-size: 21px; }
+        .timer-sec-label { font-size: 11px; }
+        .pred-card-title { font-size: 14px; line-height: 1.4; }
+        .pred-huge-signal { font-size: clamp(42px, 4vw, 60px); }
+        .probability-heading { font: 700 13px var(--font-cyber); letter-spacing: .7px; color: #cbd5e1; text-align: center; }
+        .side-probabilities { width: 100%; display: flex; align-items: stretch; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .side-probabilities .prob-chip {
+            flex: 1 1 145px; min-width: 120px; display: flex; align-items: center; justify-content: center; gap: 9px;
+            padding: 10px 13px; border: 1px solid rgba(255,255,255,.16); border-radius: 12px;
+            background: rgba(255,255,255,.035); font: 800 13px var(--font-cyber); letter-spacing: .4px; color: #e2e8f0;
+        }
+        .side-probabilities .prob-chip strong { font: 900 20px var(--font-mono); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+        .side-probabilities .prob-big { border-color: rgba(0,255,136,.32); background: rgba(0,255,136,.055); }
+        .side-probabilities .prob-big strong { color: #00ff88; }
+        .side-probabilities .prob-small { border-color: rgba(0,242,254,.32); background: rgba(0,242,254,.05); }
+        .side-probabilities .prob-small strong { color: #00f2fe; }
+        .side-probabilities .prob-chip.leading { box-shadow: 0 0 0 1px currentColor, 0 0 18px rgba(0,242,254,.10); }
+        .prediction-note { font-size: 13px; line-height: 1.55; text-align: center; }
+        .master-title { font-size: 13px; line-height: 1.45; }
+        .master-title .badge-5bet { font-size: 10px; }
+        .master-status-badge { font-size: 10px; }
+        .master-signal-text { font-size: clamp(34px, 3vw, 44px); }
+        .master-confidence-label { font-size: 11px; min-width: 125px; }
+        .master-confidence-pct { font-size: 19px; min-width: 64px; }
+        .master-confidence-note { font-size: 13px; line-height: 1.55; }
+        .master-reason-tag { font-size: 12px; line-height: 1.35; }
+        .master-no-signal-msg { font-size: 13px; line-height: 1.55; }
+        .master-bet-counter { font-size: 12px; }
+        .master-bet-counter .count { font-size: 17px; }
+        .custom-history-table th { font-size: 11px; }
+        .custom-history-table td { font-size: 13px; }
+        .col-lvl, .col-pred { font-size: 12px; }
+        .res-badge { font-size: 10px; }
+        .summary-item { font-size: 11px; }
+        .summary-item .val { font-size: 14px; }
+        .copy-icon-btn { font-size: 17px; padding: 3px 5px; }
+        @media (max-width: 520px) {
+            .header-user-title { font-size: 12px; }
+            .feed-status { font-size: 9px; }
+            .vip-gold-pill { font-size: 9px; }
+            .period-pill-label { font-size: 10px; }
+            .period-pill-val { font-size: 12px; }
+            .timer-digits { font-size: 18px; }
+            .timer-sec-label { font-size: 10px; }
+            .pred-card-title { font-size: 12px; }
+            .probability-heading { font-size: 11px; }
+            .side-probabilities { gap: 7px; }
+            .side-probabilities .prob-chip { min-width: 110px; padding: 9px 8px; font-size: 11px; gap: 6px; }
+            .side-probabilities .prob-chip strong { font-size: 17px; }
+            .prediction-note { font-size: 12px; }
+            .master-title { font-size: 11px; }
+            .master-title .badge-5bet { font-size: 9px; }
+            .master-status-badge { font-size: 9px; }
+            .master-confidence-label { font-size: 10px; min-width: 100px; }
+            .master-confidence-pct { font-size: 16px; min-width: 55px; }
+            .master-confidence-note { font-size: 12px; }
+            .master-reason-tag { font-size: 11px; }
+            .master-no-signal-msg { font-size: 12px; }
+            .master-bet-counter { font-size: 11px; }
+            .custom-history-table th { font-size: 9px; }
+            .custom-history-table td { font-size: 11px; }
+            .res-badge { font-size: 8px; }
+            .summary-item { font-size: 9px; }
+            .summary-item .val { font-size: 11px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ========== BACKGROUND VIDEO ========== -->
+    <video class="bg-video" autoplay loop muted playsinline>
+        <source src="https://www.image2url.com/r2/default/videos/1787103983251-dd3aedcb-dd5a-42fd-81a9-863fc605e54e.mp4" type="video/mp4">
+    </video>
+
+    <!-- ========== APP SHELL ========== -->
+    <div class="app-container">
+
+        <!-- TOP HEADER -->
+        <header class="top-header-bar">
+            <div class="header-user-info">
+                <span class="live-dot"></span>
+                <div class="header-user-title">
+                    ̶ͨ ̶ͧ ̶ͭ ̶ͤ➸⃝ <span>ℝ𝕀𝕊𝕂𝕐 ℝ𝔼𝔻 𝕊𝕋𝕆ℕ𝔼</span>
+                </div>
+            </div>
+            <div class="header-right-group">
+                <span class="feed-status checking" id="feedStatus">CHECKING LIVE FEED</span>
+                <div class="vip-gold-pill"><span>👑 GOLD VIP</span></div>
+            </div>
+        </header>
+
+        <!-- PERIOD & TIMER -->
+        <section class="period-control-row">
+            <div class="period-pill-box">
+                <span class="period-pill-label">CURRENT PERIOD</span>
+                <span class="period-pill-val" id="fullPeriodNum">----------------</span>
+                <button class="copy-icon-btn" id="copyPeriodBtn" title="Copy Period">📋</button>
+            </div>
+            <div class="timer-pill-box">
+                <span class="timer-digits" id="timerSeconds">--</span>
+                <span class="timer-sec-label">SEC</span>
+            </div>
+        </section>
+
+        <!-- ========== VIEW 1: HISTORY ========== -->
+        <main id="historyView" class="view-panel active-view">
+            <div class="history-card-container">
+                <div class="table-scroll-wrap">
+                    <table class="custom-history-table">
+                        <thead>
+                            <tr>
+                                <th>PRD</th>
+                                <th>LVL</th>
+                                <th>PRED</th>
+                                <th>NUM</th>
+                                <th>RES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="history-bottom-summary">
+                    <div class="summary-item item-win"><span>🏆 WIN</span><span class="val" id="winCounter">0</span></div>
+                    <div class="summary-item item-loss"><span>💀 LOSS</span><span class="val" id="lossCounter">0</span></div>
+                    <div class="summary-item item-jack"><span>🎯 HIT RATE</span><span class="val" id="jackCounter">—</span></div>
+                    <div class="summary-item item-total"><span>📊 TOTAL</span><span class="val" id="totalCounter">0</span></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ========== VIEW 2: HOME / PREDICTION + MASTER ADVISER ========== -->
+        <section id="homeView" class="view-panel">
+            <!-- Prediction Card -->
+            <div class="prediction-card">
+                <div class="pred-card-title">✦ LIVE PATTERN SIGNAL ✦</div>
+                <div class="pred-huge-signal" id="homePredSignal">CALCULATING</div>
+                <div class="probability-heading">NEXT DRAW MODEL ESTIMATE</div>
+                <div class="side-probabilities" id="homeSafeNums" aria-live="polite" aria-label="Estimated BIG and SMALL probabilities">
+                    <span class="prob-chip prob-big">BIG <strong id="bigProbability">--%</strong></span>
+                    <span class="prob-chip prob-small">SMALL <strong id="smallProbability">--%</strong></span>
+                </div>
+                <div class="pattern-badge-row" id="patternBadgeRow">
+                    <span class="pattern-badge dragon" id="dragonBadge" style="display:none;">
+                        <span class="emoji">🐉</span> DRAGON
+                    </span>
+                    <span class="pattern-badge zigzag" id="zigzagBadge" style="display:none;">
+                        <span class="emoji">⚡</span> ZIGZAG
+                    </span>
+                </div>
+                <p class="prediction-note" id="predictionNote">Estimate based on verified results. It is not a guaranteed win probability.</p>
+            </div>
+
+            <!-- ============================================================
+                 PATTERN ADVISER — WORKING CONFIRM SHOT
+                 ============================================================ -->
+            <div class="master-adviser-card" id="masterAdviserCard">
+                <div class="master-header-row">
+                    <div class="master-title">
+                        <span class="crown">👑</span> PATTERN ADVISER
+                        <span class="badge-5bet">PATTERN ANALYSIS</span>
+                    </div>
+                    <span class="master-status-badge wait" id="masterStatusBadge">WAIT</span>
+                </div>
+
+                <div class="master-signal-display">
+                    <span class="master-signal-text wait" id="masterSignalText">WAIT</span>
+                </div>
+
+                <div class="master-confidence-row" aria-live="polite">
+                    <span class="master-confidence-label">SIGNAL STRENGTH</span>
+                    <div class="master-meter-bg" role="meter" aria-label="Signal strength score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="masterMeterBg">
+                        <div class="master-meter-fill" id="masterMeterFill" style="width:0%;"></div>
+                    </div>
+                    <span class="master-confidence-pct" id="masterConfidencePct">--%</span>
+                </div>
+                <p class="master-confidence-note" id="masterConfidenceNote">Waiting for verified live results. Pattern-strength score, not a calibrated probability of winning the next draw.</p>
+                <p class="master-confidence-note" id="backtestSummary">HISTORICAL HIT RATE: waiting for enough real results.</p>
+
+                <div class="master-reasons-row" id="masterReasonsRow">
+                    <span class="master-reason-tag warn">⏳ AWAITING DATA</span>
+                </div>
+
+                <div class="master-no-signal-msg" id="masterNoSignalMsg" style="display:none;">
+                    <strong>⏸ LIVE RESULTS NEEDED</strong> · Waiting for verified history from the feed
+                </div>
+
+                <!-- Bet counter: shows how many periods since last signal -->
+                <div class="master-bet-counter" id="masterBetCounter">
+                    <span>📊 HISTORICAL TESTS:</span>
+                    <span class="count" id="betsSinceSignal">0</span>
+                    <span style="color:var(--text-muted);font-size:9px;">(past-only checks)</span>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ================================================================
+    JAVASCRIPT — COMPLETE ENGINE + MASTER ADVISER (WORKING)
+    ================================================================ -->
+    <script>
+        /* Login overlay removed: the dashboard starts directly. */
+
+        /* =============================================================
+           2. CORE STATE
+           ============================================================= */
+        let currentStepLevel = 1;
+        let winCount = 0;
+        let lossCount = 0;
+        let totalCount = 0;
+
+        let activePredictions = {};
+        let historyRecords = [];
+        let lastResolvedPeriod = null;
+        let simulatedLastPeriod = null;
+
+        const fullPeriodNumEl = document.getElementById("fullPeriodNum");
+        const timerSecondsEl = document.getElementById("timerSeconds");
+        const historyTableBody = document.getElementById("historyTableBody");
+        const homePredSignal = document.getElementById("homePredSignal");
+        const homeSafeNums = document.getElementById("homeSafeNums");
+        const winCounterEl = document.getElementById("winCounter");
+        const lossCounterEl = document.getElementById("lossCounter");
+        const jackCounterEl = document.getElementById("jackCounter");
+        const totalCounterEl = document.getElementById("totalCounter");
+        const dragonBadge = document.getElementById("dragonBadge");
+        const zigzagBadge = document.getElementById("zigzagBadge");
+
+        /* =============================================================
+           3. COLOR MAPPING (R / G / V)
+           ============================================================= */
+        function numberToColor(num) {
+            const n = Number(num);
+            if ([1, 3, 7, 9].includes(n)) return "G";
+            if ([2, 4, 6, 8].includes(n)) return "R";
+            if ([0, 5].includes(n)) return "V";
+            return "?";
+        }
+
+        /* =============================================================
+           4. DRAGON / ZIGZAG DETECTION
+           ============================================================= */
+        function detectColorDragon(colorArr) {
+            if (!colorArr || colorArr.length < 3) return { detected: false, color: null };
+            const last3 = colorArr.slice(0, 3);
+            if (last3[0] === last3[1] && last3[1] === last3[2]) {
+                return { detected: true, color: last3[0], streak: 3 };
+            }
+            return { detected: false, color: null };
+        }
+
+        function detectColorZigzag(colorArr) {
+            if (!colorArr || colorArr.length < 4) return { detected: false, lastColor: null };
+            const last4 = colorArr.slice(0, 4);
+            if (last4[0] !== last4[1] && last4[1] !== last4[2] && last4[2] !== last4[3]) {
+                if (last4[0] === last4[2] && last4[1] === last4[3]) {
+                    return { detected: true, lastColor: last4[3], pattern: last4.join('') };
+                }
+            }
+            return { detected: false, lastColor: null };
+        }
+
+        function oppositeColor(c) {
+            const map = { R: "G", G: "R", V: "R" };
+            return map[c] || "R";
+        }
+
+        /* =============================================================
+           5. PERIOD & TIMER
+           ============================================================= */
+        function getWinGo1MPeriod() {
+            // The issue counter is based on UTC minutes; countdown is computed from the
+            // actual epoch minute boundary, so slow API requests cannot freeze the timer.
+            const now = new Date();
+            const year = now.getUTCFullYear();
+            const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(now.getUTCDate()).padStart(2, '0');
+            const minuteOfDay = now.getUTCHours() * 60 + now.getUTCMinutes();
+            const periodInDay = String(minuteOfDay + 1).padStart(4, '0');
+            const fullPeriod = `${year}${month}${day}10001${periodInDay}`;
+            const msIntoMinute = now.getTime() % 60000;
+            const secondsLeft = Math.max(1, Math.ceil((60000 - msIntoMinute) / 1000));
+            return { fullPeriod, shortPeriod: periodInDay, secondsLeft };
+        }
+
+        function updateClock() {
+            const clock = getWinGo1MPeriod();
+            fullPeriodNumEl.textContent = clock.fullPeriod;
+            timerSecondsEl.textContent = String(clock.secondsLeft).padStart(2, '0');
+            timerSecondsEl.setAttribute('aria-label', `${clock.secondsLeft} seconds remaining in current minute`);
+        }
+
+        function getNextWinGoIssue(issueNumber) {
+            const id = String(issueNumber || '');
+            const match = id.match(/^(\d{8})10001(\d{4})$/);
+            if (!match) {
+                try { return String(BigInt(id) + 1n); } catch (_) { return id; }
+            }
+            const issueIndex = Number(match[2]);
+            if (issueIndex >= 1440) {
+                const y = Number(match[1].slice(0, 4));
+                const m = Number(match[1].slice(4, 6));
+                const d = Number(match[1].slice(6, 8));
+                const nextDate = new Date(Date.UTC(y, m - 1, d + 1));
+                const nextDay = `${nextDate.getUTCFullYear()}${String(nextDate.getUTCMonth() + 1).padStart(2, '0')}${String(nextDate.getUTCDate()).padStart(2, '0')}`;
+                return `${nextDay}100010001`;
+            }
+            return `${match[1]}10001${String(issueIndex + 1).padStart(4, '0')}`;
+        }
+
+        function formatShortPeriod(periodStr) {
+            if (!periodStr) return "0000";
+            const s = String(periodStr);
+            return s.length > 4 ? s.slice(-4) : s.padStart(4, '0');
+        }
+
+
+        /* =============================================================
+           6. RENDER HISTORY
+           ============================================================= */
+        function renderHistoryTable() {
+            historyTableBody.innerHTML = "";
+            historyRecords.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.className = "history-row";
+                const predClass = item.pred === "BIG" ? "pred-big" : "pred-small";
+                let resBadgeHtml = "";
+                if (item.res === "WAIT") {
+                    resBadgeHtml = `<span class="res-badge res-wait">⌛ WAIT</span>`;
+                } else if (item.res === "JACKPOT") {
+                    resBadgeHtml = `<span class="res-badge res-jackpot">💰 JACKPOT</span>`;
+                } else if (item.res === "LOSS") {
+                    resBadgeHtml = `<span class="res-badge res-loss">💔 LOSS</span>`;
+                } else if (item.res === "WIN") {
+                    resBadgeHtml = `<span class="res-badge res-win">🏆 WIN</span>`;
+                }
+                tr.innerHTML = `
+              <td class="col-prd">${item.prd}</td>
+              <td class="col-lvl">${item.lvl}</td>
+              <td class="col-pred ${predClass}">${item.pred}</td>
+              <td class="col-num">${item.num}</td>
+              <td>${resBadgeHtml}</td>
+            `;
+                historyTableBody.appendChild(tr);
+            });
+            winCounterEl.innerText = winCount;
+            lossCounterEl.innerText = lossCount;
+            const resolved = winCount + lossCount;
+            jackCounterEl.innerText = resolved ? `${Math.round((winCount / resolved) * 100)}%` : "—";
+            totalCounterEl.innerText = totalCount;
+        }
+
+        /* =============================================================
+           7. UPDATE PATTERN BADGES
+           ============================================================= */
+        function updatePatternBadges(colorArr) {
+            dragonBadge.style.display = "none";
+            zigzagBadge.style.display = "none";
+            if (!colorArr || colorArr.length < 3) return;
+            const dragon = detectColorDragon(colorArr);
+            if (dragon.detected) {
+                dragonBadge.style.display = "inline-flex";
+                dragonBadge.innerHTML =
+                    `<span class="emoji">🐉</span> DRAGON ${dragon.color}${dragon.color}${dragon.color}`;
+            }
+            const zigzag = detectColorZigzag(colorArr);
+            if (zigzag.detected) {
+                zigzagBadge.style.display = "inline-flex";
+                zigzagBadge.innerHTML =
+                    `<span class="emoji">⚡</span> ZIGZAG ${zigzag.pattern}`;
+            }
+        }
+
+        /* =============================================================
+           8. FETCH SERVER PACKET
+           ============================================================= */
+        async function fetchServerPacket() {
+            const ts = Date.now();
+            const directUrl = `https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json?ts=${ts}&pageSize=100`;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 4500);
+            try {
+                const res = await fetch(directUrl, { signal: controller.signal, cache: "no-store" });
+                if (!res.ok) return null;
+                const json = await res.json();
+                if (json && json.data && Array.isArray(json.data.list)) return json.data.list;
+            } catch (e) {
+                // Offline/CORS errors must not be replaced with fabricated draw results.
+            } finally {
+                clearTimeout(timeoutId);
+            }
+            return null;
+        }
+
+        /* =============================================================
+           9. PATTERN ADVISER — WORKING ENGINE (CONFIRM SHOT)
+           ============================================================= */
+
+        // Raw server results are expected newest-first. Only real 0–9 outcomes are used.
+        let latestServerResults = [];
+
+        // Accumulate verified feed rows across visits so evaluation is not limited to
+        // the API's most recent 100 rows. This stays in this browser only.
+        const RESULT_CACHE_KEY = "riskyRedStone.verifiedWinGoHistory.v1";
+        const MAX_CACHED_RESULTS = 2000;
+
+        function loadCachedServerHistory() {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(RESULT_CACHE_KEY) || "[]");
+                if (!Array.isArray(parsed)) return [];
+                return parsed
+                    .filter(row => row && row.issueNumber != null && /^\d{12,}$/.test(String(row.issueNumber)) && Number.isInteger(Number(row.number)) && Number(row.number) >= 0 && Number(row.number) <= 9)
+                    .map(row => ({ issueNumber: String(row.issueNumber), number: Number(row.number) }))
+                    .sort((a, b) => String(b.issueNumber).localeCompare(String(a.issueNumber)))
+                    .slice(0, MAX_CACHED_RESULTS);
+            } catch (_) {
+                return [];
+            }
+        }
+
+        function mergeAndStoreServerHistory(incomingRows) {
+            const validIncoming = (Array.isArray(incomingRows) ? incomingRows : []).filter(row => {
+                const issue = row && row.issueNumber != null ? String(row.issueNumber) : "";
+                const num = Number(row && row.number);
+                return issue.length > 0 && Number.isInteger(num) && num >= 0 && num <= 9;
+            }).map(row => ({ issueNumber: String(row.issueNumber), number: Number(row.number) }));
+
+            let cached = [];
+            try {
+                const parsed = JSON.parse(localStorage.getItem(RESULT_CACHE_KEY) || "[]");
+                if (Array.isArray(parsed)) cached = parsed;
+            } catch (_) { cached = []; }
+
+            const byIssue = new Map();
+            for (const row of cached.concat(validIncoming)) {
+                const issue = row && row.issueNumber != null ? String(row.issueNumber) : "";
+                const num = Number(row && row.number);
+                if (!issue || !Number.isInteger(num) || num < 0 || num > 9) continue;
+                byIssue.set(issue, { issueNumber: issue, number: num });
+            }
+
+            // Issue IDs use a fixed-width date/period representation, so descending
+            // lexical order is chronological without unsafe conversion to Number.
+            const merged = Array.from(byIssue.values())
+                .sort((a, b) => String(b.issueNumber).localeCompare(String(a.issueNumber)))
+                .slice(0, MAX_CACHED_RESULTS);
+            try { localStorage.setItem(RESULT_CACHE_KEY, JSON.stringify(merged)); } catch (_) {}
+            return merged.length ? merged : validIncoming;
+        }
+
+        function getRawResultSequence(serverResults) {
+            if (!Array.isArray(serverResults)) return [];
+            const seq = [];
+            for (const row of serverResults) {
+                const n = Number(row && row.number);
+                if (Number.isInteger(n) && n >= 0 && n <= 9) {
+                    seq.push(n >= 5 ? "BIG" : "SMALL");
+                }
+            }
+            return seq;
+        }
+
+        // Keep a legacy adapter for external debugging calls, but never use synthetic rows
+        // as the source for the real live model.
+        function getResultSequence(records) {
+            if (!Array.isArray(records)) return [];
+            if (records.some(r => r && r.number !== undefined)) return getRawResultSequence(records);
+            const seq = [];
+            for (const r of records) {
+                if (!r || r.res === "WAIT" || (r.num && String(r.num).includes(','))) continue;
+                const num = Number.parseInt(r.num, 10);
+                if (Number.isInteger(num) && num >= 0 && num <= 9) seq.push(num >= 5 ? "BIG" : "SMALL");
+            }
+            return seq;
+        }
+
+        function meanSmoothed(successes, count, priorStrength) {
+            if (!count) return 0.5;
+            return (successes + priorStrength * 0.5) / (count + priorStrength);
+        }
+
+        // Statistical estimate of P(next result is BIG), using only past observations.
+        // Recent frequency, a longer baseline, and observed conditional transitions are
+        // smoothed toward 50% so small samples do not create fake certainty.
+        function estimateBigProbability(seq) {
+            if (!Array.isArray(seq) || seq.length === 0) {
+                return { pBig: 0.5, sampleSize: 0, transitionSamples: 0, components: {} };
+            }
+            const longSeq = seq.slice(0, Math.min(200, seq.length));
+            const recentSeq = seq.slice(0, Math.min(20, seq.length));
+            const shortSeq = seq.slice(0, Math.min(6, seq.length));
+            const longBig = longSeq.filter(x => x === "BIG").length;
+            const recentBig = recentSeq.filter(x => x === "BIG").length;
+            const shortBig = shortSeq.filter(x => x === "BIG").length;
+            const pLong = meanSmoothed(longBig, longSeq.length, 20);
+            const pRecent = meanSmoothed(recentBig, recentSeq.length, 8);
+            const pShort = meanSmoothed(shortBig, shortSeq.length, 6);
+
+            let transitionSamples = 0;
+            let transitionBig = 0;
+            const latestSide = seq[0];
+            for (let i = 0; i < seq.length - 1; i++) {
+                // newest-first: seq[i + 1] is the earlier side and seq[i] the side after it.
+                if (seq[i + 1] === latestSide) {
+                    transitionSamples++;
+                    if (seq[i] === "BIG") transitionBig++;
+                }
+            }
+            const pTransition = meanSmoothed(transitionBig, transitionSamples, 10);
+            // Do not let a few matching transitions dominate: transition weight rises
+            // gradually and is capped. Overlapping windows are deliberately smoothed.
+            const wTransition = 0.20 * Math.min(1, transitionSamples / 10);
+            const wShort = 0.15;
+            const wRecent = 0.35;
+            const wLong = 1 - wRecent - wShort - wTransition;
+            const blended = pLong * wLong + pRecent * wRecent + pShort * wShort + pTransition * wTransition;
+
+            // Shrink small and noisy samples toward the 50/50 baseline. This limits
+            // overconfidence when the process may be random; it cannot guarantee wins.
+            const reliability = longSeq.length / (longSeq.length + 80);
+            const pBig = Math.max(0.01, Math.min(0.99, 0.5 + (blended - 0.5) * reliability));
+            return {
+                pBig,
+                sampleSize: seq.length,
+                transitionSamples,
+                components: { pLong, pRecent, pShort, pTransition, reliability }
+            };
+        }
+
+        function predictSideFromSequence(seq) {
+            const estimate = estimateBigProbability(seq);
+            return { ...estimate, signal: estimate.pBig >= 0.5 ? "BIG" : "SMALL" };
+        }
+
+        // Recreates the original dashboard's 0-100 pattern-strength score and signal vote.
+        // IMPORTANT: this is a heuristic score, not a measured chance of winning.
+        // The separate BIG/SMALL chips remain empirical, smoothed frequency estimates.
+        function calculatePatternAdvice(seq) {
+            if (!Array.isArray(seq) || seq.length === 0) {
+                return { signal: "WAIT", strengthPct: 0, reasons: ["Waiting for verified history"] };
+            }
+
+            let weightedScore = 0;
+            let maxScore = 0;
+            let bigVote = 0;
+            let smallVote = 0;
+            const reasons = [];
+
+            // Recent trend: last five finished outcomes (newest first).
+            const recent = seq.slice(0, Math.min(5, seq.length));
+            const recentBig = recent.filter(x => x === "BIG").length;
+            const recentSmall = recent.length - recentBig;
+            const recentSignal = recentBig >= recentSmall ? "BIG" : "SMALL";
+            const recentPct = Math.max(recentBig, recentSmall) / recent.length;
+            const recentScore = recentPct * 35;
+            weightedScore += recentScore;
+            maxScore += 35;
+            if (recentSignal === "BIG") bigVote += recentScore * 1.3;
+            else smallVote += recentScore * 1.3;
+            reasons.push(`Recent ${recent.length}: ${Math.round(recentPct * 100)}% ${recentSignal}`);
+
+            // Current streak.
+            let streakLength = 1;
+            while (streakLength < seq.length && seq[streakLength] === seq[0]) streakLength++;
+            if (streakLength >= 2) {
+                const streakScore = Math.min(streakLength * 15, 30);
+                weightedScore += streakScore;
+                maxScore += 30;
+                if (seq[0] === "BIG") bigVote += streakScore * 0.9;
+                else smallVote += streakScore * 0.9;
+                reasons.push(`${seq[0]} streak ${streakLength}`);
+            }
+
+            // Long-run frequency, evaluated only when there is enough history.
+            if (seq.length >= 4) {
+                const bigCount = seq.filter(x => x === "BIG").length;
+                const smallCount = seq.length - bigCount;
+                const histSignal = bigCount >= smallCount ? "BIG" : "SMALL";
+                const histPct = Math.max(bigCount, smallCount) / seq.length;
+                const histScore = histPct * 20;
+                weightedScore += histScore;
+                maxScore += 20;
+                if (histSignal === "BIG") bigVote += histScore * 0.7;
+                else smallVote += histScore * 0.7;
+                reasons.push(`History favours ${histSignal} (${Math.round(histPct * 100)}%)`);
+            }
+
+            // Detect the alternating pattern the original app recognized.
+            if (seq.length >= 4) {
+                const a = seq.slice(0, 4);
+                if (a[0] !== a[1] && a[1] !== a[2] && a[2] !== a[3] && a[0] === a[2] && a[1] === a[3]) {
+                    const altSignal = a[3] === "BIG" ? "SMALL" : "BIG";
+                    weightedScore += 18;
+                    maxScore += 20;
+                    if (altSignal === "BIG") bigVote += 18 * 0.6;
+                    else smallVote += 18 * 0.6;
+                    reasons.push(`Alternation pattern → ${altSignal}`);
+                }
+            }
+
+            let sampleBonus = 0;
+            if (seq.length >= 25) sampleBonus = 10;
+            else if (seq.length >= 15) sampleBonus = 7;
+            else if (seq.length >= 10) sampleBonus = 5;
+            else if (seq.length >= 6) sampleBonus = 3;
+            if (sampleBonus > 0) {
+                weightedScore += sampleBonus;
+                maxScore += 10;
+                reasons.push(`Sample: ${seq.length} results`);
+            }
+
+            const strengthPct = maxScore ? Math.max(0, Math.min(100, Math.round(weightedScore / maxScore * 1000) / 10)) : 0;
+            // Use the same weighted factor vote as the original adviser; no random forced side.
+            const signal = bigVote === smallVote ? recentSignal : (bigVote > smallVote ? "BIG" : "SMALL");
+            return { signal, strengthPct, reasons, streakLength };
+        }
+
+        // Strict walk-forward test: every historical prediction only sees outcomes that
+        // occurred before its target draw. No current/future result leaks into its input.
+        function backtestWalkForward(seq, minTraining = 30) {
+            let correct = 0;
+            let baselineCorrect = 0;
+            let forecasts = 0;
+            // Evaluate up to the 500 newest historical targets. For each target, only
+            // older outcomes are visible to the model and to the simple baseline.
+            const maxTargetIndex = Math.min(499, seq.length - minTraining - 1);
+            for (let targetIndex = 0; targetIndex <= maxTargetIndex; targetIndex++) {
+                const pastOnly = seq.slice(targetIndex + 1);
+                if (pastOnly.length < minTraining) continue;
+                const estimate = calculatePatternAdvice(pastOnly);
+                const trainWindow = pastOnly.slice(0, Math.min(200, pastOnly.length));
+                const bigCount = trainWindow.filter(x => x === "BIG").length;
+                const baselineSignal = bigCount >= (trainWindow.length / 2) ? "BIG" : "SMALL";
+                const actual = seq[targetIndex];
+                if (!actual || (actual !== "BIG" && actual !== "SMALL")) continue;
+                forecasts++;
+                if (estimate.signal === actual) correct++;
+                if (baselineSignal === actual) baselineCorrect++;
+            }
+            // Smoothed rates prevent a very small sample from looking decisive.
+            const hitRate = forecasts ? ((correct + 5) / (forecasts + 10)) * 100 : 50;
+            const baselineHitRate = forecasts ? ((baselineCorrect + 5) / (forecasts + 10)) * 100 : 50;
+            const rawHitRate = forecasts ? correct / forecasts * 100 : null;
+            const baselineRawHitRate = forecasts ? baselineCorrect / forecasts * 100 : null;
+            const edgePoints = rawHitRate == null || baselineRawHitRate == null ? null : rawHitRate - baselineRawHitRate;
+            return { correct, baselineCorrect, forecasts, hitRate, baselineHitRate, rawHitRate, baselineRawHitRate, edgePoints };
+        }
+
+        // The displayed rate is a smoothed historical walk-forward hit rate, not a promise
+        // that the next result has that probability of winning.
+        function calculateMasterConfidence(source = latestServerResults) {
+            const seq = getResultSequence(source);
+            if (seq.length === 0) {
+                return {
+                    confidence: 50, predictionPct: 50, signal: "WAIT", reasons: ["⏳ Waiting for verified live results"],
+                    isActive: false, statusText: "FEED REQUIRED", statusClass: "wait", signalClass: "wait",
+                    sampleSize: 0, backtest: { correct: 0, forecasts: 0, hitRate: 50, rawHitRate: null }
+                };
+            }
+
+            const model = predictSideFromSequence(seq);
+            const patternAdvice = calculatePatternAdvice(seq);
+            const backtest = backtestWalkForward(seq);
+            const signalPct = patternAdvice.strengthPct;
+            const reasons = [
+                `🗃️ Stored verified sample: ${seq.length} actual results`,
+                `⚖️ Historical estimate: BIG ${Math.round(model.pBig * 1000) / 10}% / SMALL ${Math.round((1 - model.pBig) * 1000) / 10}%`,
+                `📶 Pattern strength: ${signalPct.toFixed(1)}% (heuristic score, not win probability)`
+            ];
+            if (backtest.forecasts > 0) {
+                reasons.push(`🧪 Walk-forward: ${backtest.correct}/${backtest.forecasts} correct`);
+                reasons.push(`📏 Majority baseline: ${backtest.baselineRawHitRate.toFixed(1)}% · model edge ${backtest.edgePoints >= 0 ? "+" : ""}${backtest.edgePoints.toFixed(1)} pp`);
+            } else {
+                reasons.push("⏳ Need more history for a meaningful past-only test");
+            }
+            if (Math.abs(model.pBig - 0.5) < 0.025) {
+                reasons.push("⚠️ Historical BIG/SMALL estimate is close to 50/50");
+            }
+            reasons.push("ℹ️ Pattern score is not a calibrated chance of winning");
+
+            let statusText = "LOW EDGE";
+            if (backtest.forecasts < 50 || seq.length < 80) statusText = "BUILDING DATA";
+            else if (backtest.edgePoints != null && backtest.edgePoints >= 2 && backtest.rawHitRate >= 53 && backtest.forecasts >= 100) statusText = "HISTORICAL LEAN";
+            else if (backtest.edgePoints != null && backtest.edgePoints <= -2 && backtest.forecasts >= 100) statusText = "BELOW BASELINE";
+
+            return {
+                confidence: backtest.hitRate,
+                predictionPct: signalPct,
+                signalStrengthPct: signalPct,
+                signal: patternAdvice.signal,
+                reasons,
+                isActive: true,
+                statusText,
+                statusClass: statusText === "HISTORICAL LEAN" ? "confirm" : (statusText === "BUILDING DATA" ? "wait" : "no-bet"),
+                signalClass: patternAdvice.signal === "BIG" ? "big" : "small",
+                sampleSize: seq.length,
+                model,
+                backtest
+            };
+        }
+
+        /* =============================================================
+           10. UPDATE MASTER ADVISER UI (with 5-bet counter)
+           ============================================================= */
+        function updateMasterAdviser(records, currentPeriod, source = latestServerResults) {
+            const advice = calculateMasterConfidence(source);
+            const statusBadge = document.getElementById("masterStatusBadge");
+            const signalText = document.getElementById("masterSignalText");
+            const meterFill = document.getElementById("masterMeterFill");
+            const confPct = document.getElementById("masterConfidencePct");
+            const reasonsRow = document.getElementById("masterReasonsRow");
+            const noSignalMsg = document.getElementById("masterNoSignalMsg");
+            const testsCounter = document.getElementById("betsSinceSignal");
+
+            statusBadge.textContent = advice.statusText;
+            statusBadge.className = `master-status-badge ${advice.statusClass}`;
+            signalText.textContent = advice.isActive ? advice.signal : "WAIT";
+            signalText.className = `master-signal-text ${advice.signalClass}`;
+
+            // Refresh the visible BIG and SMALL percentages on EVERY evaluation,
+            // not only when a new period first appears. Use saved verified history if
+            // the API is temporarily offline, and say so plainly below.
+            const bigPctEl = document.getElementById("bigProbability");
+            const smallPctEl = document.getElementById("smallProbability");
+            const bigChip = document.querySelector(".prob-chip.prob-big");
+            const smallChip = document.querySelector(".prob-chip.prob-small");
+            const feedIsOnline = document.getElementById("feedStatus")?.classList.contains("online") === true;
+            const homeSignalEl = document.getElementById("homePredSignal");
+            if (advice.isActive && advice.model) {
+                const pBigPct = advice.model.pBig * 100;
+                const pSmallPct = 100 - pBigPct;
+                if (bigPctEl) bigPctEl.textContent = `${pBigPct.toFixed(1)}%`;
+                if (smallPctEl) smallPctEl.textContent = `${pSmallPct.toFixed(1)}%`;
+                if (bigChip) bigChip.classList.toggle("leading", advice.signal === "BIG");
+                if (smallChip) smallChip.classList.toggle("leading", advice.signal === "SMALL");
+                if (homeSignalEl) {
+                    homeSignalEl.textContent = advice.signal;
+                    homeSignalEl.className = advice.signal === "BIG" ? "pred-huge-signal" : "pred-huge-signal signal-small";
+                }
+            } else {
+                if (bigPctEl) bigPctEl.textContent = "--%";
+                if (smallPctEl) smallPctEl.textContent = "--%";
+                if (bigChip) bigChip.classList.remove("leading");
+                if (smallChip) smallChip.classList.remove("leading");
+                if (homeSignalEl) {
+                    homeSignalEl.textContent = feedIsOnline ? "WAITING" : "FEED OFFLINE";
+                    homeSignalEl.className = "pred-huge-signal signal-small";
+                }
+            }
+
+            // This bar restores the original-style pattern strength score. It can move
+            // into the 70-90 range when pattern factors score highly, but is NOT win odds.
+            const signalLean = advice.isActive && Number.isFinite(Number(advice.signalStrengthPct))
+                ? Math.max(0, Math.min(100, Number(advice.signalStrengthPct))) : 0;
+            meterFill.style.width = `${signalLean}%`;
+            const meterBg = document.getElementById("masterMeterBg");
+            if (meterBg) meterBg.setAttribute("aria-valuenow", signalLean.toFixed(1));
+            confPct.textContent = advice.isActive ? `${signalLean.toFixed(1)}%` : "--%";
+
+            const confidenceNote = document.getElementById("masterConfidenceNote");
+            if (confidenceNote) {
+                const sampleText = advice.isActive ? ` Based on ${advice.sampleSize} stored results.` : "";
+                confidenceNote.textContent = advice.isActive
+                    ? `${feedIsOnline ? "Live-feed" : "Saved-history"} pattern-strength score for ${advice.signal}: ${signalLean.toFixed(1)}%. This score reflects pattern factors, NOT the chance of winning the next draw. BIG/SMALL chips above are separate historical estimates.${sampleText}${feedIsOnline ? "" : " Live feed is offline, so this is not a live update."}`
+                    : "No verified results are available yet. A score appears only after real result history is received.";
+            }
+            const predictionNote = document.getElementById("predictionNote");
+            if (predictionNote) {
+                predictionNote.textContent = advice.isActive
+                    ? `${feedIsOnline ? "Updating with the live feed" : "Using saved results; live feed offline"} · BIG/SMALL percentages are smoothed historical estimates, not guaranteed win chances.`
+                    : "Waiting for verified results · no random percentage is fabricated.";
+            }
+            const backtestSummary = document.getElementById("backtestSummary");
+            if (backtestSummary) {
+                const bt = advice.backtest;
+                if (bt && bt.forecasts > 0 && bt.rawHitRate != null) {
+                    const sampleWarning = bt.forecasts < 100 ? " · small sample" : "";
+                    backtestSummary.textContent = `HISTORICAL HIT RATE: ${bt.rawHitRate.toFixed(1)}% (${bt.correct}/${bt.forecasts} past-only tests)${sampleWarning}`;
+                } else {
+                    backtestSummary.textContent = "HISTORICAL HIT RATE: collecting enough genuine results to test.";
+                }
+            }
+            testsCounter.textContent = advice.backtest ? advice.backtest.forecasts : 0;
+
+            reasonsRow.innerHTML = "";
+            for (const reason of (advice.reasons || ["⏳ AWAITING DATA"])) {
+                const tag = document.createElement("span");
+                const warn = reason.includes("⏳") || reason.includes("⚠️");
+                const highlight = reason.includes("📚") || reason.includes("🧪") || reason.includes("⚖️");
+                tag.className = `master-reason-tag ${warn ? "warn" : highlight ? "highlight" : "purple"}`;
+                tag.textContent = reason;
+                reasonsRow.appendChild(tag);
+            }
+            noSignalMsg.style.display = advice.isActive ? "none" : "block";
+        }
+
+        /* =============================================================
+           11. MAIN EVALUATION CYCLE
+           ============================================================= */
+        let evaluationInFlight = false;
+        async function evaluateWinGoCycle() {
+            if (evaluationInFlight) return;
+            evaluationInFlight = true;
+            try {
+            const { fullPeriod, shortPeriod, secondsLeft } = getWinGo1MPeriod();
+            updateClock();
+
+            const serverList = await fetchServerPacket();
+
+            if (serverList && serverList.length > 0) {
+                const validServerRows = serverList.filter(row => row && Number.isInteger(Number(row.number)) && Number(row.number) >= 0 && Number(row.number) <= 9);
+                latestServerResults = mergeAndStoreServerHistory(validServerRows);
+                const feedStatusEl = document.getElementById("feedStatus");
+                if (feedStatusEl) {
+                    feedStatusEl.textContent = "LIVE FEED CONNECTED";
+                    feedStatusEl.className = "feed-status online";
+                }
+                const latest = serverList[0];
+                const drawnFullPeriod = String(latest.issueNumber);
+                const drawnShort = formatShortPeriod(drawnFullPeriod);
+                const drawnNum = parseInt(latest.number, 10);
+
+                if (lastResolvedPeriod !== drawnFullPeriod && activePredictions[drawnFullPeriod]) {
+                    const predObj = activePredictions[drawnFullPeriod];
+                    // Score the advertised BIG/SMALL call only. Random exact-number picks
+                    // are not treated as a separate jackpot or mixed into hit rate.
+                    const isCorrectSide = predObj.predictedSide === (drawnNum >= 5 ? "BIG" : "SMALL");
+                    const outcome = isCorrectSide ? "WIN" : "LOSS";
+
+                    if (outcome === "WIN") {
+                        winCount++;
+                        currentStepLevel = 1;
+                    } else {
+                        lossCount++;
+                        currentStepLevel = currentStepLevel >= 4 ? 1 : currentStepLevel + 1;
+                    }
+                    totalCount++;
+                    lastResolvedPeriod = drawnFullPeriod;
+
+                    const existingWaitIndex = historyRecords.findIndex(r => r.prd === drawnShort && r.res === "WAIT");
+                    if (existingWaitIndex !== -1) {
+                        historyRecords[existingWaitIndex].res = outcome;
+                        historyRecords[existingWaitIndex].num = String(drawnNum);
+                    } else {
+                        historyRecords.unshift({
+                            prd: drawnShort,
+                            lvl: `L${predObj.level}`,
+                            pred: predObj.predictedSide,
+                            num: String(drawnNum),
+                            res: outcome
+                        });
+                    }
+                    delete activePredictions[drawnFullPeriod];
+                    renderHistoryTable();
+                    updateMasterAdviser(historyRecords, shortPeriod, latestServerResults);
+                }
+
+                const colorArr = serverList.slice(0, 12).map(x => {
+                    const n = parseInt(x.number, 10);
+                    return numberToColor(n);
+                }).filter(c => c !== "?");
+                updatePatternBadges(colorArr);
+
+                const nextFullPeriod = getNextWinGoIssue(drawnFullPeriod);
+                const nextShortPeriod = formatShortPeriod(nextFullPeriod);
+
+                if (!activePredictions[nextFullPeriod]) {
+                    const outcomeSequence = getRawResultSequence(latestServerResults);
+                    const model = predictSideFromSequence(outcomeSequence);
+                    const predictedSide = model.signal;
+
+                    activePredictions[nextFullPeriod] = {
+                        predictedSide,
+                        modelProbability: model.pBig,
+                        level: currentStepLevel
+                    };
+
+                    homePredSignal.innerText = predictedSide;
+                    homePredSignal.className = predictedSide === "BIG" ? "pred-huge-signal" :
+                        "pred-huge-signal signal-small";
+
+                    if (!historyRecords.some(r => r.prd === nextShortPeriod)) {
+                        historyRecords.unshift({
+                            prd: nextShortPeriod,
+                            lvl: `L${currentStepLevel}`,
+                            pred: predictedSide,
+                            num: "—",
+                            res: "WAIT"
+                        });
+                        if (historyRecords.length > 25) historyRecords.pop();
+                        renderHistoryTable();
+                        updateMasterAdviser(historyRecords, shortPeriod, latestServerResults);
+                    }
+                }
+            } else {
+                handleLocalSimulationCycle(fullPeriod, shortPeriod, secondsLeft);
+            }
+
+            updateMasterAdviser(historyRecords, shortPeriod, latestServerResults);
+            } finally {
+                evaluationInFlight = false;
+            }
+        }
+
+        /* =============================================================
+           12. LOCAL SIMULATION
+           ============================================================= */
+        function handleLocalSimulationCycle(fullPeriod, shortPeriod, secondsLeft) {
+            // Do not invent draw results or keep a stale signal active while live feed is down.
+            // Keep previously verified history for an explicitly labelled saved-history estimate.
+            // Never fabricate a new result while the live feed is unavailable.
+            simulatedLastPeriod = shortPeriod;
+            homePredSignal.innerText = "FEED OFFLINE";
+            homePredSignal.className = "pred-huge-signal signal-small";
+            const status = document.getElementById("feedStatus");
+            if (status) {
+                status.textContent = "LIVE FEED OFFLINE";
+                status.className = "feed-status offline";
+            }
+            updatePatternBadges([]);
+            updateMasterAdviser(historyRecords, shortPeriod, latestServerResults);
+        }
+
+        /* =============================================================
+           13. COPY BUTTON
+           ============================================================= */
+        document.getElementById("copyPeriodBtn").addEventListener("click", () => {
+            const text = fullPeriodNumEl.innerText;
+            if (navigator.clipboard && text !== "----------------") {
+                navigator.clipboard.writeText(text);
+                document.getElementById("copyPeriodBtn").innerText = "✓";
+                setTimeout(() => { document.getElementById("copyPeriodBtn").innerText = "📋"; }, 1200);
+            }
+        });
+
+        /* =============================================================
+           14. BOOT ENGINE — no login overlay
+           ============================================================= */
+        let engineStarted = false;
+
+        function startEngine() {
+            if (engineStarted) return;
+            engineStarted = true;
+            latestServerResults = loadCachedServerHistory();
+            const { shortPeriod } = getWinGo1MPeriod();
+            updateMasterAdviser(historyRecords, shortPeriod, latestServerResults);
+            updateClock();
+            setInterval(updateClock, 250);
+            evaluateWinGoCycle();
+            setInterval(evaluateWinGoCycle, 3000);
+        }
+
+        startEngine();
+
+        // Expose for debugging
+        window.WingoEngine = {
+            evaluate: evaluateWinGoCycle,
+            detectDragon: detectColorDragon,
+            detectZigzag: detectColorZigzag,
+            numberToColor: numberToColor,
+            oppositeColor: oppositeColor,
+            calculateMasterConfidence: calculateMasterConfidence,
+            estimateBigProbability: estimateBigProbability,
+            predictSideFromSequence: predictSideFromSequence,
+            backtestWalkForward: backtestWalkForward,
+            updateMasterAdviser: updateMasterAdviser,
+            getResultSequence: getResultSequence,
+            getRawResultSequence: getRawResultSequence,
+            mergeAndStoreServerHistory: mergeAndStoreServerHistory,
+            historyRecords: historyRecords
+        };
+
+        console.log("🐉 DRAGON + ⚡ ZIGZAG badges active; they do not force a signal.");
+        console.log("📊 Statistical engine active; actual outcomes persist locally and are tested against a majority baseline with past-only walk-forward checks.");
+    </script>
+
+</body>
+</html>
