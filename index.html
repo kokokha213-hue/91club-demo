@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b12">
+<title>BILAL SAREBA X — Wingo Signal Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#080b12;--panel:#101620;--panel2:#0c111a;--panel3:#141c29;--line:#263244;--text:#eff4fc;--muted:#8290a5;--dim:#536177;--cyan:#69f0dc;--blue:#6fa7ff;--violet:#ae8bff;--green:#6ce6ad;--red:#ff7589;--amber:#f6c76b;--radius:19px;--shadow:0 18px 48px rgba(0,0,0,.24)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 15% -5%,rgba(36,105,122,.23),transparent 34%),radial-gradient(ellipse at 105% 13%,rgba(105,65,155,.18),transparent 31%),var(--bg);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}button:disabled{opacity:.45;cursor:not-allowed}a{color:inherit;text-decoration:none}.app{max-width:1440px;margin:0 auto;padding:0 28px 38px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:82px;border-bottom:1px solid rgba(148,170,200,.13)}.brand{display:flex;align-items:center;gap:13px;min-width:0}.brand-mark{width:43px;height:43px;border-radius:13px;background:linear-gradient(135deg,#153c48,#152238 55%,#31214d);border:1px solid #5ee8d54d;display:grid;place-items:center;position:relative;box-shadow:inset 0 0 22px #63f0d913,0 0 22px #3ad2c10d;flex:none}.brand-mark b{font-size:19px;letter-spacing:-2px;font-weight:950;color:var(--cyan)}.brand-mark span{position:absolute;right:5px;bottom:2px;font-size:9px;letter-spacing:0;color:#e7ecff}.brand-title{font-size:15px;font-weight:900;letter-spacing:1.8px;white-space:nowrap}.brand-sub{font:10px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);letter-spacing:1.2px;margin-top:2px}.top-right{display:flex;align-items:center;gap:14px}.local-tag,.source-tag{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:100px;padding:8px 12px;background:#0d131d;color:#9eacc0;font:10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.8px}.status-dot{display:inline-block;width:7px;height:7px;border-radius:99px;background:var(--amber);box-shadow:0 0 10px currentColor}.status-dot.good{background:var(--green);color:var(--green)}.status-dot.bad{background:var(--red);color:var(--red)}.status-dot.idle{background:var(--amber);color:var(--amber)}.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:31px 0 22px}.eyebrow{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--cyan);letter-spacing:1.8px;text-transform:uppercase;margin:0 0 10px}.intro h1{font-size:clamp(24px,3vw,35px);line-height:1.1;letter-spacing:-1.2px;margin:0;font-weight:850}.intro h1 span{color:#94a5bd;font-weight:520}.intro p.desc{color:var(--muted);margin:10px 0 0;max-width:680px;font-size:13px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px;border:1px solid var(--line);border-radius:16px;background:rgba(13,18,28,.83);margin-bottom:18px}.toolbar-left,.toolbar-right{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.control-label{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11px;padding-left:4px}.select{appearance:none;min-width:134px;border:1px solid #344158;background:#141c29;color:var(--text);border-radius:10px;padding:10px 34px 10px 12px;outline:none;background-image:linear-gradient(45deg,transparent 50%,#8f9bb0 50%),linear-gradient(135deg,#8f9bb0 50%,transparent 50%);background-position:calc(100% - 15px) 17px,calc(100% - 10px) 17px;background-size:5px 5px,5px 5px;background-repeat:no-repeat}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #344056;background:#172130;color:#dfe8f8;border-radius:10px;padding:10px 13px;font-size:11px;font-weight:800;letter-spacing:.35px;transition:transform .16s ease,border-color .16s ease,background .16s ease;white-space:nowrap}.btn:hover{transform:translateY(-1px);border-color:#60748f}.btn.primary{background:linear-gradient(135deg,#77f1dd,#55cbbc);color:#071214;border-color:#7bfae4;box-shadow:0 7px 22px #54e5d010}.btn.ghost{background:transparent}.btn.warn{color:#ffd1d8;border-color:#713342;background:#25141d}.btn.small{padding:8px 10px;font-size:10px}.btn svg{width:14px;height:14px;flex:none}.metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 18px}.metric{padding:16px 17px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(150deg,rgba(21,30,45,.92),rgba(12,17,26,.92));min-width:0}.metric-head{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}.metric-icon{display:grid;place-items:center;width:28px;height:28px;border:1px solid #344258;border-radius:9px;color:var(--cyan);background:#121f2a;font-size:13px}.metric-val{font-size:27px;font-weight:850;letter-spacing:-.8px;margin-top:8px;line-height:1.15;font-variant-numeric:tabular-nums}.metric-note{font-size:10px;color:var(--dim);margin-top:6px}.layout{display:grid;grid-template-columns:minmax(0,1.13fr) minmax(340px,.87fr);gap:16px;align-items:start}.panel{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(160deg,rgba(17,24,36,.97),rgba(11,16,25,.97));box-shadow:var(--shadow);min-width:0;overflow:hidden}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid #243044}.panel-kicker{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);letter-spacing:1.3px}.panel-title{margin:3px 0 0;font-size:15px;font-weight:800;letter-spacing:-.25px}.panel-body{padding:19px 20px}.signal-panel{position:relative;isolation:isolate}.signal-panel:before{content:"";position:absolute;z-index:-1;width:300px;height:300px;right:-105px;top:-110px;background:radial-gradient(circle,rgba(66,204,194,.13),transparent 69%);pointer-events:none}.signal-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.signal-label{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--cyan);letter-spacing:1.6px}.target-wrap{text-align:right;min-width:0}.target-caption{display:block;font-size:10px;color:var(--muted);margin-bottom:4px}.target-id{display:inline-block;border:1px solid #314158;background:#0b121d;padding:6px 9px;border-radius:8px;color:#e6efff;font:12px ui-monospace,SFMono-Regular,Consolas,monospace;max-width:180px;overflow-wrap:anywhere}.signal-main{display:grid;grid-template-columns:minmax(0,1fr) 142px;gap:18px;align-items:center;padding:21px 0 15px}.signal-word{font-size:clamp(42px,5.5vw,64px);font-weight:950;letter-spacing:-2.5px;line-height:.99;margin:0;color:#65738a}.signal-word.big{color:var(--green);text-shadow:0 0 28px #6ce6ad1c}.signal-word.small{color:var(--blue);text-shadow:0 0 28px #6fa7ff1c}.signal-state{display:inline-flex;align-items:center;gap:7px;border:1px solid #344258;background:#111a28;border-radius:8px;padding:6px 9px;margin:11px 0 0;color:#b3c1d5;font:10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.6px}.signal-state .status-dot{width:6px;height:6px}.signal-explain{color:var(--muted);font-size:11px;max-width:390px;margin:12px 0 0}.score-ring{--score:0;display:grid;place-items:center;width:132px;height:132px;border-radius:100%;background:conic-gradient(var(--cyan) var(--score),#273345 0);position:relative;margin:auto}.score-ring:before{content:"";position:absolute;inset:7px;border-radius:100%;background:#101722;border:1px solid #263346}.score-inner{z-index:1;text-align:center}.score-value{font-size:31px;line-height:1.08;font-weight:900;letter-spacing:-1px;font-variant-numeric:tabular-nums}.score-unit{font:9px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);letter-spacing:1px;margin-top:4px}.score-name{font-size:9px;color:#b9c6d8;margin-top:5px}.signal-actions{display:flex;gap:9px;flex-wrap:wrap;padding:5px 0 18px}.model-bars{border-top:1px solid #243044;padding-top:17px;display:grid;gap:13px}.bar-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;margin-bottom:7px}.bar-head .side-label{font-weight:850;letter-spacing:.6px}.bar-head .num{font:12px ui-monospace,SFMono-Regular,Consolas,monospace;color:#d7e1f1}.track{height:7px;background:#222e40;border-radius:99px;overflow:hidden}.track>span{display:block;height:100%;width:50%;border-radius:99px;transition:width .3s ease}.track .big-fill{background:linear-gradient(90deg,#459b82,var(--green))}.track .small-fill{background:linear-gradient(90deg,#4678ca,var(--blue))}.score-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--dim);font-size:10px;margin-top:13px}.score-foot strong{color:#b4c3d8;font-weight:600}.mini-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.mini-badge{font:9px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.5px;color:#a8b7cc;border:1px solid #2a384e;background:#101827;padding:5px 7px;border-radius:7px}.model-panel .panel-body{padding:8px 20px 15px}.strategy-row{display:grid;grid-template-columns:minmax(0,1fr) 68px;gap:12px;padding:14px 0;border-bottom:1px solid #202b3b}.strategy-row:last-child{border-bottom:0}.strategy-name{font-size:12px;font-weight:750}.strategy-note{font-size:10px;color:var(--muted);margin-top:3px}.strategy-mini{margin-top:8px;height:4px;background:#202d40;border-radius:99px;overflow:hidden}.strategy-mini span{display:block;height:100%;border-radius:99px}.strategy-result{text-align:right}.strategy-pct{font:13px ui-monospace,SFMono-Regular,Consolas,monospace;font-weight:750}.strategy-vote{display:inline-block;margin-top:4px;font-size:9px;padding:3px 6px;border-radius:5px;background:#15271f;color:#84e6b4}.strategy-vote.s{background:#14213a;color:#9dc1ff}.strategy-vote.n{background:#252333;color:#b9a8e9}.section-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:16px;margin-top:16px;align-items:start}.section-title-wrap{display:flex;flex-direction:column;gap:4px}.section-hint{font-size:10px;color:var(--muted)}.table-wrap{width:100%;overflow:auto}.data-table{width:100%;border-collapse:collapse;min-width:420px}.data-table th{text-align:left;text-transform:uppercase;letter-spacing:.8px;font-size:9px;color:var(--dim);font-weight:750;padding:12px 18px;background:#0d141f;border-bottom:1px solid #243044;white-space:nowrap}.data-table td{padding:11px 18px;border-bottom:1px solid #1d2736;font:11px ui-monospace,SFMono-Regular,Consolas,monospace;color:#cfdaeb;white-space:nowrap}.data-table tr:last-child td{border-bottom:0}.data-table tbody tr:hover{background:#141f2d}.digit-pill{display:inline-grid;place-items:center;width:27px;height:27px;border-radius:8px;background:#192335;border:1px solid #303d51;font-size:12px;font-weight:800}.digit-pill.big{color:var(--green);border-color:#2c6654;background:#12251f}.digit-pill.small{color:var(--blue);border-color:#2f4d79;background:#121f33}.size-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 7px;border-radius:6px;font:9px ui-monospace,SFMono-Regular,Consolas,monospace;font-weight:800}.size-pill.big{background:#123126;color:#82efb7}.size-pill.small{background:#142441;color:#9fc2ff}.muted-text{color:var(--muted)}.empty-state{padding:32px 20px;text-align:center;color:var(--muted);font-size:12px}.empty-state strong{display:block;color:#dbe5f4;font-size:13px;margin-bottom:5px}.backtest-content{padding:18px 20px}.bt-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.bt-stat{padding:12px 11px;border-radius:11px;border:1px solid #253247;background:#0d1420;min-width:0}.bt-stat .bt-label{font-size:9px;line-height:1.4;color:var(--muted)}.bt-stat .bt-number{font-size:22px;font-weight:850;letter-spacing:-.6px;margin-top:5px;font-variant-numeric:tabular-nums}.bt-number.good{color:var(--green)}.bt-number.warn{color:var(--amber)}.bt-number.muted{color:#b6c3d7}.bt-chart-title{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:19px 0 9px;color:#c8d5e8;font-size:11px;font-weight:750}.bt-chart{height:96px;display:flex;align-items:flex-end;gap:3px;padding:8px 0 0;border-bottom:1px solid #2b384c;overflow:hidden}.bt-column{flex:1;min-width:3px;max-width:15px;border-radius:3px 3px 0 0;min-height:4px;position:relative;opacity:.88}.bt-column.win{background:linear-gradient(180deg,#80f0b4,#278363)}.bt-column.loss{background:linear-gradient(180deg,#ff9aaa,#a9465a)}.bt-column:hover{opacity:1;filter:brightness(1.2)}.bt-legend{display:flex;gap:13px;flex-wrap:wrap;margin-top:9px;color:var(--muted);font-size:10px}.legend-key{display:inline-flex;align-items:center;gap:6px}.legend-dot{width:7px;height:7px;border-radius:2px;background:var(--green)}.legend-dot.red{background:var(--red)}.bt-note{margin-top:14px;padding:10px 12px;background:#0d141f;border:1px solid #273347;border-radius:10px;color:#8e9db3;font-size:10px}.lower-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:16px}.digits-body{padding:18px 20px}.digit-chart{height:113px;display:flex;align-items:flex-end;gap:7px;padding:8px 0 0}.digit-col{flex:1;min-width:12px;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:5px}.digit-count{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;color:#9eacc0}.digit-stick{width:100%;max-width:32px;height:10%;min-height:4px;margin:auto auto 0;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#65e6db,#2a6579);transition:height .3s}.digit-stick.hot{background:linear-gradient(180deg,#bb9bff,#634eb5)}.digit-name{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;color:#d4deee}.digit-foot{font-size:10px;color:var(--muted);margin-top:12px}.signal-log{max-height:350px;overflow:auto}.log-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:13px 20px;border-bottom:1px solid #202b3a}.log-row:last-child{border-bottom:0}.log-issue{font:11px ui-monospace,SFMono-Regular,Consolas,monospace;color:#d9e3f2;overflow-wrap:anywhere}.log-sub{font-size:10px;color:var(--muted);margin-top:4px}.log-right{text-align:right}.log-pred{font-weight:850;font-size:11px}.log-status{font-size:9px;margin-top:4px;color:var(--muted)}.log-status.win{color:var(--green)}.log-status.loss{color:var(--red)}.import-area{padding:18px 20px}.import-tools{display:grid;grid-template-columns:1fr 1fr;gap:11px;align-items:start}.import-option{padding:13px;border:1px solid #273449;background:#0d1420;border-radius:12px;min-width:0}.import-option h3{font-size:11px;margin:0 0 5px}.import-option p{font-size:10px;color:var(--muted);margin:0 0 10px;line-height:1.5}.file-input{width:100%;max-width:100%;font-size:10px;color:var(--muted)}textarea{resize:vertical;width:100%;background:#090f18;color:#dce6f5;border:1px solid #2a374b;border-radius:9px;padding:10px;font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;min-height:100px}textarea::placeholder{color:#5d6b80}.import-action{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}.settings-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 20px;border-bottom:1px solid #202b3a}.settings-row:last-child{border-bottom:0}.settings-title{font-size:11px;font-weight:750}.settings-desc{font-size:10px;color:var(--muted);margin-top:3px}.settings-row .right{display:flex;align-items:center;gap:9px}.footer{padding:25px 3px 6px;display:flex;justify-content:space-between;gap:20px;align-items:flex-start;color:#65738a;font-size:10px}.footer strong{color:#9aa9be}.disclaimer{max-width:800px;line-height:1.65}.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,18px);z-index:10;padding:11px 16px;border-radius:10px;border:1px solid #344258;background:#141d2b;color:#e7f1ff;box-shadow:0 15px 35px #0008;font-size:12px;opacity:0;pointer-events:none;transition:all .22s;max-width:calc(100% - 28px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.hidden{display:none!important}.divider{height:1px;background:#243044;margin:13px 0}.signal-score-note{color:#7e8da3;font-size:9px;line-height:1.5;margin-top:9px}.inline-link{color:var(--cyan);text-decoration:underline;text-underline-offset:2px}.source-detail{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:10px}.version{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;color:#65738a;letter-spacing:.7px}
+@media(max-width:1050px){.app{padding:0 18px 28px}.layout,.section-grid{grid-template-columns:minmax(0,1fr) minmax(0,.9fr)}.signal-main{grid-template-columns:minmax(0,1fr) 116px}.score-ring{width:112px;height:112px}.score-value{font-size:28px}}
+@media(max-width:820px){.layout,.section-grid,.lower-grid{grid-template-columns:1fr}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.intro{align-items:flex-start;flex-direction:column}.intro .source-tag{align-self:flex-start}.section-grid{margin-top:14px}.model-panel{grid-row:auto}.import-tools{grid-template-columns:1fr}.topbar{min-height:72px}.top-right .local-tag{display:none}}
+@media(max-width:520px){.app{padding:0 11px 20px}.topbar{min-height:67px}.brand-mark{width:38px;height:38px}.brand-title{font-size:12px;letter-spacing:1.2px}.brand-sub{font-size:8px;letter-spacing:.6px}.top-right{gap:5px}.source-tag{font-size:9px;padding:7px 8px}.intro{padding:25px 0 18px}.intro h1{font-size:26px}.toolbar{padding:10px}.toolbar-left,.toolbar-right{width:100%}.toolbar-left .control-label{width:100%;justify-content:space-between}.control-label .select{flex:1}.toolbar-right .btn{flex:1}.metric{padding:13px}.metric-val{font-size:23px}.metric-head{font-size:10px}.metric-note{font-size:9px}.panel-head{padding:15px}.panel-body,.backtest-content,.digits-body,.import-area{padding:15px}.signal-main{grid-template-columns:minmax(0,1fr) 94px;gap:8px;padding:23px 0 14px}.signal-word{font-size:45px;letter-spacing:-2px}.score-ring{width:91px;height:91px}.score-ring:before{inset:6px}.score-value{font-size:24px}.score-unit{font-size:7px}.score-name{font-size:8px}.signal-explain{font-size:10px}.target-id{max-width:143px;font-size:10px}.signal-actions .btn{flex:1}.bt-summary{gap:6px}.bt-stat{padding:10px 8px}.bt-stat .bt-number{font-size:19px}.bt-stat .bt-label{font-size:8px}.data-table th,.data-table td{padding:10px 12px}.footer{flex-direction:column}.score-foot{align-items:flex-start;flex-direction:column;gap:5px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Bilal Sareba X home">
+      <div class="brand-mark"><b>BS</b><span>X</span></div>
+      <div><div class="brand-title">BILAL SAREBA <span style="color:var(--cyan)">X</span></div><div class="brand-sub">WINGO SIGNAL INTELLIGENCE</div></div>
+    </a>
+    <div class="top-right">
+      <div class="local-tag"><span class="status-dot good"></span> LOCAL-FIRST TERMINAL</div>
+      <div id="source-tag" class="source-tag"><span id="source-dot" class="status-dot idle"></span><span id="source-label">CONNECTING</span></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="intro">
+      <div><p class="eyebrow">ANALYSIS CONSOLE / 01</p><h1>Signal lab, <span>not guesswork.</span></h1><p class="desc">A history-driven BIG / SMALL analytics terminal combining recency, transition patterns, streak context and walk-forward testing.</p></div>
+      <div class="source-tag"><span class="status-dot idle" id="mode-dot"></span><span id="mode-label">WAITING FOR DATA</span></div>
+    </section>
+
+    <section class="toolbar" aria-label="Data controls">
+      <div class="toolbar-left">
+        <label class="control-label" for="market">MARKET <select id="market" class="select"><option value="WinGo_1M">Wingo 1 Minute</option><option value="WinGo_30S">Wingo 30 Seconds</option><option value="WinGo_3M">Wingo 3 Minutes</option><option value="WinGo_5M">Wingo 5 Minutes</option></select></label>
+        <label class="control-label" for="refresh-rate">SYNC <select id="refresh-rate" class="select" style="min-width:100px"><option value="5000">5 seconds</option><option value="8000" selected>8 seconds</option><option value="15000">15 seconds</option><option value="30000">30 seconds</option></select></label>
+      </div>
+      <div class="toolbar-right">
+        <button class="btn primary" id="sync-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/></svg>SYNC RESULTS</button>
+        <button class="btn ghost" id="auto-btn" type="button">AUTO SYNC: ON</button>
+      </div>
+    </section>
+
+    <section class="metric-grid" aria-label="Key metrics">
+      <article class="metric"><div class="metric-head">HISTORY LOADED <span class="metric-icon">▤</span></div><div class="metric-val" id="metric-history">—</div><div class="metric-note" id="metric-history-note">Waiting for observed results</div></article>
+      <article class="metric"><div class="metric-head">WALK-FORWARD ACCURACY <span class="metric-icon">⌁</span></div><div class="metric-val" id="metric-accuracy">—</div><div class="metric-note" id="metric-accuracy-note">No tested samples yet</div></article>
+      <article class="metric"><div class="metric-head">SIMPLE BASELINE <span class="metric-icon">≋</span></div><div class="metric-val" id="metric-baseline">—</div><div class="metric-note">Most frequent side in prior window</div></article>
+      <article class="metric"><div class="metric-head">SETTLED SIGNALS <span class="metric-icon">✓</span></div><div class="metric-val" id="metric-settled">0</div><div class="metric-note" id="metric-settled-note">No locked signal outcomes yet</div></article>
+    </section>
+
+    <section class="layout">
+      <article class="panel signal-panel">
+        <div class="panel-head"><div><div class="panel-kicker">NEXT ISSUE / LOCKED SIGNAL</div><h2 class="panel-title">Primary model readout</h2></div><span class="mini-badge" id="signal-sample-badge">0 RESULTS</span></div>
+        <div class="panel-body">
+          <div class="signal-top"><div><div class="signal-label">CURRENT MODEL LEAN</div><div class="signal-state"><span id="signal-state-dot" class="status-dot idle"></span><span id="signal-state-text">AWAITING HISTORY</span></div></div><div class="target-wrap"><span class="target-caption">TARGET ISSUE</span><span class="target-id" id="target-issue">—</span></div></div>
+          <div class="signal-main"><div><h2 class="signal-word" id="signal-side">—</h2><div class="signal-explain" id="signal-explain">Connect to a live source or import a real result history to begin analysis.</div></div><div class="score-ring" id="score-ring" style="--score:0%"><div class="score-inner"><div class="score-value" id="signal-score">—</div><div class="score-unit">MODEL SCORE</div><div class="score-name" id="score-name">UNRATED</div></div></div></div>
+          <div class="signal-actions"><button class="btn primary" id="copy-btn" type="button" disabled>▣ COPY SIGNAL</button><button class="btn" id="recheck-btn" type="button">↻ ANALYZE HISTORY</button></div>
+          <div class="model-bars">
+            <div><div class="bar-head"><span class="side-label" style="color:var(--green)">BIG RELATIVE SCORE</span><span class="num" id="big-score-text">—</span></div><div class="track"><span id="big-score-bar" class="big-fill" style="width:50%"></span></div></div>
+            <div><div class="bar-head"><span class="side-label" style="color:var(--blue)">SMALL RELATIVE SCORE</span><span class="num" id="small-score-text">—</span></div><div class="track"><span id="small-score-bar" class="small-fill" style="width:50%"></span></div></div>
+          </div>
+          <div class="score-foot"><span>Ensemble agreement: <strong id="agreement-text">—</strong></span><span>History snapshot: <strong id="snapshot-text">—</strong></span></div>
+          <div class="mini-badges"><span class="mini-badge">RECENCY WEIGHTING</span><span class="mini-badge">MARKOV STATES</span><span class="mini-badge">SEQUENCE MATCHING</span><span class="mini-badge">WALK-FORWARD TEST</span></div>
+          <p class="signal-score-note">Model score is a heuristic strength indicator, not a calibrated winning probability. The locked signal stays fixed for its target issue to prevent result-by-result repainting.</p>
+        </div>
+      </article>
+
+      <article class="panel model-panel">
+        <div class="panel-head"><div><div class="panel-kicker">ENSEMBLE / BREAKDOWN</div><h2 class="panel-title">Strategy consensus</h2></div><span class="mini-badge" id="strategy-count">0 MODELS</span></div>
+        <div class="panel-body" id="strategy-list"><div class="empty-state"><strong>Awaiting result history</strong>Model votes will appear here when real results are available.</div></div>
+      </article>
+    </section>
+
+    <section class="section-grid">
+      <article class="panel">
+        <div class="panel-head"><div class="section-title-wrap"><div class="panel-kicker">OBSERVED DATA</div><h2 class="panel-title">Recent result history</h2><div class="section-hint" id="history-caption">No result source connected</div></div><button class="btn small ghost" id="export-results-btn" type="button">↓ EXPORT CSV</button></div>
+        <div id="history-container"><div class="empty-state"><strong>No real results loaded</strong>Press “Sync results” or import a JSON / CSV file. Demo results are never generated.</div></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><div class="section-title-wrap"><div class="panel-kicker">VALIDATION / OUT-OF-SAMPLE</div><h2 class="panel-title">Walk-forward backtest</h2><div class="section-hint">Each test prediction uses only earlier results.</div></div><span class="mini-badge">NO FUTURE LEAKAGE</span></div>
+        <div class="backtest-content">
+          <div class="bt-summary">
+            <div class="bt-stat"><div class="bt-label">TEST ACCURACY</div><div class="bt-number muted" id="bt-accuracy">—</div></div>
+            <div class="bt-stat"><div class="bt-label">BASELINE ACCURACY</div><div class="bt-number muted" id="bt-baseline">—</div></div>
+            <div class="bt-stat"><div class="bt-label">TESTED PICKS</div><div class="bt-number muted" id="bt-samples">0</div></div>
+          </div>
+          <div class="bt-chart-title"><span>RECENT TESTED OUTCOMES</span><span id="bt-edge" class="muted-text">—</span></div>
+          <div class="bt-chart" id="bt-chart" aria-label="Backtest outcomes"><div class="empty-state" style="padding:10px;width:100%">Not enough history to test yet.</div></div>
+          <div class="bt-legend"><span class="legend-key"><span class="legend-dot"></span>Correct</span><span class="legend-key"><span class="legend-dot red"></span>Incorrect</span></div>
+          <div class="bt-note" id="bt-note">Backtest metrics will appear after sufficient authentic history is loaded. Accuracy on past draws does not guarantee future performance.</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="lower-grid">
+      <article class="panel">
+        <div class="panel-head"><div class="section-title-wrap"><div class="panel-kicker">DISTRIBUTION / 0–9</div><h2 class="panel-title">Digit frequency map</h2><div class="section-hint">Observed count in the loaded sample, not a forecast.</div></div><span class="mini-badge" id="digit-sample">0 DIGITS</span></div>
+        <div class="digits-body"><div class="digit-chart" id="digit-chart"><div class="empty-state" style="width:100%;padding:10px">No data</div></div><div class="digit-foot" id="digit-foot">Counts are descriptive only; frequency does not make a digit “due.”</div></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><div class="section-title-wrap"><div class="panel-kicker">SIGNAL JOURNAL</div><h2 class="panel-title">Locked prediction log</h2><div class="section-hint">Each target issue is stored once and settled against its exact result.</div></div><span class="mini-badge" id="log-count">0 RECORDS</span></div>
+        <div class="signal-log" id="signal-log"><div class="empty-state"><strong>No signals logged</strong>Once enough real history is available, the current model readout is saved for the target issue.</div></div>
+      </article>
+    </section>
+
+    <section class="section-grid">
+      <article class="panel">
+        <div class="panel-head"><div class="section-title-wrap"><div class="panel-kicker">DATA TOOLS</div><h2 class="panel-title">Import real history</h2><div class="section-hint">Use source-exported JSON or a CSV with issue and number columns.</div></div><span class="mini-badge">NO DEMO MODE</span></div>
+        <div class="import-area">
+          <div class="import-tools">
+            <div class="import-option"><h3>Import a file</h3><p>Choose a JSON or CSV file containing actual result records. Imported data remains local in this browser.</p><input type="file" class="file-input" id="import-file" accept=".json,.csv,.txt,application/json,text/csv,text/plain"><div class="import-action"><button class="btn small primary" id="import-file-btn" type="button">IMPORT FILE</button></div></div>
+            <div class="import-option"><h3>Paste JSON / CSV</h3><p>Expected fields include <code>issueNumber</code> and <code>number</code>. A list of digits also works for backtesting.</p><textarea id="import-text" placeholder='{"data":{"list":[{"issueNumber":"202610270123","number":"7"}]}}'></textarea><div class="import-action"><button class="btn small primary" id="import-text-btn" type="button">IMPORT TEXT</button><button class="btn small ghost" id="clear-text-btn" type="button">CLEAR</button></div></div>
+          </div>
+        </div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><div class="section-title-wrap"><div class="panel-kicker">PREFERENCES / STORAGE</div><h2 class="panel-title">Terminal controls</h2><div class="section-hint">History and signals are saved locally on this device.</div></div><span class="mini-badge">BROWSER STORAGE</span></div>
+        <div class="settings-row"><div><div class="settings-title">Current data mode</div><div class="settings-desc" id="settings-mode">Live source / awaiting connection</div></div><div class="right"><span id="storage-mode" class="mini-badge">LOCAL</span></div></div>
+        <div class="settings-row"><div><div class="settings-title">Last successful sync</div><div class="settings-desc" id="last-sync">Not synced yet</div></div><div class="right"><span class="version">SYNC</span></div></div>
+        <div class="settings-row"><div><div class="settings-title">Export loaded history</div><div class="settings-desc">Download observed issue and number rows as CSV.</div></div><div class="right"><button class="btn small" id="export-settings-btn" type="button">EXPORT</button></div></div>
+        <div class="settings-row"><div><div class="settings-title">Reset this market's local data</div><div class="settings-desc">Removes saved signals and import/cache for the selected market only.</div></div><div class="right"><button class="btn small warn" id="reset-btn" type="button">RESET</button></div></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="disclaimer"><strong>Important:</strong> This is a statistical analysis and record-keeping tool, not a guaranteed predictor. Wingo outcomes may be random or unavailable to forecast. It never invents draw results or displays unverified “99% accuracy.” Backtest percentages describe the loaded sample only. Use responsibly and do not risk money you cannot afford to lose.</div><div class="version">BILAL SAREBA X · BUILD 1.0</div></footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const DB_KEY = 'bilal-sareba-x.wingo.v1';
+  const MARKETS = ['WinGo_1M','WinGo_30S','WinGo_3M','WinGo_5M'];
+  const MODEL_DEFS = [
+    {key:'recency',name:'Recency-weighted trend',weight:0.23,note:'Recent outcomes get gradually more weight.'},
+    {key:'markov1',name:'Markov state · 1 step',weight:0.18,note:'Observed next-side tendency after the last side.'},
+    {key:'markov2',name:'Markov state · 2 step',weight:0.16,note:'Matches the last two sides in earlier history.'},
+    {key:'sequence',name:'Sequence analogue',weight:0.15,note:'Checks earlier appearances of the recent 3-side pattern.'},
+    {key:'streak',name:'Streak context',weight:0.10,note:'Uses historical outcomes after a similar current run.'},
+    {key:'momentum',name:'Short-window balance',weight:0.10,note:'Smoothed BIG / SMALL balance in the last ten draws.'},
+    {key:'bayes',name:'Smoothed historical prior',weight:0.08,note:'Baseline estimate with a small symmetric prior.'}
+  ];
+  let state = {
+    market:'WinGo_1M', results:[], mode:'live', source:'connecting', sourceDetail:'Waiting for source', lastSync:null,
+    auto:true, pollTimer:null, busy:false, requestId:0, forecast:null, currentSignal:null, backtest:null, toastTimer:null
+  };
+  let db = loadDB();
+
+  function loadDB(){
+    try {
+      const parsed = JSON.parse(localStorage.getItem(DB_KEY) || '{}');
+      if(parsed && typeof parsed === 'object' && parsed.markets && typeof parsed.markets === 'object') return parsed;
+    } catch(e) { /* use in-memory state if storage is unavailable */ }
+    return {markets:{}};
+  }
+  function saveDB(){ try { localStorage.setItem(DB_KEY, JSON.stringify(db)); } catch(e) { toast('Browser storage is full or unavailable. Current session still works.'); } }
+  function getStore(market=state.market){
+    if(!db.markets[market] || typeof db.markets[market] !== 'object') db.markets[market] = {};
+    const s=db.markets[market];
+    if(!Array.isArray(s.signals)) s.signals=[];
+    if(!Array.isArray(s.cachedResults)) s.cachedResults=[];
+    if(!Array.isArray(s.manualResults)) s.manualResults=[];
+    if(!['live','imported'].includes(s.mode)) s.mode='live';
+    return s;
+  }
+  function escapeHTML(value){ return String(value ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function toast(message){
+    const el=$('toast'); el.textContent=message; el.classList.add('show');
+    clearTimeout(state.toastTimer); state.toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
+  }
+  function setSource(kind, label, detail){
+    state.source=kind; state.sourceDetail=detail || label;
+    $('source-label').textContent=label;
+    $('source-dot').className='status-dot '+(kind==='live'||kind==='imported'?'good':kind==='error'?'bad':'idle');
+    $('mode-dot').className='status-dot '+(kind==='live'||kind==='imported'?'good':kind==='error'?'bad':'idle');
+    $('mode-label').textContent=kind==='live'?'LIVE SOURCE':kind==='imported'?'IMPORTED HISTORY':kind==='cached'?'CACHED HISTORY':kind==='error'?'SOURCE UNAVAILABLE':'WAITING FOR DATA';
+    $('settings-mode').textContent=kind==='live'?'Connected to live history endpoint':kind==='imported'?'Imported local history (auto sync paused)':kind==='cached'?'Last saved results; live refresh pending':kind==='error'?'Could not reach the live source':'Connecting to result source';
+  }
+  function toDigit(value){
+    if(typeof value==='number' && Number.isInteger(value) && value>=0 && value<=9) return value;
+    if(typeof value==='string'){
+      const t=value.trim();
+      if(/^\d$/.test(t)) return Number(t);
+      const first=t.split(/[;,|\s]+/).find(x=>/^\d$/.test(x));
+      if(first!==undefined) return Number(first);
+    }
+    return null;
+  }
+  function issueOf(item){
+    if(!item || typeof item!=='object') return '';
+    const keys=['issueNumber','issue','period','periodId','period_id','issue_no','drawId','id','periodNo'];
+    for(const k of keys){const v=item[k]; if(v!==undefined&&v!==null&&String(v).trim()!=='') return String(v).trim();}
+    return '';
+  }
+  function digitOf(item){
+    if(typeof item==='number'||typeof item==='string') return toDigit(item);
+    if(!item||typeof item!=='object') return null;
+    const keys=['number','result','openNumber','open_number','winningNumber','winning_number','digit','value','resultNumber','lotteryResult','num'];
+    for(const k of keys){if(item[k]!==undefined){const n=toDigit(item[k]);if(n!==null)return n;}}
+    if(Array.isArray(item)){for(const v of item){const n=toDigit(v);if(n!==null)return n;}}
+    return null;
+  }
+  function findRows(raw, depth=0){
+    if(Array.isArray(raw)) return raw;
+    if(!raw || typeof raw!=='object' || depth>5) return null;
+    const preferred=['list','records','results','history','data','result','rows','items','issueList','lotteryHistory'];
+    for(const k of preferred){if(raw[k]!==undefined){const r=findRows(raw[k],depth+1);if(r && r.length)return r;}}
+    for(const v of Object.values(raw)){if(Array.isArray(v))return v; if(v&&typeof v==='object'){const r=findRows(v,depth+1);if(r&&r.length)return r;}}
+    return null;
+  }
+  function compareIssue(a,b){
+    const x=String(a),y=String(b);
+    if(/^\d+$/.test(x)&&/^\d+$/.test(y)){
+      try{const A=BigInt(x),B=BigInt(y);return A<B?-1:A>B?1:0;}catch(e){}
+    }
+    return x.localeCompare(y,undefined,{numeric:true,sensitivity:'base'});
+  }
+  function normalizeRows(rows, options={}){
+    const out=[]; let autoIndex=0;
+    for(const item of (rows||[])){
+      const digit=digitOf(item); if(digit===null) continue;
+      autoIndex++;
+      let issue=issueOf(item);
+      if(!issue) issue=`MANUAL-${String(autoIndex).padStart(6,'0')}`;
+      out.push({issue:String(issue),number:digit,size:digit>=5?'BIG':'SMALL'});
+    }
+    const dedup=new Map();
+    for(const row of out) dedup.set(row.issue,row);
+    const unique=[...dedup.values()];
+    const allNumeric=unique.length>0&&unique.every(r=>/^\d+$/.test(r.issue));
+    if(allNumeric || options.sortLexically) unique.sort((a,b)=>compareIssue(a.issue,b.issue));
+    else if(options.newestFirst) unique.reverse();
+    return unique;
+  }
+  function normaliseLive(raw){
+    const rows=findRows(raw);
+    if(!rows) return [];
+    return normalizeRows(rows,{newestFirst:true});
+  }
+  function nextIssue(issue){
+    if(/^\d+$/.test(String(issue||''))){try{return (BigInt(String(issue))+1n).toString();}catch(e){}}
+    return 'NEXT DRAW';
+  }
+  function sideOf(number){return Number(number)>=5?'BIG':'SMALL';}
+  function clamp(x,lo,hi){return Math.min(hi,Math.max(lo,x));}
+  function countBig(history){return history.reduce((n,r)=>n+(r.size==='BIG'?1:0),0);}
+  function globalPrior(history){
+    const n=history.length, b=countBig(history);
+    // Symmetric Beta(2,2) smoothing prevents 0% or 100% claims on small samples.
+    return {p:(b+2)/(n+4),support:n};
+  }
+  function recencyModel(history){
+    if(!history.length)return {p:.5,support:0};
+    let b=0,s=0;
+    for(let i=0;i<history.length;i++){
+      const age=history.length-1-i;
+      const w=Math.exp(-age/11.5);
+      s+=w;if(history[i].size==='BIG')b+=w;
+    }
+    return {p:(b+1.5)/(s+3),support:history.length};
+  }
+  function conditionalModel(history, order){
+    const prior=globalPrior(history);
+    if(history.length<order+1) return {p:prior.p,support:0};
+    const current=history.slice(-order).map(r=>r.size);
+    let b=0,n=0;
+    for(let i=order;i<history.length;i++){
+      let match=true;
+      for(let j=0;j<order;j++){if(history[i-order+j].size!==current[j]){match=false;break;}}
+      if(match){n++;if(history[i].size==='BIG')b++;}
+    }
+    // Shrink sparse conditional estimates towards the broad observed prior.
+    return {p:(b+prior.p*4)/(n+4),support:n};
+  }
+  function sequenceModel(history, order=3){return conditionalModel(history,Math.min(order,Math.max(1,history.length-1)));}
+  function streakModel(history){
+    const prior=globalPrior(history); if(history.length<2)return {p:prior.p,support:0};
+    const side=history[history.length-1].size; let run=0;
+    for(let i=history.length-1;i>=0;i--){if(history[i].size===side)run++;else break;}
+    const cap=Math.min(run,5);let b=0,n=0;
+    for(let i=0;i<history.length-1;i++){
+      let r=0;for(let j=i;j>=0&&history[j].size===history[i].size;j--)r++;
+      if(Math.min(r,5)===cap && i+1<history.length){n++;if(history[i+1].size==='BIG')b++;}
+    }
+    return {p:(b+prior.p*5)/(n+5),support:n};
+  }
+  function momentumModel(history){
+    const recent=history.slice(-10);if(!recent.length)return {p:.5,support:0};
+    let b=0;for(let i=0;i<recent.length;i++) b+=(recent[i].size==='BIG'?1:0);
+    return {p:(b+2)/(recent.length+4),support:recent.length};
+  }
+  function computeForecast(history){
+    const hist=history.slice(-240);
+    const models={
+      recency:recencyModel(hist),markov1:conditionalModel(hist,1),markov2:conditionalModel(hist,2),sequence:sequenceModel(hist,3),streak:streakModel(hist),momentum:momentumModel(hist),bayes:globalPrior(hist)
+    };
+    let total=0,weighted=0;
+    for(const def of MODEL_DEFS){const m=models[def.key];let w=def.weight;
+      // Contextual model votes with very few matches carry less weight, not more.
+      if(['markov1','markov2','sequence','streak'].includes(def.key)) w*=0.28+0.72*(m.support/(m.support+5));
+      weighted+=m.p*w; total+=w;
+    }
+    const pBig=total?weighted/total:.5;
+    const side=pBig>=.5?'BIG':'SMALL';
+    let agreeing=0, eligible=0;
+    for(const def of MODEL_DEFS){const p=models[def.key].p;eligible+=1;if((p>=.5?'BIG':'SMALL')===side)agreeing++;}
+    const agreement=eligible?agreeing/eligible:0.5;
+    const strength=Math.round(clamp(50+Math.abs(pBig-.5)*88+Math.max(0,agreement-.5)*18,50,84));
+    const modelsWithMeta=MODEL_DEFS.map(def=>({...def,p:models[def.key].p,support:models[def.key].support,vote:models[def.key].p>=.5?'BIG':'SMALL'}));
+    return {side,pBig,scoreBig:Math.round(pBig*100),scoreSmall:100-Math.round(pBig*100),strength,agreement,models:modelsWithMeta,sampleCount:history.length,calculatedAt:new Date().toISOString()};
+  }
+  function baselineSide(history,windowSize=30){
+    const hist=history.slice(-windowSize); if(!hist.length)return 'SMALL';
+    const b=countBig(hist);return b*2>=hist.length?'BIG':'SMALL';
+  }
+  function runBacktest(history){
+    const n=history.length;
+    if(n<18)return {tested:0,wins:0,accuracy:null,baseWins:0,baseline:null,records:[],note:'Load at least 18 real results to begin a small walk-forward test. Larger samples are more informative.'};
+    const start=Math.max(12,n-180);let tested=0,wins=0,baseWins=0;const records=[];
+    for(let i=start;i<n;i++){
+      const earlier=history.slice(Math.max(0,i-120),i);
+      if(earlier.length<12)continue;
+      const f=computeForecast(earlier);const actual=history[i].size;
+      const predicted=f.side; const base=baselineSide(earlier,30);
+      const win=predicted===actual; const baseWin=base===actual;
+      tested++;if(win)wins++;if(baseWin)baseWins++;
+      records.push({issue:history[i].issue,actual,predicted,win,baseWin,score:f.strength});
+    }
+    return {tested,wins,accuracy:tested?wins/tested:null,baseWins,baseline:tested?baseWins/tested:null,records,note:tested?'Walk-forward test: each signal was calculated from earlier history only. This is not a guarantee for future draws.':'Not enough valid sequential records to test.'};
+  }
+  function currentStore(){return getStore(state.market);}
+  function findSignalFor(store,target,mode){return store.signals.find(s=>s.targetIssue===target&&s.sourceMode===mode&&!s.abandoned);}
+  function saveForecastSignal(){
+    const store=currentStore(); const latest=state.results[state.results.length-1];
+    if(!latest||state.results.length<6){state.currentSignal=null;state.forecast=null;return;}
+    const target=nextIssue(latest.issue); let existing=findSignalFor(store,target,state.mode);
+    if(existing){state.currentSignal=existing;state.forecast=existing.forecast||computeForecast(state.results);return;}
+    const f=computeForecast(state.results);
+    const sig={id:`${state.market}:${state.mode}:${target}`,market:state.market,sourceMode:state.mode,targetIssue:target,createdAt:new Date().toISOString(),lastObservedIssue:latest.issue,forecast:f,side:f.side,score:f.strength,settled:false,actualSize:null,won:null};
+    store.signals.unshift(sig);store.signals=store.signals.slice(0,300);
+    state.currentSignal=sig;state.forecast=f;saveDB();
+  }
+  function settleSignals(){
+    if(!state.results.length)return;
+    const store=currentStore(); const resultByIssue=new Map(state.results.map(r=>[r.issue,r])); let changed=false;
+    for(const sig of store.signals){
+      if(sig.settled)continue;
+      const actual=resultByIssue.get(String(sig.targetIssue));
+      if(!actual)continue;
+      sig.settled=true;sig.actualSize=actual.size;sig.actualNumber=actual.number;sig.won=sig.side===actual.size;sig.settledAt=new Date().toISOString();changed=true;
+    }
+    if(changed)saveDB();
+  }
+  function updateStateFromResults(results, mode, sourceKind){
+    state.results=results;
+    state.mode=mode;
+    const store=currentStore();
+    if(mode==='live') store.cachedResults=results;
+    if(mode==='imported') store.manualResults=results;
+    store.mode=mode;
+    settleSignals();
+    saveForecastSignal();
+    state.backtest=runBacktest(state.results);
+    saveDB();
+    setSource(sourceKind,sourceKind==='live'?'LIVE CONNECTED':sourceKind==='imported'?'IMPORT MODE':sourceKind==='cached'?'CACHED DATA':'SOURCE UNAVAILABLE',state.sourceDetail);
+    renderAll();
+  }
+  async function requestJson(url){
+    let directError=null;
+    try{
+      const resp=await fetch(url,{cache:'no-store',headers:{'Accept':'application/json'}});
+      if(!resp.ok)throw new Error('HTTP '+resp.status);
+      return {json:await resp.json(),via:'direct'};
+    }catch(err){directError=err;}
+    // Optional read-only fallback for public JSON feeds if the browser blocks cross-origin access.
+    try{
+      const proxy='https://api.allorigins.win/raw?url='+encodeURIComponent(url);
+      const resp=await fetch(proxy,{cache:'no-store',headers:{'Accept':'application/json'}});
+      if(!resp.ok)throw new Error('Relay HTTP '+resp.status);
+      return {json:await resp.json(),via:'relay'};
+    }catch(err){throw new Error((directError&&directError.message?directError.message+'; ':'')+(err&&err.message?err.message:'source unavailable'));}
+  }
+  async function syncResults(manualClick=false){
+    if(state.busy)return;
+    const market=state.market; const req=++state.requestId; const store=getStore(market); const wasImported=store.mode==='imported';
+    if(wasImported){store.mode='live';state.mode='live';saveDB();}
+    state.busy=true;$('sync-btn').disabled=true;$('sync-btn').textContent='SYNCING…';
+    setSource('connecting','SYNCING','Requesting real result history');
+    const url=`https://draw.ar-lottery01.com/WinGo/${encodeURIComponent(market)}/GetHistoryIssuePage.json?pageNo=1&pageSize=100&_=${Date.now()}`;
+    try{
+      const response=await requestJson(url); if(req!==state.requestId||market!==state.market)return;
+      const results=normaliseLive(response.json);
+      if(results.length<1)throw new Error('The source returned no recognisable results');
+      store.cachedResults=results;store.mode='live';store.lastSync=new Date().toISOString();saveDB();
+      state.lastSync=store.lastSync;state.sourceDetail=response.via==='direct'?'Live API connected':'Live API via fallback relay';
+      updateStateFromResults(results,'live','live');
+      $('history-caption').textContent=`${results.length} observed results · ${response.via==='direct'?'direct source':'fallback relay'} · newest issue ${results[results.length-1].issue}`;
+      $('last-sync').textContent=new Date(state.lastSync).toLocaleString();
+      if(manualClick)toast('Live result history synced.');
+    }catch(err){
+      if(req!==state.requestId||market!==state.market)return;
+      const cache=store.cachedResults;
+      if(wasImported && store.manualResults.length){
+        store.mode='imported';state.mode='imported';state.results=store.manualResults;state.lastSync=null;state.sourceDetail='Live source unavailable; keeping imported history';
+        settleSignals();saveForecastSignal();state.backtest=runBacktest(state.results);saveDB();setSource('imported','IMPORT MODE',state.sourceDetail);renderAll();
+        $('history-caption').textContent=`${state.results.length} imported results · live refresh failed`;
+        if(manualClick)toast('Live connection failed; your imported history is still loaded.');
+      } else if(cache.length){state.lastSync=store.lastSync||null;state.sourceDetail='Live source unavailable; showing saved results';updateStateFromResults(cache,'live','cached');$('history-caption').textContent=`${cache.length} cached results · live refresh failed`;toast('Live connection failed; displaying saved history.');}
+      else{state.results=[];state.forecast=null;state.currentSignal=null;state.backtest=runBacktest([]);state.sourceDetail=String(err.message||'Source unavailable');setSource('error','SOURCE UNAVAILABLE',state.sourceDetail);renderAll();$('history-caption').textContent='No live history available. Import authentic JSON / CSV to continue.';if(manualClick)toast('Could not connect. You can import real history below.');}
+    }finally{
+      if(req===state.requestId){state.busy=false;$('sync-btn').disabled=false;$('sync-btn').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/></svg>SYNC RESULTS';}
+    }
+  }
+  function setMarket(market){
+    if(!MARKETS.includes(market))return;
+    state.requestId++;state.busy=false;state.market=market;$('market').value=market;
+    const store=getStore(market);state.mode=store.mode;state.results=(store.mode==='imported'?store.manualResults:store.cachedResults)||[];state.lastSync=store.lastSync||null;
+    state.forecast=null;state.currentSignal=null;settleSignals();saveForecastSignal();state.backtest=runBacktest(state.results);
+    if(state.mode==='imported')setSource('imported','IMPORT MODE','Using locally imported history');
+    else if(state.results.length){setSource('cached','CACHED DATA','Restored saved result history');}
+    else setSource('connecting','CONNECTING','Waiting for source response');
+    renderAll();$('history-caption').textContent=state.results.length?`${state.results.length} saved results · newest issue ${state.results[state.results.length-1].issue}`:'No saved results for this market';
+    $('last-sync').textContent=state.lastSync?new Date(state.lastSync).toLocaleString():'Not synced yet';
+    startPolling();
+    if(state.mode!=='imported')syncResults(false);
+  }
+  function startPolling(){
+    if(state.pollTimer)clearInterval(state.pollTimer);
+    const interval=Number($('refresh-rate').value)||8000;
+    state.pollTimer=setInterval(()=>{if(state.auto&&!state.busy&&currentStore().mode!=='imported')syncResults(false);},interval);
+  }
+  function importRows(rows,label){
+    const results=normalizeRows(rows,{sortLexically:true});
+    if(results.length<3){toast('Could not find at least 3 valid digit results. Check your JSON / CSV fields.');return false;}
+    const store=currentStore();
+    store.mode='imported';store.manualResults=results;store.signals=store.signals.filter(s=>s.sourceMode!=='imported');
+    state.mode='imported';state.results=results;state.lastSync=null;state.sourceDetail=label||'Local imported history';
+    settleSignals();saveForecastSignal();state.backtest=runBacktest(results);saveDB();
+    state.requestId++;state.busy=false;setSource('imported','IMPORT MODE',state.sourceDetail);
+    $('history-caption').textContent=`${results.length} imported results · newest issue ${results[results.length-1].issue}`;
+    $('last-sync').textContent='Imported locally · '+new Date().toLocaleString();
+    renderAll();startPolling();toast(`Imported ${results.length} observed result records.`);return true;
+  }
+  function importText(text,label){
+    const rawText=String(text||'').trim();if(!rawText){toast('Paste JSON or CSV data first.');return false;}
+    try{
+      const raw=JSON.parse(rawText);const rows=findRows(raw);
+      if(rows){const r=normalizeRows(rows,{sortLexically:true});if(r.length>=3)return importRows(r,label);}
+      if(Array.isArray(raw)){const r=normalizeRows(raw,{sortLexically:true});if(r.length>=3)return importRows(r,label);}
+    }catch(e){/* treat as CSV / plain digit sequence below */}
+    const lines=rawText.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+    if(!lines.length){toast('No import rows found.');return false;}
+    const first=lines[0].split(/[;,\t|]/).map(x=>x.trim().toLowerCase());
+    const hasHeader=first.some(x=>/(issue|period|round|draw|number|result|digit)/.test(x));
+    const issueIndex=hasHeader?Math.max(0,first.findIndex(x=>/(issue|period|round|draw|id)/.test(x))):-1;
+    const digitIndex=hasHeader?Math.max(0,first.findIndex(x=>/(number|result|digit|winning)/.test(x))):1;
+    const dataLines=hasHeader?lines.slice(1):lines;const rows=[];let i=0;
+    for(const line of dataLines){
+      const cells=line.split(/[;,\t|]/).map(x=>x.trim().replace(/^['"]|['"]$/g,''));if(!cells.length)continue;
+      let digit=toDigit(cells[digitIndex]);
+      if(digit===null){for(const c of cells){digit=toDigit(c);if(digit!==null)break;}}
+      if(digit===null)continue;
+      i++;let issue=(issueIndex>=0&&cells[issueIndex]!==undefined)?cells[issueIndex]:'';
+      if(!issue)issue=`MANUAL-${String(i).padStart(6,'0')}`;
+      rows.push({issueNumber:String(issue),number:digit});
+    }
+    if(rows.length>=3)return importRows(rows,label);
+    // Finally support a simple sequence such as: 2, 8, 5, 1, 7.
+    const digits=rawText.match(/\b[0-9]\b/g);
+    if(digits&&digits.length>=3)return importRows(digits.map((v,i)=>({issueNumber:`MANUAL-${String(i+1).padStart(6,'0')}`,number:Number(v)})),label);
+    toast('Import format not recognised. Include issue/period and number fields, or a digit list.');return false;
+  }
+  function percent(v){return v===null||v===undefined||!Number.isFinite(v)?'—':`${Math.round(v*1000)/10}%`;}
+  function shortIssue(value){const v=String(value??'—');return v.length>22?v.slice(0,8)+'…'+v.slice(-8):v;}
+  function renderAll(){
+    renderMetrics();renderSignal();renderStrategies();renderHistory();renderBacktest();renderDigits();renderLog();
+    $('source-label').textContent=state.source==='live'?'LIVE CONNECTED':state.source==='imported'?'IMPORT MODE':state.source==='cached'?'CACHED DATA':state.source==='error'?'SOURCE UNAVAILABLE':state.source==='connecting'?'CONNECTING':'WAITING';
+    $('source-dot').className='status-dot '+(state.source==='live'||state.source==='imported'?'good':state.source==='error'?'bad':'idle');
+    $('mode-label').textContent=state.source==='live'?'LIVE SOURCE':state.source==='imported'?'IMPORTED HISTORY':state.source==='cached'?'CACHED HISTORY':state.source==='error'?'SOURCE UNAVAILABLE':'WAITING FOR DATA';
+    $('mode-dot').className='status-dot '+(state.source==='live'||state.source==='imported'?'good':state.source==='error'?'bad':'idle');
+    $('auto-btn').textContent=`AUTO SYNC: ${state.auto?'ON':'OFF'}`;$('auto-btn').classList.toggle('primary',state.auto);
+    $('settings-mode').textContent=state.mode==='imported'?'Imported local history (auto sync paused)':state.source==='live'?'Connected to live history endpoint':state.source==='cached'?'Last saved results; live refresh pending':'Waiting for source or import';
+    $('storage-mode').textContent='LOCAL';
+  }
+  function renderMetrics(){
+    const bt=state.backtest||runBacktest(state.results);const store=currentStore();const settled=store.signals.filter(s=>s.settled);const wins=settled.filter(s=>s.won).length;
+    $('metric-history').textContent=String(state.results.length);$('metric-history-note').textContent=state.results.length?`Newest issue ${shortIssue(state.results[state.results.length-1].issue)}`:'Waiting for observed results';
+    $('metric-accuracy').textContent=percent(bt.accuracy);$('metric-accuracy-note').textContent=bt.tested?`${bt.tested} walk-forward samples`:'No tested samples yet';
+    $('metric-baseline').textContent=percent(bt.baseline);$('metric-settled').textContent=String(settled.length);$('metric-settled-note').textContent=settled.length?`${wins} correct · ${settled.length-wins} incorrect`:'No locked signal outcomes yet';
+  }
+  function renderSignal(){
+    const sig=state.currentSignal;const f=state.forecast||sig?.forecast;const h=state.results;
+    $('signal-sample-badge').textContent=`${h.length} RESULTS`;$('target-issue').textContent=sig?shortIssue(sig.targetIssue):(h.length?shortIssue(nextIssue(h[h.length-1].issue)):'—');
+    if(!h.length||!f){$('signal-side').textContent='—';$('signal-side').className='signal-word';$('signal-state-text').textContent='AWAITING HISTORY';$('signal-state-dot').className='status-dot idle';$('signal-explain').textContent='Connect to a live source or import authentic result history to begin analysis.';$('signal-score').textContent='—';$('score-name').textContent='UNRATED';$('score-ring').style.setProperty('--score','0%');$('big-score-text').textContent='—';$('small-score-text').textContent='—';$('big-score-bar').style.width='50%';$('small-score-bar').style.width='50%';$('agreement-text').textContent='—';$('snapshot-text').textContent='—';$('copy-btn').disabled=true;return;}
+    const side=sig?.side||f.side,score=sig?.score??f.strength,issue=sig?.targetIssue||nextIssue(h[h.length-1].issue);const badge=score>=70?'STRONGER LEAN':score>=60?'MODERATE LEAN':'WEAK LEAN';
+    $('signal-side').textContent=side;$('signal-side').className='signal-word '+side.toLowerCase();$('signal-state-text').textContent=h.length<18?'LOW SAMPLE · '+badge:badge;$('signal-state-dot').className='status-dot '+(score>=70?'good':score>=60?'idle':'bad');
+    $('signal-explain').textContent=`Model leans ${side} for issue ${issue}. This is a history-based heuristic; it cannot know or guarantee the next draw.`;
+    $('signal-score').textContent=String(score);$('score-name').textContent=score>=70?'FIRM':score>=60?'MODERATE':'SOFT';$('score-ring').style.setProperty('--score',score+'%');
+    const big=f.scoreBig??Math.round(f.pBig*100),small=f.scoreSmall??100-big;
+    $('big-score-text').textContent=big+'/100';$('small-score-text').textContent=small+'/100';$('big-score-bar').style.width=big+'%';$('small-score-bar').style.width=small+'%';$('agreement-text').textContent=percent(f.agreement);$('snapshot-text').textContent=shortIssue(sig?.lastObservedIssue||h[h.length-1].issue);$('copy-btn').disabled=false;
+  }
+  function renderStrategies(){
+    const f=state.forecast||state.currentSignal?.forecast;
+    if(!f||!Array.isArray(f.models)){$('strategy-list').innerHTML='<div class="empty-state"><strong>Awaiting result history</strong>Model votes will appear here when real results are available.</div>';$('strategy-count').textContent='0 MODELS';return;}
+    $('strategy-count').textContent=`${f.models.length} MODELS`;
+    $('strategy-list').innerHTML=f.models.map(m=>{
+      const v=Math.round(m.p*100),lean=m.vote;const klass=lean==='BIG'?'':'s';const color=lean==='BIG'?'var(--green)':'var(--blue)';
+      const support=m.support===0?'prior only':`${m.support} matches / observations`;
+      return `<div class="strategy-row"><div><div class="strategy-name">${escapeHTML(m.name)}</div><div class="strategy-note">${escapeHTML(m.note)} · ${escapeHTML(support)}</div><div class="strategy-mini"><span style="width:${v}%;background:${color}"></span></div></div><div class="strategy-result"><div class="strategy-pct">${v}/100</div><span class="strategy-vote ${klass}">${lean} LEAN</span></div></div>`;
+    }).join('');
+  }
+  function renderHistory(){
+    const rows=state.results.slice().reverse().slice(0,18);
+    if(!rows.length){$('history-container').innerHTML='<div class="empty-state"><strong>No real results loaded</strong>Press “Sync results” or import a JSON / CSV file. Demo results are never generated.</div>';return;}
+    $('history-container').innerHTML=`<div class="table-wrap"><table class="data-table"><thead><tr><th>Issue</th><th>Number</th><th>Size</th><th>Odd / even</th><th>Signal result</th></tr></thead><tbody>${rows.map(r=>{
+      const sig=currentStore().signals.find(s=>s.targetIssue===r.issue&&s.settled);
+      const settled=sig?`<span style="color:${sig.won?'var(--green)':'var(--red)'}">${sig.won?'✓ HIT':'× MISS'}</span>`:'<span class="muted-text">—</span>';
+      return `<tr><td>${escapeHTML(shortIssue(r.issue))}</td><td><span class="digit-pill ${r.size.toLowerCase()}">${r.number}</span></td><td><span class="size-pill ${r.size.toLowerCase()}">${r.size}</span></td><td>${r.number%2?'ODD':'EVEN'}</td><td>${settled}</td></tr>`;
+    }).join('')}</tbody></table></div>`;
+  }
+  function renderBacktest(){
+    const bt=state.backtest||runBacktest(state.results);$('bt-accuracy').textContent=percent(bt.accuracy);$('bt-baseline').textContent=percent(bt.baseline);$('bt-samples').textContent=String(bt.tested||0);
+    $('bt-accuracy').className='bt-number '+(bt.accuracy===null?'muted':bt.accuracy>=.55?'good':bt.accuracy<.45?'warn':'muted');
+    $('bt-baseline').className='bt-number '+(bt.baseline===null?'muted':bt.baseline>=.55?'good':bt.baseline<.45?'warn':'muted');
+    if(bt.accuracy!==null&&bt.baseline!==null){const edge=(bt.accuracy-bt.baseline)*100;$('bt-edge').textContent=`vs baseline ${edge>=0?'+':''}${edge.toFixed(1)} pp`;$('bt-edge').style.color=edge>0?'var(--green)':edge<0?'var(--red)':'var(--muted)';}
+    else{$('bt-edge').textContent='Awaiting samples';$('bt-edge').style.color='var(--muted)';}
+    const recent=(bt.records||[]).slice(-36);
+    $('bt-chart').innerHTML=recent.length?recent.map(r=>`<div class="bt-column ${r.win?'win':'loss'}" style="height:${r.win?90:48}%" title="Issue ${escapeHTML(r.issue)} · predicted ${r.predicted} · actual ${r.actual} · ${r.win?'correct':'incorrect'}"></div>`).join(''):'<div class="empty-state" style="padding:10px;width:100%">Not enough history to test yet.</div>';
+    $('bt-note').textContent=bt.note;
+  }
+  function renderDigits(){
+    const counts=Array(10).fill(0);for(const r of state.results)counts[r.number]++;
+    $('digit-sample').textContent=`${state.results.length} RESULTS`;
+    if(!state.results.length){$('digit-chart').innerHTML='<div class="empty-state" style="width:100%;padding:10px">No data</div>';return;}
+    const max=Math.max(1,...counts);$('digit-chart').innerHTML=counts.map((count,n)=>`<div class="digit-col"><div class="digit-count">${count}</div><div class="digit-stick ${count===max?'hot':''}" style="height:${Math.max(4,count/max*76)}%"></div><div class="digit-name">${n}</div></div>`).join('');
+    const b=state.results.filter(r=>r.number>=5).length;const s=state.results.length-b;$('digit-foot').textContent=`Observed BIG (5–9): ${b} · SMALL (0–4): ${s}. This describes only the loaded history; frequency does not make a result “due.”`;
+  }
+  function renderLog(){
+    const signals=currentStore().signals.slice(0,12);$('log-count').textContent=`${currentStore().signals.length} RECORDS`;
+    if(!signals.length){$('signal-log').innerHTML='<div class="empty-state"><strong>No signals logged</strong>Once enough real history is available, the current model readout is saved for the target issue.</div>';return;}
+    $('signal-log').innerHTML=signals.map(s=>{
+      const status=s.settled?(s.won?'✓ CORRECT':'× INCORRECT'):'PENDING';const cls=s.settled?(s.won?'win':'loss'):'';
+      return `<div class="log-row"><div><div class="log-issue">${escapeHTML(shortIssue(s.targetIssue))}</div><div class="log-sub">${escapeHTML(s.sourceMode==='imported'?'IMPORTED HISTORY':'LIVE HISTORY')} · ${new Date(s.createdAt).toLocaleString()}</div></div><div class="log-right"><div class="log-pred" style="color:${s.side==='BIG'?'var(--green)':'var(--blue)'}">${escapeHTML(s.side)} · ${Number(s.score)||0}</div><div class="log-status ${cls}">${status}${s.settled&&s.actualSize?' · '+escapeHTML(s.actualSize):''}</div></div></div>`;
+    }).join('');
+  }
+  function exportCSV(){
+    if(!state.results.length){toast('No history to export.');return;}
+    const rows=[['issueNumber','number','size'],...state.results.slice().reverse().map(r=>[r.issue,r.number,r.size])];
+    const csv=rows.map(row=>row.map(v=>{const s=String(v??'');return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}).join(',')).join('\r\n');
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${state.market.toLowerCase()}-history.csv`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);toast('CSV export created.');
+  }
+  async function copySignal(){
+    const sig=state.currentSignal;if(!sig){toast('No signal available yet.');return;}
+    const text=`BILAL SAREBA X | ${state.market}\nTarget issue: ${sig.targetIssue}\nModel lean: ${sig.side}\nModel strength score: ${sig.score}/100\nHistory sample: ${state.results.length}\nNote: heuristic only, not a guaranteed prediction.`;
+    try{await navigator.clipboard.writeText(text);toast('Signal copied.');}catch(e){window.prompt('Copy signal text:',text);}
+  }
+  function resetMarket(){
+    const yes=window.confirm(`Reset saved data for ${state.market}? This removes that market's local cache, import and prediction log.`);if(!yes)return;
+    delete db.markets[state.market];saveDB();state.results=[];state.currentSignal=null;state.forecast=null;state.backtest=runBacktest([]);state.lastSync=null;setSource('connecting','CONNECTING','Market data reset');renderAll();toast('Selected market local data reset.');syncResults(false);
+  }
+  function bindEvents(){
+    $('market').addEventListener('change',e=>setMarket(e.target.value));
+    $('refresh-rate').addEventListener('change',startPolling);
+    $('sync-btn').addEventListener('click',()=>syncResults(true));
+    $('auto-btn').addEventListener('click',()=>{state.auto=!state.auto;startPolling();renderAll();toast(`Auto sync ${state.auto?'enabled':'paused'}.`);});
+    $('copy-btn').addEventListener('click',copySignal);
+    $('recheck-btn').addEventListener('click',()=>{
+      if(state.results.length<6){toast('At least 6 real results are needed for an initial model read.');return;}
+      // Keep an existing target locked; show the saved target forecast rather than repainting it.
+      state.backtest=runBacktest(state.results);renderAll();toast('Model and walk-forward test refreshed. Existing target signal remains locked.');
+    });
+    $('export-results-btn').addEventListener('click',exportCSV);$('export-settings-btn').addEventListener('click',exportCSV);$('reset-btn').addEventListener('click',resetMarket);
+    $('clear-text-btn').addEventListener('click',()=>$('import-text').value='');
+    $('import-text-btn').addEventListener('click',()=>importText($('import-text').value,'Pasted JSON / CSV'));
+    $('import-file-btn').addEventListener('click',async()=>{
+      const file=$('import-file').files&&$('import-file').files[0];if(!file){toast('Choose a JSON or CSV file first.');return;}
+      try{const text=await file.text();const ok=importText(text,`Imported file: ${file.name}`);if(ok)toast(`Imported ${file.name}. Auto sync paused until you press Sync Results.`);}catch(e){toast('Could not read the selected file.');}
+    });
+  }
+  function boot(){
+    bindEvents();state.market=$('market').value;const store=currentStore();state.mode=store.mode;state.results=(store.mode==='imported'?store.manualResults:store.cachedResults)||[];
+    state.lastSync=store.lastSync||null;state.backtest=runBacktest(state.results);
+    if(state.results.length){settleSignals();saveForecastSignal();setSource(state.mode==='imported'?'imported':'cached',state.mode==='imported'?'IMPORT MODE':'CACHED DATA','Restored local result history');}
+    else setSource('connecting','CONNECTING','Starting live source connection');
+    renderAll();startPolling();
+    if(state.mode!=='imported')syncResults(false);
+  }
+  boot();
+})();
+</script>
+</body>
+</html>
