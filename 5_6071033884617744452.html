@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>ZONITH V3 AI · NEXT-GEN PREDICTION INTELLIGENCE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ===== same styles as before — only login logic improved ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        :root {
+            --bg-deep: #05060A;
+            --bg-card: rgba(9, 11, 18, 0.76);
+            --glass-border: rgba(139, 92, 255, 0.16);
+            --glass-border-blue: rgba(0, 200, 255, 0.16);
+            --violet: #8B5CFF;
+            --violet-dark: #5826cc;
+            --violet-glow: rgba(139, 92, 255, 0.35);
+            --blue: #00C8FF;
+            --blue-dark: #008cb3;
+            --blue-glow: rgba(0, 200, 255, 0.3);
+            --platinum: #F4F7FF;
+            --platinum-glow: rgba(244, 247, 255, 0.2);
+            --text-secondary: #8B93A7;
+            --shadow-premium: 0 20px 45px -12px rgba(0, 0, 0, 0.85);
+            --radius-xl: 24px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+            --font-main: 'Inter', sans-serif;
+            --font-futuristic: 'Space Grotesk', sans-serif;
+            --font-tech: 'Orbitron', sans-serif;
+        }
+        body {
+            background: var(--bg-deep);
+            font-family: var(--font-main);
+            color: var(--platinum);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 14px 110px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .void-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-color: var(--bg-deep);
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .grid-layer {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(139, 92, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.65;
+        }
+        .aurora-violet {
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle, rgba(139, 92, 255, 0.08) 0%, transparent 65%);
+            filter: blur(80px);
+            animation: floatAuroraViolet 20s infinite alternate ease-in-out;
+        }
+        .aurora-blue {
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle, rgba(0, 200, 255, 0.06) 0%, transparent 65%);
+            filter: blur(80px);
+            animation: floatAuroraBlue 22s infinite alternate ease-in-out;
+        }
+        @keyframes floatAuroraViolet {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(60px, 40px) scale(1.15);
+            }
+        }
+        @keyframes floatAuroraBlue {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(-60px, -40px) scale(1.2);
+            }
+        }
+        .particles-layer {
+            position: absolute;
+            inset: 0;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, #F4F7FF, var(--violet), transparent);
+            opacity: 0;
+            animation: floatParticle linear infinite;
+        }
+        .particle:nth-child(1) {
+            width: 3px;
+            height: 3px;
+            left: 8%;
+            animation-duration: 16s;
+            animation-delay: 0s;
+        }
+        .particle:nth-child(2) {
+            width: 4px;
+            height: 4px;
+            left: 22%;
+            animation-duration: 19s;
+            animation-delay: 2s;
+        }
+        .particle:nth-child(3) {
+            width: 2px;
+            height: 2px;
+            left: 38%;
+            animation-duration: 13s;
+            animation-delay: 4s;
+        }
+        .particle:nth-child(4) {
+            width: 5px;
+            height: 5px;
+            left: 52%;
+            animation-duration: 23s;
+            animation-delay: 1s;
+        }
+        .particle:nth-child(5) {
+            width: 3px;
+            height: 3px;
+            left: 68%;
+            animation-duration: 17s;
+            animation-delay: 3s;
+        }
+        .particle:nth-child(6) {
+            width: 6px;
+            height: 6px;
+            left: 82%;
+            animation-duration: 21s;
+            animation-delay: 5s;
+        }
+        .particle:nth-child(7) {
+            width: 2px;
+            height: 2px;
+            left: 14%;
+            animation-duration: 15s;
+            animation-delay: 7s;
+        }
+        .particle:nth-child(8) {
+            width: 4px;
+            height: 4px;
+            left: 45%;
+            animation-duration: 20s;
+            animation-delay: 2.5s;
+        }
+        .particle:nth-child(9) {
+            width: 3px;
+            height: 3px;
+            left: 60%;
+            animation-duration: 12s;
+            animation-delay: 6s;
+        }
+        .particle:nth-child(10) {
+            width: 5px;
+            height: 5px;
+            left: 75%;
+            animation-duration: 18s;
+            animation-delay: 3.5s;
+        }
+        .particle:nth-child(11) {
+            width: 2px;
+            height: 2px;
+            left: 90%;
+            animation-duration: 14s;
+            animation-delay: 1s;
+        }
+        .particle:nth-child(12) {
+            width: 4px;
+            height: 4px;
+            left: 4%;
+            animation-duration: 25s;
+            animation-delay: 8s;
+        }
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(105vh) scale(0.4);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.5;
+            }
+            85% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-5vh) scale(1);
+                opacity: 0;
+            }
+        }
+        .app {
+            position: relative;
+            z-index: 5;
+            max-width: 480px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .glass {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-premium), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            padding: 22px 18px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-premium);
+            overflow: hidden;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        .ai-logo {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(0, 200, 255, 0.4);
+            animation: rotateLogo 10s linear infinite;
+        }
+        .ai-logo .inner-core {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--violet);
+            box-shadow: 0 0 10px var(--violet);
+        }
+        @keyframes rotateLogo {
+            0% {
+                transform: rotate(0deg);
+                border-color: var(--blue);
+            }
+            50% {
+                border-color: var(--violet);
+            }
+            100% {
+                transform: rotate(360deg);
+                border-color: var(--blue);
+            }
+        }
+        .header-center {
+            text-align: center;
+        }
+        .header-center h1 {
+            font-size: 17px;
+            font-weight: 900;
+            font-family: var(--font-futuristic);
+            letter-spacing: 1.2px;
+            background: linear-gradient(135deg, var(--violet), var(--blue), var(--platinum));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            text-shadow: 0 0 25px rgba(139, 92, 255, 0.15);
+        }
+        .header-center span {
+            display: block;
+            font-size: 7.5px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-top: 3px;
+            font-family: var(--font-tech);
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--blue);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--blue);
+            animation: pulseBlueDot 1.4s infinite ease-in-out;
+        }
+        @keyframes pulseBlueDot {
+            0% {
+                opacity: 0.4;
+                transform: scale(0.85);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+                box-shadow: 0 0 16px var(--blue);
+            }
+            100% {
+                opacity: 0.4;
+                transform: scale(0.85);
+            }
+        }
+        .live-label {
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--blue);
+            letter-spacing: 1.5px;
+            font-family: var(--font-tech);
+        }
+        .energy-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, var(--violet), var(--blue), transparent);
+            background-size: 200% 100%;
+            animation: energyScan 3.5s linear infinite;
+        }
+        @keyframes energyScan {
+            0% {
+                background-position: -150% 0;
+            }
+            100% {
+                background-position: 150% 0;
+            }
+        }
+        .pred-card {
+            position: relative;
+            padding: 24px 20px 20px;
+            background: radial-gradient(circle at 50% 25%, rgba(139, 92, 255, 0.05), var(--bg-card) 75%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-premium);
+        }
+        .scan-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 35%, rgba(0, 200, 255, 0.06) 50%, transparent 65%);
+            background-size: 100% 200%;
+            animation: verticalScan 4.5s infinite linear;
+            pointer-events: none;
+        }
+        @keyframes verticalScan {
+            0% {
+                background-position: 0 -200%;
+            }
+            100% {
+                background-position: 0 200%;
+            }
+        }
+        .pred-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 2;
+        }
+        .pred-period {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.8px;
+            font-family: var(--font-futuristic);
+        }
+        .pred-period span {
+            color: var(--platinum);
+            font-weight: 800;
+            font-family: var(--font-tech);
+        }
+        .pred-timer {
+            font-size: 13px;
+            font-weight: 800;
+            font-family: var(--font-tech);
+            color: var(--blue);
+            background: rgba(0, 200, 255, 0.06);
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 200, 255, 0.18);
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.1);
+        }
+        .pred-result {
+            text-align: center;
+            margin: 12px 0 8px;
+            position: relative;
+            z-index: 2;
+        }
+        .pred-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            font-family: var(--font-tech);
+        }
+        .pred-value {
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+            font-family: var(--font-futuristic);
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .pred-value.big {
+            color: var(--violet);
+            text-shadow: 0 0 35px rgba(139, 92, 255, 0.6), 0 0 70px rgba(139, 92, 255, 0.2);
+            animation: valuePulseViolet 2s infinite alternate ease-in-out;
+        }
+        .pred-value.small {
+            color: var(--blue);
+            text-shadow: 0 0 35px rgba(0, 200, 255, 0.6), 0 0 70px rgba(0, 200, 255, 0.2);
+            animation: valuePulseBlue 2s infinite alternate ease-in-out;
+        }
+        .pred-value.dragon {
+            color: var(--platinum);
+            text-shadow: 0 0 35px rgba(244, 247, 255, 0.6), 0 0 75px rgba(139, 92, 255, 0.3);
+            animation: valuePulsePlatinum 1.6s infinite alternate;
+            font-size: 34px;
+        }
+        .pred-value.wait {
+            color: var(--text-secondary);
+            opacity: 0.5;
+            font-size: 28px;
+        }
+        @keyframes valuePulseViolet {
+            0% {
+                text-shadow: 0 0 25px rgba(139, 92, 255, 0.35);
+            }
+            100% {
+                text-shadow: 0 0 45px rgba(139, 92, 255, 0.75), 0 0 80px rgba(139, 92, 255, 0.25);
+            }
+        }
+        @keyframes valuePulseBlue {
+            0% {
+                text-shadow: 0 0 25px rgba(0, 200, 255, 0.35);
+            }
+            100% {
+                text-shadow: 0 0 45px rgba(0, 200, 255, 0.75), 0 0 80px rgba(0, 200, 255, 0.25);
+            }
+        }
+        @keyframes valuePulsePlatinum {
+            0% {
+                text-shadow: 0 0 25px rgba(244, 247, 255, 0.35);
+            }
+            100% {
+                text-shadow: 0 0 45px rgba(244, 247, 255, 0.75), 0 0 80px rgba(139, 92, 255, 0.35);
+            }
+        }
+        .target-numbers {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin: 16px 0 10px;
+            position: relative;
+            z-index: 2;
+        }
+        .num-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: var(--radius-md);
+            padding: 8px 14px;
+            text-align: center;
+            min-width: 110px;
+            transition: all 0.3s;
+        }
+        .num-card.main {
+            border-color: rgba(139, 92, 255, 0.25);
+            background: rgba(139, 92, 255, 0.04);
+        }
+        .num-card.opp {
+            border-color: rgba(0, 200, 255, 0.25);
+            background: rgba(0, 200, 255, 0.04);
+        }
+        .num-card .lbl {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
+            font-family: var(--font-tech);
+        }
+        .num-card .val {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--platinum);
+            font-family: var(--font-tech);
+        }
+        .num-card.main .val {
+            color: var(--violet);
+            text-shadow: 0 0 15px rgba(139, 92, 255, 0.35);
+        }
+        .num-card.opp .val {
+            color: var(--blue);
+            text-shadow: 0 0 15px rgba(0, 200, 255, 0.35);
+        }
+        .conf-section {
+            margin: 12px 0 8px;
+            position: relative;
+            z-index: 2;
+        }
+        .conf-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 0.8px;
+            margin-bottom: 5px;
+            font-family: var(--font-tech);
+        }
+        .conf-track {
+            width: 100%;
+            height: 7px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .conf-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--violet), var(--blue), var(--platinum));
+            border-radius: 20px;
+            transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 0 15px rgba(139, 92, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .conf-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: progressShimmer 2.2s infinite linear;
+            background-size: 200% 100%;
+        }
+        @keyframes progressShimmer {
+            0% {
+                background-position: -150% 0;
+            }
+            100% {
+                background-position: 150% 0;
+            }
+        }
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 12px 0 2px;
+            position: relative;
+            z-index: 2;
+        }
+        .btn {
+            padding: 12px 6px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--font-futuristic);
+            font-weight: 700;
+            font-size: 9.5px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--platinum);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn i {
+            font-size: 11px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(139, 92, 255, 0.25);
+            background: rgba(139, 92, 255, 0.05);
+            box-shadow: 0 8px 20px rgba(139, 92, 255, 0.1);
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .btn-primary {
+            background: rgba(139, 92, 255, 0.06);
+            border-color: rgba(139, 92, 255, 0.2);
+        }
+        .btn-primary i {
+            color: var(--violet);
+        }
+        .btn-primary:hover {
+            border-color: var(--violet);
+            background: rgba(139, 92, 255, 0.12);
+            box-shadow: 0 8px 24px rgba(139, 92, 255, 0.2);
+        }
+        .btn-gold {
+            background: rgba(0, 200, 255, 0.06);
+            border-color: rgba(0, 200, 255, 0.2);
+        }
+        .btn-gold i {
+            color: var(--blue);
+        }
+        .btn-gold:hover {
+            border-color: var(--blue);
+            background: rgba(0, 200, 255, 0.12);
+            box-shadow: 0 8px 24px rgba(0, 200, 255, 0.2);
+        }
+        .chart-section {
+            padding: 18px 16px;
+            border-radius: var(--radius-xl);
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-premium);
+            overflow: hidden;
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            font-family: var(--font-futuristic);
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            margin-bottom: 12px;
+        }
+        .chart-header i {
+            color: var(--violet);
+            margin-right: 6px;
+        }
+        .chart-header .badge {
+            font-size: 9px;
+            background: rgba(0, 200, 255, 0.08);
+            padding: 2px 10px;
+            border-radius: 20px;
+            color: var(--blue);
+            border: 1px solid rgba(0, 200, 255, 0.15);
+            font-family: var(--font-tech);
+        }
+        .candle-container {
+            position: relative;
+            width: 100%;
+            height: 140px;
+            overflow: hidden;
+            border-radius: var(--radius-sm);
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+        #candleCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .candle-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 0 4px;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            font-family: var(--font-tech);
+        }
+        .candle-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dot-indicator {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot-indicator.purple {
+            background-color: var(--violet);
+            box-shadow: 0 0 8px var(--violet);
+        }
+        .dot-indicator.blue {
+            background-color: var(--blue);
+            box-shadow: 0 0 8px var(--blue);
+        }
+        .dot-indicator.platinum {
+            background-color: var(--platinum);
+            box-shadow: 0 0 8px var(--platinum);
+        }
+        .candle-stats span strong {
+            color: var(--platinum);
+            font-weight: 800;
+        }
+        .candle-stats .up {
+            color: var(--violet);
+        }
+        .candle-stats .down {
+            color: var(--blue);
+        }
+        .candle-stats .neutral {
+            color: var(--platinum);
+        }
+        .history-card {
+            padding: 18px 14px;
+            border-radius: var(--radius-xl);
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-premium);
+        }
+        .history-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            font-family: var(--font-futuristic);
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            margin-bottom: 12px;
+        }
+        .history-title i {
+            color: var(--blue);
+            margin-right: 6px;
+        }
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 340px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .history-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--violet);
+            border-radius: 6px;
+        }
+        .hist-item {
+            display: grid;
+            grid-template-columns: 1.2fr 0.9fr 0.9fr 1.3fr;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            border-left: 3px solid transparent;
+            animation: slideUp 0.35s ease-out;
+            transition: all 0.2s;
+        }
+        .hist-item.win {
+            border-left-color: var(--violet);
+            background: rgba(139, 92, 255, 0.03);
+        }
+        .hist-item.loss {
+            border-left-color: var(--blue);
+            background: rgba(0, 200, 255, 0.02);
+        }
+        .hist-item.jackpot {
+            border-left-color: var(--platinum);
+            background: rgba(244, 247, 255, 0.04);
+            box-shadow: 0 0 15px rgba(244, 247, 255, 0.02);
+        }
+        .hist-item.dragon {
+            border-left-color: var(--violet);
+            background: rgba(139, 92, 255, 0.04);
+            box-shadow: 0 0 15px rgba(139, 92, 255, 0.03);
+        }
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(14px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .hist-period {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-variant-numeric: tabular-nums;
+            font-family: var(--font-tech);
+        }
+        .hist-pred {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-family: var(--font-futuristic);
+        }
+        .hist-pred.big {
+            color: var(--violet);
+        }
+        .hist-pred.small {
+            color: var(--blue);
+        }
+        .hist-pred.dragon {
+            color: var(--platinum);
+        }
+        .hist-number {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--platinum);
+            text-align: center;
+            font-family: var(--font-tech);
+        }
+        .hist-number.jackpot-num {
+            color: var(--platinum);
+            text-shadow: 0 0 15px rgba(244, 247, 255, 0.5);
+            font-size: 16px;
+        }
+        .hist-status {
+            font-size: 9px;
+            font-weight: 700;
+            text-align: right;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: var(--font-tech);
+        }
+        .hist-status.win {
+            color: var(--violet);
+            text-shadow: 0 0 12px rgba(139, 92, 255, 0.2);
+        }
+        .hist-status.loss {
+            color: var(--blue);
+        }
+        .hist-status.jackpot {
+            color: var(--platinum);
+            text-shadow: 0 0 15px rgba(244, 247, 255, 0.3);
+            font-size: 9px;
+        }
+        .hist-status.dragon {
+            color: var(--violet);
+            text-shadow: 0 0 15px rgba(139, 92, 255, 0.3);
+            font-size: 9px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .stat-item {
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: var(--radius-sm);
+            padding: 10px 4px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: all 0.3s;
+        }
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(139, 92, 255, 0.15);
+        }
+        .stat-item .num {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--platinum);
+            font-family: var(--font-tech);
+        }
+        .stat-item .label {
+            font-size: 7.5px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 4px;
+            font-family: var(--font-tech);
+        }
+        .stat-item.gold .num {
+            color: var(--platinum);
+            text-shadow: 0 0 10px rgba(244, 247, 255, 0.3);
+        }
+        .stat-item.red .num {
+            color: var(--violet);
+            text-shadow: 0 0 10px rgba(139, 92, 255, 0.3);
+        }
+        .stat-item.blue .num {
+            color: var(--blue);
+            text-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+        }
+        .stat-item.orange .num {
+            color: var(--violet);
+        }
+        .view-hidden {
+            display: none !important;
+        }
+        #winOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s ease-out;
+            background: rgba(5, 6, 10, 0.88);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+        #winOverlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .win-burst {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at center, rgba(139, 92, 255, 0.18), transparent 70%);
+        }
+        .win-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease-out;
+        }
+        #winOverlay.active .win-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .win-content .win-emoji {
+            font-size: 72px;
+            display: block;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 35px rgba(139, 92, 255, 0.6));
+            animation: emojiFloat 1.5s infinite alternate ease-in-out;
+        }
+        @keyframes emojiFloat {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                transform: translateY(-12px) scale(1.05);
+            }
+        }
+        .win-content .win-text {
+            font-size: 40px;
+            font-weight: 900;
+            color: var(--platinum);
+            text-shadow: 0 0 30px rgba(139, 92, 255, 0.8), 0 0 60px rgba(0, 200, 255, 0.4);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-family: var(--font-futuristic);
+        }
+        .win-content .win-sub {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--blue);
+            margin-top: 6px;
+            letter-spacing: 5px;
+            opacity: 0.9;
+            font-family: var(--font-tech);
+        }
+        .win-content .win-stats {
+            margin-top: 18px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            font-family: var(--font-tech);
+        }
+        .win-content .win-stats strong {
+            color: var(--violet);
+            font-weight: 800;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3);
+                opacity: 0;
+            }
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 24px);
+            max-width: 440px;
+            background: rgba(5, 6, 10, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(139, 92, 255, 0.12);
+            border-radius: 40px;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 10px;
+            z-index: 100;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.9);
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            color: var(--text-secondary);
+            font-size: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 8px 14px;
+            border-radius: 30px;
+            transition: all 0.25s;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-family: var(--font-tech);
+        }
+        .nav-item i {
+            font-size: 16px;
+            transition: all 0.25s;
+        }
+        .nav-item.active {
+            color: var(--platinum);
+            background: rgba(139, 92, 255, 0.12);
+            border: 1px solid rgba(139, 92, 255, 0.2);
+        }
+        .nav-item.active i {
+            color: var(--violet);
+            text-shadow: 0 0 15px var(--violet-glow);
+        }
+
+        /* ===== LOGIN SCREEN — FIXED ===== */
+        #loginOverlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-deep);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+            transition: opacity 0.6s ease-out;
+        }
+        #loginOverlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .login-box {
+            background: rgba(9, 11, 18, 0.85);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 44px 32px;
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-premium), 0 0 40px rgba(139, 92, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .login-box::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: var(--radius-xl);
+            padding: 1px;
+            background: linear-gradient(135deg, var(--violet), var(--blue), transparent, var(--violet));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.4;
+            animation: spinBorder 8s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes spinBorder {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .login-box h2 {
+            font-size: 26px;
+            font-weight: 900;
+            font-family: var(--font-futuristic);
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--violet), var(--blue), var(--platinum));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+        }
+        .login-box .sub {
+            color: var(--text-secondary);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-family: var(--font-tech);
+        }
+        .login-box .hint {
+            font-size: 8.5px;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            margin: -8px 0 16px 0;
+            font-family: var(--font-tech);
+            opacity: 0.6;
+        }
+        .login-box .hint i {
+            color: var(--violet);
+            margin-right: 4px;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 16px 18px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-md);
+            color: var(--platinum);
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 24px;
+            font-family: var(--font-tech);
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        .login-box input:focus {
+            border-color: var(--violet);
+            box-shadow: 0 0 25px rgba(139, 92, 255, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .login-box input::placeholder {
+            color: rgba(255, 255, 255, 0.18);
+            font-weight: 500;
+            letter-spacing: 1.5px;
+        }
+        .login-box .btn-login {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            background: linear-gradient(135deg, var(--violet), var(--violet-dark));
+            border-radius: var(--radius-md);
+            color: var(--platinum);
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 8px 30px rgba(139, 92, 255, 0.3);
+            font-family: var(--font-futuristic);
+        }
+        .login-box .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(139, 92, 255, 0.45);
+            background: linear-gradient(135deg, var(--violet), var(--blue));
+        }
+        .login-box .btn-login:active {
+            transform: scale(0.97);
+        }
+        .login-box .btn-login:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .login-box .premium-badge {
+            margin-top: 26px;
+            font-size: 8px;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 20px;
+            font-family: var(--font-tech);
+        }
+        .login-box .premium-badge i {
+            color: var(--blue);
+            margin-right: 6px;
+        }
+        .login-error {
+            color: #ff6b8a;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-top: -16px;
+            margin-bottom: 16px;
+            font-family: var(--font-tech);
+            opacity: 0;
+            transition: opacity 0.25s;
+            min-height: 18px;
+        }
+        .login-error.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 420px) {
+            .header-center h1 {
+                font-size: 15px;
+            }
+            .pred-value {
+                font-size: 38px;
+            }
+            .btn {
+                font-size: 8.5px;
+                padding: 11px 4px;
+            }
+            .hist-item {
+                grid-template-columns: 1.1fr 0.8fr 0.8fr 1.1fr;
+                padding: 7px 8px;
+            }
+            .hist-period {
+                font-size: 9px;
+            }
+            .hist-pred {
+                font-size: 10px;
+            }
+            .hist-number {
+                font-size: 11px;
+            }
+            .candle-container {
+                height: 115px;
+            }
+            .win-content .win-emoji {
+                font-size: 56px;
+            }
+            .win-content .win-text {
+                font-size: 28px;
+            }
+        }
+        @media (max-width: 360px) {
+            .pred-value {
+                font-size: 32px;
+            }
+            .btn-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .btn-row .btn:last-child {
+                grid-column: span 2;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .target-numbers {
+                gap: 8px;
+            }
+            .num-card {
+                min-width: 80px;
+                padding: 6px 10px;
+            }
+            .num-card .val {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== FUTURISTIC BACKGROUND ===== -->
+    <div class="void-bg">
+        <div class="grid-layer"></div>
+        <div class="aurora-violet"></div>
+        <div class="aurora-blue"></div>
+        <div class="particles-layer">
+            <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+            <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+            <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+            <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+        </div>
+    </div>
+
+    <!-- ===== WIN OVERLAY ===== -->
+    <div id="winOverlay">
+        <div class="win-burst"></div>
+        <div class="win-content">
+            <span class="win-emoji">💎</span>
+            <div class="win-text">JACKPOT!</div>
+            <div class="win-sub">⚡ PREDICTION HIT ⚡</div>
+            <div class="win-stats">+<strong id="winStreakBonus">1</strong> STREAK · <strong id="winAccBonus">100%</strong> ACC</div>
+        </div>
+    </div>
+
+    <!-- ===== LOGIN — FIXED ===== -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h2>ZONITH V3 AI</h2>
+            <div class="sub">SECURE AI ACCESS</div>
+            <input type="password" id="loginKey" placeholder="ENTER CORE KEY" autocomplete="off" />
+            <div class="login-error" id="loginError">❌ INVALID CORE KEY</div>
+            <div class="hint"><i class="fas fa-key"></i> use: ZONITH MODS · admin · 1234</div>
+            <button class="btn-login" id="loginBtn">UNLOCK CORE</button>
+            <div class="premium-badge"><i class="fas fa-shield-halved"></i> SYSTEM SECURITY VERIFIED</div>
+        </div>
+    </div>
+
+    <!-- ===== APP ===== -->
+    <div class="app" id="app">
+
+        <header class="header">
+            <div class="header-left">
+                <div class="ai-logo"><div class="inner-core"></div></div>
+            </div>
+            <div class="header-center">
+                <h1>ZONITH V3 AI</h1>
+                <span>PRIME ENGINE v4.0</span>
+            </div>
+            <div class="header-right">
+                <span class="live-dot"></span>
+                <span class="live-label">LIVE</span>
+            </div>
+            <div class="energy-line"></div>
+        </header>
+
+        <div class="glass pred-card" id="predCard">
+            <div class="scan-overlay"></div>
+            <div class="pred-top">
+                <div class="pred-period">PERIOD <span id="periodDisplay">---</span></div>
+                <div class="pred-timer" id="timerDisplay">00:00</div>
+            </div>
+            <div class="pred-result">
+                <div class="pred-label">AI PREDICTION</div>
+                <div class="pred-value wait" id="predValue">WAIT</div>
+            </div>
+            <div class="target-numbers">
+                <div class="num-card main">
+                    <span class="lbl">PRIMARY NUM</span>
+                    <span class="val" id="numMain">-</span>
+                </div>
+                <div class="num-card opp">
+                    <span class="lbl">SECONDARY NUM</span>
+                    <span class="val" id="numOpp">-</span>
+                </div>
+            </div>
+            <div class="conf-section">
+                <div class="conf-header">
+                    <span>AI CONFIDENCE</span>
+                    <span id="confPercent">0%</span>
+                </div>
+                <div class="conf-track">
+                    <div class="conf-fill" id="confFill" style="width:0%;"></div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-primary" id="syncBtn"><i class="fas fa-sync-alt"></i> SYNC</button>
+                <button class="btn" id="resetBtn"><i class="fas fa-undo-alt"></i> RESET</button>
+                <button class="btn btn-gold" id="copyBtn"><i class="fas fa-copy"></i> COPY</button>
+            </div>
+        </div>
+
+        <div class="chart-section" id="chartSection">
+            <div class="chart-header">
+                <span><i class="fas fa-chart-line"></i> ENGINE FREQUENCY MATRIX</span>
+                <span class="badge"><i class="fas fa-circle" style="color:var(--blue);font-size:8px;margin-right:4px;"></i> LIVE FEED</span>
+            </div>
+            <div class="candle-container">
+                <canvas id="candleCanvas"></canvas>
+            </div>
+            <div class="candle-stats">
+                <span><span class="dot-indicator purple"></span>WINS <strong class="up" id="chartWins">0</strong></span>
+                <span><span class="dot-indicator blue"></span>LOSSES <strong class="down" id="chartLosses">0</strong></span>
+                <span><span class="dot-indicator platinum"></span>STREAK <strong class="neutral" id="chartStreak">0</strong></span>
+                <span>📊 ACC <strong id="chartAcc">0%</strong></span>
+            </div>
+        </div>
+
+        <div class="history-card" id="historyCard">
+            <div class="history-title">
+                <span><i class="fas fa-scroll"></i> DECRYPTION HISTORY</span>
+                <span id="histCount" style="font-weight:400; opacity:0.4; font-size:10px;">0</span>
+            </div>
+            <div class="history-list" id="historyList"></div>
+        </div>
+
+        <div class="glass view-hidden" id="statsCard" style="padding:18px 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <span style="font-weight:700; font-size:13px; color:var(--violet); letter-spacing:1px; font-family:var(--font-futuristic);"><i class="fas fa-chart-pie" style="color:var(--blue);margin-right:8px;"></i>ANALYTICS SYSTEM</span>
+                <span style="font-size:10px; color:var(--blue); font-weight:700; font-family:var(--font-tech);">LIVE UPDATING</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item red"><div class="num" id="statWins">0</div><div class="label">WINS</div></div>
+                <div class="stat-item blue"><div class="num" id="statLosses">0</div><div class="label">LOSSES</div></div>
+                <div class="stat-item gold"><div class="num" id="statJackpots">0</div><div class="label">JACKPOTS</div></div>
+                <div class="stat-item orange"><div class="num" id="statAccuracy">0%</div><div class="label">ACCURACY</div></div>
+                <div class="stat-item red"><div class="num" id="statDragon">0</div><div class="label">PRIME PATTERNS</div></div>
+                <div class="stat-item orange"><div class="num" id="statDragonRate">0%</div><div class="label">PATTERN %</div></div>
+            </div>
+            <div style="margin-top:14px; display:flex; justify-content:space-between; font-size:10px; color:var(--text-secondary); border-top:1px solid rgba(255,255,255,0.03); padding-top:12px; font-family:var(--font-tech);">
+                <span>STREAK: <strong id="statStreak" style="color:var(--platinum);font-weight:700;">0</strong></span>
+                <span>TOTAL EVALUATED: <strong id="statTotal" style="color:var(--platinum);font-weight:700;">0</strong></span>
+            </div>
+        </div>
+
+        <div class="glass view-hidden" id="profileCard" style="padding:22px 18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <span style="font-weight:700; font-size:14px; color:var(--violet); letter-spacing:1px; font-family:var(--font-futuristic);"><i class="fas fa-shield-halved" style="color:var(--blue);margin-right:8px;"></i>SYSTEM SECURITY</span>
+                <span style="font-size:10px; color:var(--blue); font-weight:700; letter-spacing:1px; background:rgba(0,200,255,0.1); padding:2px 8px; border-radius:12px;">ACTIVE</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px; font-family:var(--font-main);">
+                <div style="display:flex; justify-content:space-between; font-size:12px; border-bottom:1px solid rgba(255,255,255,0.03); padding-bottom:8px;">
+                    <span style="color:var(--text-secondary);">SECURITY LEVEL</span>
+                    <span style="color:var(--platinum); font-weight:700;">QUANTUM v4.0</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; border-bottom:1px solid rgba(255,255,255,0.03); padding-bottom:8px;">
+                    <span style="color:var(--text-secondary);">DECRYPTION RATE</span>
+                    <span style="color:var(--blue); font-weight:700;">99.8% ACC</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; border-bottom:1px solid rgba(255,255,255,0.03); padding-bottom:8px;">
+                    <span style="color:var(--text-secondary);">LATENCY GATE</span>
+                    <span style="color:var(--violet); font-weight:700;">12ms</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:12px;">
+                    <span style="color:var(--text-secondary);">CREDENTIAL ENGINE</span>
+                    <span style="color:#22c55e; font-weight:700;">VERIFIED ACCREDITED</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav" id="bottomNav">
+            <button class="nav-item active" data-tab="dashboard"><i class="fas fa-terminal"></i><span>Core</span></button>
+            <button class="nav-item" data-tab="history"><i class="fas fa-clock-rotate-left"></i><span>History</span></button>
+            <button class="nav-item" data-tab="stats"><i class="fas fa-chart-simple"></i><span>Stats</span></button>
+            <button class="nav-item" data-tab="profile"><i class="fas fa-shield-halved"></i><span>System</span></button>
+        </nav>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const API_URL = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json";
+
+            // ===== LOGIN — FIXED: multiple valid keys =====
+            const VALID_KEYS = [
+                "PANDA",
+                "ZONITHMODS",
+                "admin",
+                "1234"
+            ];
+
+            // DOM refs
+            const predValue = document.getElementById('predValue');
+            const periodDisplay = document.getElementById('periodDisplay');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const confFill = document.getElementById('confFill');
+            const confPercent = document.getElementById('confPercent');
+            const historyList = document.getElementById('historyList');
+            const histCount = document.getElementById('histCount');
+            const numMain = document.getElementById('numMain');
+            const numOpp = document.getElementById('numOpp');
+            const statWins = document.getElementById('statWins');
+            const statLosses = document.getElementById('statLosses');
+            const statJackpots = document.getElementById('statJackpots');
+            const statAccuracy = document.getElementById('statAccuracy');
+            const statStreak = document.getElementById('statStreak');
+            const statTotal = document.getElementById('statTotal');
+            const statDragon = document.getElementById('statDragon');
+            const statDragonRate = document.getElementById('statDragonRate');
+            const statsCard = document.getElementById('statsCard');
+            const profileCard = document.getElementById('profileCard');
+            const chartWins = document.getElementById('chartWins');
+            const chartLosses = document.getElementById('chartLosses');
+            const chartStreak = document.getElementById('chartStreak');
+            const chartAcc = document.getElementById('chartAcc');
+            const winOverlay = document.getElementById('winOverlay');
+            const winStreakBonus = document.getElementById('winStreakBonus');
+            const winAccBonus = document.getElementById('winAccBonus');
+            const canvas = document.getElementById('candleCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Login elements
+            const loginOverlay = document.getElementById('loginOverlay');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginKey = document.getElementById('loginKey');
+            const loginError = document.getElementById('loginError');
+
+            // State
+            let lastPeriod = null;
+            let currentPrediction = null;
+            let currentMainNum = null;
+            let currentOppNum = null;
+            let currentConf = 0;
+            let total = 0,
+                wins = 0,
+                losses = 0,
+                jackpots = 0,
+                streak = 0,
+                accuracy = 0;
+            let dragonCount = 0;
+            let dragonTotal = 0;
+            let pendingPrediction = null;
+            let pendingMainNum = null;
+            let pendingOppNum = null;
+            let pendingPeriod = null;
+            let pendingDragon = false;
+            const resultHistory = [];
+            const candleData = [];
+            const MAX_CANDLES = 40;
+            let loginAttempts = 0;
+
+            // ===== CANVAS SETUP =====
+            function resizeCanvas() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = rect.width * dpr;
+                canvas.height = rect.height * dpr;
+                canvas.style.width = rect.width + 'px';
+                canvas.style.height = rect.height + 'px';
+                ctx.scale(dpr, dpr);
+                drawCandles();
+            }
+
+            function drawCandles() {
+                const w = canvas.width / (window.devicePixelRatio || 1);
+                const h = canvas.height / (window.devicePixelRatio || 1);
+                ctx.clearRect(0, 0, w, h);
+                if (candleData.length === 0) {
+                    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+                    ctx.font = '12px Space Grotesk, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('⏳ initializing system analysis...', w / 2, h / 2 + 4);
+                    return;
+                }
+                const padding = { top: 8, bottom: 8, left: 6, right: 6 };
+                const chartW = w - padding.left - padding.right;
+                const chartH = h - padding.top - padding.bottom;
+                const maxVal = 10,
+                    minVal = 0;
+                const candleWidth = Math.min(chartW / candleData.length * 0.7, 18);
+                const gap = Math.max(1, (chartW / candleData.length) * 0.3);
+                let x = padding.left + gap / 2;
+                for (let i = 0; i < candleData.length; i++) {
+                    const d = candleData[i];
+                    const value = d.value;
+                    const isWin = d.isWin;
+                    const isJackpot = d.isJackpot || false;
+                    const y0 = padding.top + chartH - ((value - minVal) / (maxVal - minVal)) * chartH;
+                    const yBase = padding.top + chartH;
+                    const cw = candleWidth;
+                    const color = isJackpot ? '#F4F7FF' : (isWin ? '#8B5CFF' : '#00C8FF');
+                    const glow = isJackpot ? 'rgba(244,247,255,0.3)' : (isWin ? 'rgba(139,92,255,0.25)' :
+                        'rgba(0,200,255,0.25)');
+                    ctx.shadowColor = glow;
+                    ctx.shadowBlur = isJackpot ? 16 : 8;
+                    const bodyH = Math.max(2, yBase - y0);
+                    const radius = 2;
+                    ctx.beginPath();
+                    ctx.roundRect(x - cw / 2, y0, cw, bodyH, radius);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                    ctx.beginPath();
+                    ctx.moveTo(x, y0 - 3);
+                    ctx.lineTo(x, y0 + bodyH + 3);
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 1.2;
+                    ctx.stroke();
+                    if (isJackpot) {
+                        ctx.shadowColor = 'rgba(244,247,255,0.6)';
+                        ctx.shadowBlur = 20;
+                        ctx.beginPath();
+                        ctx.arc(x, y0 - 4, 4, 0, Math.PI * 2);
+                        ctx.fillStyle = '#F4F7FF';
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                    }
+                    ctx.shadowBlur = 0;
+                    if (i % 5 === 0 || i === candleData.length - 1) {
+                        ctx.fillStyle = 'rgba(255,255,255,0.15)';
+                        ctx.font = '7px Orbitron, sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText((d.period || '').slice(-3), x, h - 2);
+                    }
+                    x += candleWidth + gap;
+                }
+                ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+                ctx.lineWidth = 0.5;
+                for (let v = 2; v <= 8; v += 2) {
+                    const y = padding.top + chartH - ((v - minVal) / (maxVal - minVal)) * chartH;
+                    ctx.beginPath();
+                    ctx.moveTo(padding.left, y);
+                    ctx.lineTo(w - padding.right, y);
+                    ctx.stroke();
+                    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+                    ctx.font = '6px Orbitron, sans-serif';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(v, padding.left + 2, y - 2);
+                }
+            }
+
+            if (!CanvasRenderingContext2D.prototype.roundRect) {
+                CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                    if (r > w / 2) r = w / 2;
+                    if (r > h / 2) r = h / 2;
+                    this.moveTo(x + r, y);
+                    this.arcTo(x + w, y, x + w, y + h, r);
+                    this.arcTo(x + w, y + h, x, y + h, r);
+                    this.arcTo(x, y + h, x, y, r);
+                    this.arcTo(x, y, x + w, y, r);
+                    return this;
+                };
+            }
+
+            // ===== AI PATTERN DETECTOR =====
+            function checkDragon(results) {
+                if (results.length < 6) return { signal: "WAIT", next: null, msg: "Analyzing..." };
+                const last6 = results.slice(-6);
+                if (last6[0] === "BIG" && last6[1] === "BIG" && last6[2] === "BIG" &&
+                    last6[3] === "SMALL" && last6[4] === "SMALL" && last6[5] === "BIG") {
+                    return { signal: "DRAGON_UP", next: "SMALL", msg: "🔮 REVERSE PATTERN → SMALL" };
+                }
+                if (last6[0] === "SMALL" && last6[1] === "SMALL" && last6[2] === "SMALL" &&
+                    last6[3] === "BIG" && last6[4] === "BIG" && last6[5] === "SMALL") {
+                    return { signal: "DRAGON_DOWN", next: "BIG", msg: "🔮 REVERSE PATTERN → BIG" };
+                }
+                if (results.length >= 5) {
+                    const last5 = results.slice(-5);
+                    if (last5[0] === "BIG" && last5[1] === "BIG" && last5[2] === "BIG" && last5[3] === "SMALL" && last5[4] ===
+                        "SMALL") {
+                        return { signal: "DRAGON_FORMING", next: "BIG", msg: "⚡ VOID FORWARD → BIG" };
+                    }
+                    if (last5[0] === "SMALL" && last5[1] === "SMALL" && last5[2] === "SMALL" && last5[3] === "BIG" && last5[4] ===
+                        "BIG") {
+                        return { signal: "DRAGON_FORMING", next: "SMALL", msg: "⚡ VOID FORWARD → SMALL" };
+                    }
+                }
+                return { signal: "NO_DRAGON", next: null, msg: "🧬 GRID DETECTED" };
+            }
+
+            // ===== PREDICTION ENGINE =====
+            function runEngine(list) {
+                const nums = list.slice(0, 12).map(x => parseInt(x.number));
+                const lastNum = nums[0] !== undefined ? nums[0] : 0;
+                const cats = nums.map(n => n >= 5 ? 'BIG' : 'SMALL');
+                if (cats.length > 0) {
+                    resultHistory.push(cats[0]);
+                    if (resultHistory.length > 40) resultHistory.shift();
+                }
+                let pred = 'BIG';
+                let conf = 72;
+                let isDragon = false;
+                let dragonSignal = null;
+                const dragon = checkDragon(resultHistory);
+                if (dragon.signal === "DRAGON_UP" || dragon.signal === "DRAGON_DOWN") {
+                    pred = dragon.next;
+                    conf = 94;
+                    isDragon = true;
+                    dragonSignal = dragon.msg;
+                    dragonCount++;
+                    dragonTotal++;
+                } else if (dragon.signal === "DRAGON_FORMING") {
+                    pred = dragon.next;
+                    conf = 84;
+                    isDragon = true;
+                    dragonSignal = dragon.msg;
+                    dragonTotal++;
+                } else {
+                    dragonTotal++;
+                    const last3 = cats.slice(0, 3);
+                    const last4 = cats.slice(0, 4);
+                    const last5 = cats.slice(0, 5);
+                    if (last3.length >= 3 && last3[0] === last3[1] && last3[1] === last3[2]) {
+                        pred = (last3[0] === 'BIG') ? 'SMALL' : 'BIG';
+                        conf = 88;
+                    } else if (last4.length >= 4 && last4[0] === last4[1] && last4[1] === last4[2] && last4[2] !== last4[3]) {
+                        pred = (last4[3] === 'BIG') ? 'SMALL' : 'BIG';
+                        conf = 82;
+                    } else if (last5.length >= 5 && last5[0] === last5[1] && last5[2] === last5[3] && last5[4] === last5[0]) {
+                        pred = (last5[0] === 'BIG') ? 'SMALL' : 'BIG';
+                        conf = 80;
+                    } else if (last3.length >= 2 && last3[0] === last3[1]) {
+                        pred = (last3[0] === 'BIG') ? 'SMALL' : 'BIG';
+                        conf = 76;
+                    } else if (cats.length > 0) {
+                        pred = (cats[0] === 'BIG') ? 'SMALL' : 'BIG';
+                        conf = 72;
+                    }
+                    if (cats.length > 2) {
+                        const recent = cats.slice(0, 5);
+                        const bigCount = recent.filter(c => c === 'BIG').length;
+                        const smallCount = recent.filter(c => c === 'SMALL').length;
+                        if (bigCount >= 4) { pred = 'SMALL';
+                            conf += 6; }
+                        if (smallCount >= 4) { pred = 'BIG';
+                            conf += 6; }
+                    }
+                }
+                let mainN, oppN;
+                if (pred === 'BIG') {
+                    mainN = 5 + ((lastNum * 3 + 2 + Math.floor(Math.random() * 2)) % 5);
+                    oppN = 0 + ((lastNum * 2 + 1 + Math.floor(Math.random() * 2)) % 5);
+                } else {
+                    mainN = 0 + ((lastNum * 3 + 2 + Math.floor(Math.random() * 2)) % 5);
+                    oppN = 5 + ((lastNum * 2 + 1 + Math.floor(Math.random() * 2)) % 5);
+                }
+                mainN = Math.min(Math.max(mainN, 0), 9);
+                oppN = Math.min(Math.max(oppN, 0), 9);
+                return {
+                    prediction: pred,
+                    mainNum: mainN,
+                    oppNum: oppN,
+                    confidence: Math.min(conf, 98),
+                    isDragon,
+                    dragonSignal,
+                    algo: 'PRIME v4.0'
+                };
+            }
+
+            // ===== PROCESS DATA =====
+            function processData(list) {
+                const current = list[0];
+                const period = current.issueNumber;
+                const number = parseInt(current.number);
+                const cat = number >= 5 ? 'BIG' : 'SMALL';
+                if (lastPeriod !== period) {
+                    if (pendingPeriod && pendingPrediction) {
+                        const isNumHit = (number === pendingMainNum || number === pendingOppNum);
+                        const isCatWin = (pendingPrediction === cat);
+                        const wasDragon = pendingDragon || false;
+                        total++;
+                        let status = 'LOSS';
+                        let isJackpot = false;
+                        if (isNumHit) {
+                            jackpots++;
+                            wins++;
+                            streak = streak >= 0 ? streak + 1 : 1;
+                            status = 'JACKPOT';
+                            isJackpot = true;
+                            triggerWinAnimation('JACKPOT', number, pendingPrediction);
+                        } else if (isCatWin) {
+                            wins++;
+                            streak = streak >= 0 ? streak + 1 : 1;
+                            status = 'WIN';
+                            triggerWinAnimation('WIN', number, pendingPrediction);
+                        } else {
+                            losses++;
+                            streak = streak <= 0 ? streak - 1 : -1;
+                            status = 'LOSS';
+                        }
+                        const value = isJackpot ? 10 : (isCatWin ? number : 10 - number);
+                        candleData.push({
+                            value: isJackpot ? 10 : (isCatWin ? Math.min(number + 2, 10) : Math.max(number - 2, 0)),
+                            isWin: isCatWin || isJackpot,
+                            isJackpot: isJackpot,
+                            period: pendingPeriod,
+                            number: number
+                        });
+                        if (candleData.length > MAX_CANDLES) candleData.shift();
+                        drawCandles();
+                        accuracy = total > 0 ? Math.round((wins / total) * 100) : 0;
+                        addHistory(pendingPeriod, pendingPrediction, number, status, wasDragon);
+                        updateStats();
+                        updateChartStats();
+                    }
+                    lastPeriod = period;
+                    const nextPeriod = (BigInt(period) + 1n).toString();
+                    periodDisplay.textContent = nextPeriod.slice(-6);
+                    const result = runEngine(list);
+                    currentPrediction = result.prediction;
+                    currentMainNum = result.mainNum;
+                    currentOppNum = result.oppNum;
+                    currentConf = result.confidence;
+                    pendingDragon = result.isDragon;
+                    pendingPrediction = currentPrediction;
+                    pendingMainNum = currentMainNum;
+                    pendingOppNum = currentOppNum;
+                    pendingPeriod = nextPeriod;
+                    numMain.textContent = currentMainNum;
+                    numOpp.textContent = currentOppNum;
+                    if (result.isDragon) {
+                        predValue.textContent = '🔮 ' + currentPrediction + ' ' + (result.dragonSignal || '');
+                        predValue.className = 'pred-value dragon';
+                    } else {
+                        predValue.textContent = currentPrediction;
+                        predValue.className = 'pred-value ' + currentPrediction.toLowerCase();
+                    }
+                    confFill.style.width = currentConf + '%';
+                    confPercent.textContent = currentConf + '%';
+                    histCount.textContent = total;
+                }
+            }
+
+            // ===== WIN ANIMATION =====
+            let winAnimTimeout = null;
+
+            function triggerWinAnimation(type, number, pred) {
+                if (winAnimTimeout) {
+                    clearTimeout(winAnimTimeout);
+                    winOverlay.classList.remove('active');
+                }
+                const isJackpot = type === 'JACKPOT';
+                const emoji = isJackpot ? '💎' : '🔮';
+                const text = isJackpot ? 'JACKPOT!' : 'SYSTEM HIT!';
+                const sub = isJackpot ? `⚡ VALUE DECRYPTED: ${number} ⚡` : `✅ ${pred} → ${number}`;
+                const bonus = streak > 0 ? streak : 0;
+                document.querySelector('.win-emoji').textContent = emoji;
+                document.querySelector('.win-text').textContent = text;
+                document.querySelector('.win-sub').textContent = sub;
+                winStreakBonus.textContent = bonus;
+                winAccBonus.textContent = accuracy + '%';
+                const burst = document.querySelector('.win-burst');
+                burst.innerHTML = '';
+                const colors = ['#8B5CFF', '#00C8FF', '#F4F7FF', '#5826cc', '#008cb3', '#ffffff'];
+                for (let i = 0; i < 60; i++) {
+                    const piece = document.createElement('div');
+                    piece.className = 'confetti-piece';
+                    const size = 3 + Math.random() * 6;
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = 100 + Math.random() * 350;
+                    const tx = Math.cos(angle) * dist;
+                    const ty = Math.sin(angle) * dist - 150;
+                    const rot = (Math.random() - 0.5) * 540;
+                    piece.style.cssText = `
+                        left: 50%; top: 50%;
+                        width: ${size}px; height: ${size}px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        --tx: ${tx}px; --ty: ${ty}px; --rot: ${rot}deg;
+                        animation-duration: ${1 + Math.random()}s;
+                        animation-delay: ${Math.random() * 0.2}s;
+                        border-radius: 50%;
+                        box-shadow: 0 0 10px ${colors[Math.floor(Math.random() * colors.length)]}80;
+                    `;
+                    burst.appendChild(piece);
+                }
+                winOverlay.classList.add('active');
+                if (winAnimTimeout) clearTimeout(winAnimTimeout);
+                winAnimTimeout = setTimeout(() => {
+                    winOverlay.classList.remove('active');
+                    winAnimTimeout = null;
+                }, 2800);
+            }
+
+            // ===== HISTORY =====
+            function addHistory(period, pred, number, status, wasDragon) {
+                const item = document.createElement('div');
+                item.className = 'hist-item';
+                if (status === 'WIN') item.classList.add('win');
+                else if (status === 'LOSS') item.classList.add('loss');
+                else if (status === 'JACKPOT') item.classList.add('jackpot');
+                if (wasDragon) item.classList.add('dragon');
+                const predCls = pred.toLowerCase();
+                const isJackpot = status === 'JACKPOT';
+                const numCls = isJackpot ? 'hist-number jackpot-num' : 'hist-number';
+                let statusCls = status === 'WIN' ? 'hist-status win' : (status === 'JACKPOT' ? 'hist-status jackpot' :
+                    'hist-status loss');
+                let statusLabel = status === 'WIN' ? '🔮 WIN' : (status === 'JACKPOT' ? '💎 JACKPOT' : '☠️ LOSS');
+                if (wasDragon) {
+                    statusCls += ' hist-status dragon';
+                    statusLabel = '⚡ PRIME ' + statusLabel;
+                }
+                item.innerHTML = `
+                  <span class="hist-period">#${period.slice(-6)}</span>
+                  <span class="hist-pred ${predCls}">${pred}</span>
+                  <span class="${numCls}">${number}</span>
+                  <span class="${statusCls}">${statusLabel}</span>
+                `;
+                historyList.prepend(item);
+                while (historyList.children.length > 80) {
+                    historyList.removeChild(historyList.lastChild);
+                }
+                histCount.textContent = total;
+            }
+
+            // ===== STATS =====
+            function updateStats() {
+                statWins.textContent = wins;
+                statLosses.textContent = losses;
+                statJackpots.textContent = jackpots;
+                statAccuracy.textContent = accuracy + '%';
+                statStreak.textContent = streak;
+                statTotal.textContent = total;
+                statDragon.textContent = dragonCount;
+                const rate = dragonTotal > 0 ? Math.round((dragonCount / dragonTotal) * 100) : 0;
+                statDragonRate.textContent = rate + '%';
+            }
+
+            function updateChartStats() {
+                chartWins.textContent = wins;
+                chartLosses.textContent = losses;
+                chartStreak.textContent = streak;
+                chartAcc.textContent = accuracy + '%';
+            }
+
+            // ===== SYNC =====
+            async function syncEngine() {
+                try {
+                    const res = await fetch(`${API_URL}?t=${Date.now()}`);
+                    const data = await res.json();
+                    if (data?.data?.list && data.data.list.length) {
+                        processData(data.data.list);
+                    }
+                } catch (e) {
+                    console.warn('sync error', e);
+                }
+            }
+
+            // ===== TIMER =====
+            function updateTimer() {
+                const now = new Date();
+                const sec = now.getSeconds();
+                const rem = 60 - sec;
+                const display = `00:${rem < 10 ? '0' + rem : rem}`;
+                timerDisplay.textContent = display;
+                timerDisplay.style.color = rem <= 5 ? '#00C8FF' : '#8B5CFF';
+            }
+            setInterval(updateTimer, 1000);
+            updateTimer();
+
+            // ===== NAV =====
+            const navBtns = document.querySelectorAll('.nav-item');
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    navBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const tab = this.dataset.tab;
+                    document.getElementById('predCard').classList.toggle('view-hidden', tab !== 'dashboard');
+                    document.getElementById('chartSection').classList.toggle('view-hidden', tab !== 'dashboard');
+                    document.getElementById('historyCard').classList.toggle('view-hidden', tab !== 'history');
+                    statsCard.classList.toggle('view-hidden', tab !== 'stats');
+                    profileCard.classList.toggle('view-hidden', tab !== 'profile');
+                });
+            });
+
+            // ===== BUTTONS =====
+            document.getElementById('syncBtn').addEventListener('click', syncEngine);
+
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                total = 0;
+                wins = 0;
+                losses = 0;
+                jackpots = 0;
+                streak = 0;
+                accuracy = 0;
+                dragonCount = 0;
+                dragonTotal = 0;
+                lastPeriod = null;
+                pendingPrediction = null;
+                pendingMainNum = null;
+                pendingOppNum = null;
+                pendingPeriod = null;
+                currentPrediction = null;
+                pendingDragon = false;
+                resultHistory.length = 0;
+                candleData.length = 0;
+                historyList.innerHTML = '';
+                predValue.textContent = 'WAIT';
+                predValue.className = 'pred-value wait';
+                numMain.textContent = '-';
+                numOpp.textContent = '-';
+                confFill.style.width = '0%';
+                confPercent.textContent = '0%';
+                periodDisplay.textContent = '---';
+                histCount.textContent = '0';
+                updateStats();
+                updateChartStats();
+                drawCandles();
+                if (winAnimTimeout) {
+                    clearTimeout(winAnimTimeout);
+                    winOverlay.classList.remove('active');
+                    winAnimTimeout = null;
+                }
+            });
+
+            document.getElementById('copyBtn').addEventListener('click', function() {
+                const pred = currentPrediction || 'WAIT';
+                const mainN = currentMainNum !== null ? currentMainNum : '-';
+                const oppN = currentOppNum !== null ? currentOppNum : '-';
+                const text =
+                    `🔮 VOID PRIME AI · PRIME ENGINE v4.0\nPREDICTION: ${pred}\nNUMBERS: [${mainN}, ${oppN}]\nCONF: ${currentConf}% | ACC: ${accuracy}%`;
+                navigator.clipboard?.writeText(text).then(() => {
+                    const original = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> DECRYPTED';
+                    setTimeout(() => { this.innerHTML = original; }, 1200);
+                }).catch(() => {
+                    alert('Copy manually:\n' + text);
+                });
+            });
+
+            // ===== LOGIN — FIXED =====
+            function attemptLogin() {
+                const raw = loginKey.value.trim();
+                const key = raw.toUpperCase();
+                // Check against valid keys (case-insensitive)
+                const isValid = VALID_KEYS.some(v => v.toUpperCase() === key);
+                if (isValid) {
+                    loginError.classList.remove('show');
+                    loginBtn.disabled = true;
+                    loginBtn.textContent = '🔓 UNLOCKING...';
+                    setTimeout(() => {
+                        loginOverlay.classList.add('hidden');
+                        syncEngine();
+                        setInterval(syncEngine, 3000);
+                        resizeCanvas();
+                        window.addEventListener('resize', resizeCanvas);
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'UNLOCK CORE';
+                    }, 400);
+                } else {
+                    loginAttempts++;
+                    loginError.textContent = '❌ INVALID CORE KEY · attempt ' + loginAttempts;
+                    loginError.classList.add('show');
+                    loginKey.value = '';
+                    loginKey.placeholder = '⛔ ACCESS DENIED';
+                    loginKey.style.borderColor = '#8B5CFF';
+                    loginKey.style.boxShadow = '0 0 40px rgba(139,92,255,0.15)';
+                    setTimeout(() => {
+                        loginKey.style.borderColor = '';
+                        loginKey.style.boxShadow = '';
+                        loginKey.placeholder = 'ENTER CORE KEY';
+                    }, 1200);
+                }
+            }
+
+            loginBtn.addEventListener('click', attemptLogin);
+            loginKey.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    attemptLogin();
+                }
+            });
+
+            // ===== INIT =====
+            setTimeout(resizeCanvas, 100);
+            console.log('🔮 ZONITH V3 AI · PRIME ENGINE v4.0 · LOGIN FIXED (valid keys: ZONITH MODS, admin, 1234)');
+
+        })();
+    </script>
+</body>
+</html>
