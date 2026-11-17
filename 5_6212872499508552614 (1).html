@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MARCO BOSS</title>
+<style>
+:root { 
+    --neon: #39ff14; 
+    --accent: #00f0ff; 
+    --danger: #ff3333; 
+    --gold: #ffb703; 
+    --success: #00ff66;
+    --warning: #ffaa00;
+    --bg: #020408; 
+    --card-bg: rgba(6, 12, 26, 0.95);
+}
+body {
+    background: var(--bg);
+    color: #fff;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    margin: 0;
+    user-select: none;
+    overflow-x: hidden;
+    background-image: radial-gradient(circle at 50% 50%, #081c10 0%, var(--bg) 90%);
+}
+
+.matrix-grid {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(57, 255, 20, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 255, 20, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 15px rgba(57, 255, 20, 0.2); border-color: rgba(57, 255, 20, 0.3); }
+    50% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.6); border-color: var(--accent); }
+    100% { box-shadow: 0 0 15px rgba(57, 255, 20, 0.2); border-color: rgba(57, 255, 20, 0.3); }
+}
+@keyframes textShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes pythonRotate {
+    0% { transform: rotate(0deg); filter: drop-shadow(0 0 8px var(--neon)); }
+    50% { filter: drop-shadow(0 0 25px var(--accent)); }
+    100% { transform: rotate(360deg); filter: drop-shadow(0 0 8px var(--neon)); }
+}
+
+#lock-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #010204;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.lock-card {
+    background: var(--card-bg);
+    border: 2px solid var(--neon);
+    padding: 20px; /* Reduced padding */
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    width: 80%;
+    max-width: 300px; /* Smaller width */
+    animation: pulseGlow 4s infinite;
+    z-index: 2;
+}
+
+.python-live-logo {
+    width: 50px; /* Smaller logo */
+    height: 50px;
+    margin: 0 auto 10px auto;
+    animation: pythonRotate 10s linear infinite;
+}
+
+.join-btn {
+    background: linear-gradient(135deg, var(--neon), var(--accent));
+    background-size: 200% 200%;
+    color: black;
+    padding: 10px; /* Smaller button */
+    border: none;
+    font-weight: 900;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
+}
+.join-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 240, 255, 0.6);
+}
+.paste-shortcut-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(57, 255, 20, 0.4);
+    color: var(--neon);
+    padding: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 8px;
+    cursor: pointer;
+    width: 100%;
+}
+input {
+    width: 100%;
+    padding: 10px; /* Smaller input */
+    border-radius: 8px;
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    background: rgba(5, 6, 15, 0.9);
+    color: #fff;
+    box-sizing: border-box;
+    margin-top: 8px;
+    text-align: center;
+    font-size: 14px;
+}
+#main-app { display: none; padding: 20px; max-width: 480px; margin: 0 auto; position: relative; z-index: 1; }
+.zigzag-name {
+    font-size: 32px; /* Slightly smaller name */
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-align: center;
+    background: linear-gradient(90deg, #fff, var(--neon), var(--accent), #fff);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShimmer 6s linear infinite;
+    text-transform: uppercase;
+}
+.version-badge {
+    text-align: center;
+    font-size: 10px;
+    background: rgba(57, 255, 20, 0.1);
+    color: var(--neon);
+    padding: 3px 10px;
+    border-radius: 20px;
+    width: fit-content;
+    margin: 5px auto 15px auto;
+    border: 1px solid rgba(57, 255, 20, 0.3);
+    font-weight: bold;
+}
+.glass-box {
+    background: var(--card-bg);
+    border: 1px solid rgba(57, 255, 20, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+    backdrop-filter: blur(15px);
+    animation: pulseGlow 6s infinite;
+}
+.pred-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid rgba(57, 255, 20, 0.1);
+}
+.pred-val {
+    font-size: 40px; /* Reduced */
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 20px var(--neon);
+    margin: 0;
+    letter-spacing: 2px;
+    text-align: center;
+}
+.big-number {
+    font-size: 40px; /* Reduced */
+    font-weight: 900;
+    background: linear-gradient(180deg, var(--gold), #ff6b00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 5px;
+    letter-spacing: 3px;
+}
+.table-container { max-height: 200px; overflow-y: auto; margin-top: 15px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { 
+    color: #aaa; 
+    border-bottom: 2px solid rgba(57, 255, 20, 0.2); 
+    padding: 8px; 
+    position: sticky; top: 0; background: #060c1a;
+}
+td { padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.03); text-align: center; }
+.win { color: var(--success); font-weight: bold; text-shadow: 0 0 10px rgba(0,255,102,0.6); }
+.loss { color: var(--danger); font-weight: bold; text-shadow: 0 0 10px rgba(255,51,51,0.6); }
+.virtual-log { color: #888; font-style: italic; }
+
+.safeguard-badge {
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+    border: 1px solid transparent;
+    display: inline-block;
+}
+.status-ok { background: rgba(57, 255, 20, 0.1); color: var(--neon); border-color: rgba(57, 255, 20, 0.3); }
+.status-block { background: rgba(255, 51, 51, 0.15); color: var(--danger); border-color: var(--danger); animation: blink 1s infinite; }
+
+.stats-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 6px;
+}
+.stat-title { font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+.stat-count { font-size: 16px; font-weight: bold; margin-top: 2px; }
+.jackpot-alert {
+    position: fixed;
+    top: 20%; left: 50%; transform: translate(-50%, -20%);
+    background: linear-gradient(135deg, #ff007f, #7f00ff);
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 50px var(--gold);
+    color: white; padding: 15px 30px; border-radius: 15px;
+    font-size: 20px; font-weight: 900; z-index: 10000;
+    text-align: center; display: none;
+    animation: blink 0.5s infinite alternate;
+}
+.jackpot-style { color: var(--gold); font-weight: bold; text-shadow: 0 0 15px var(--gold); }
+.music-control {
+    text-align: center; margin-top: 10px; font-size: 11px; color: #888; cursor: pointer;
+}
+
+@keyframes blink { 50% { opacity: 0.5; } }
+</style>
+</head>
+<body>
+
+<div class="matrix-grid"></div>
+
+<div id="jackpot-popup" class="jackpot-alert">🎉 JACKPOT CAUGHT! 🎉</div>
+
+<audio id="bg-music" src="https://pub-c5e31b5cdafb419a824e6939b0ee0470.r2.dev/mujhko_tu_chahiye_lofi_slowed.mp3" loop></audio>
+
+<div id="lock-screen">
+  <div class="lock-card">
+      <svg class="python-live-logo" viewBox="0 0 110 110" fill="none">
+        <path d="M51.8 14.2C40.2 14.2 31.4 16.8 31.4 28.5V36.7H52.5V39.9H22.7C11.1 39.9 2 46.5 2 58.2C2 69.9 10.1 77.2 21.7 77.2H29.4V67C29.4 57.3 36.4 51.5 46.1 51.5H71.3V39.9C71.3 26.6 64.9 14.2 51.8 14.2ZM40.7 23.3C42.7 23.3 44.3 24.9 44.3 26.9C44.3 30.5 40.7 30.5 40.7 30.5Z" fill="#39ff14"/>
+        <path d="M58.2 95.8C69.8 95.8 78.6 93.2 78.6 81.5V73.3H57.5V70.1H87.3C98.9 70.1 108 63.5 108 51.8C108 40.1 99.9 32.8 88.3 32.8H80.6V43C80.6 52.7 73.6 58.5 63.9 58.5H38.7V70.1C38.7 83.4 45.1 95.8 58.2 95.8ZM69.3 86.7C67.3 86.7 65.7 85.1 65.7 83.1C65.7 81.1 69.3 81.1 69.3 86.7Z" fill="#00f0ff"/>
+      </svg>
+      
+      <h2 style="color:var(--neon); margin: 0 0 5px 0; font-weight: 900; font-size: 18px;">SYSTEM LOCKED</h2>
+      <p style="color: #7e84a3; font-size: 12px; margin: 0 0 15px 0;">Enter Key To Authenticate</p>
+      <input type="text" id="password" placeholder="Enter Key">
+      <button class="paste-shortcut-btn" onclick="pasteFromClipboard()">📋 PASTE KEY</button>
+      <button class="join-btn" onclick="checkPassword()">INITIALIZE CORE</button>
+      <div id="error" style="color:var(--danger); margin-top:10px; font-weight:bold; font-size: 12px;"></div>
+  </div>
+</div>
+
+<div id="main-app">
+    <div style="text-align: center;">
+        <svg style="width:40px; height:40px; animation: pythonRotate 6s linear infinite;" viewBox="0 0 110 110" fill="none">
+            <path d="M51.8 14.2C40.2 14.2 31.4 16.8 31.4 28.5V36.7H52.5V39.9H22.7C11.1 39.9 2 46.5 2 58.2C2 69.9 10.1 77.2 21.7 77.2H29.4V67C29.4 57.3 36.4 51.5 46.1 51.5H71.3V39.9C71.3 26.6 64.9 14.2 51.8 14.2ZM40.7 23.3C42.7 23.3 44.3 24.9 44.3 26.9Z" fill="#39ff14"/>
+            <path d="M58.2 95.8C69.8 95.8 78.6 93.2 78.6 81.5V73.3H57.5V70.1H87.3C98.9 70.1 108 63.5 108 51.8C108 40.1 99.9 32.8 88.3 32.8H80.6V43C80.6 52.7 73.6 58.5 63.9 58.5H38.7V70.1C38.7 83.4 45.1 95.8 58.2 95.8ZM69.3 86.7C67.3 86.7 65.7 85.1 65.7 83.1Z" fill="#00f0ff"/>
+        </svg>
+    </div>
+    
+    <div class="zigzag-name">MARCO BOSS</div>
+    <div class="version-badge" id="version-display">VERSION: SYNCING...</div>
+    
+    <div class="stats-board">
+        <div class="stat-card"><div class="stat-title">Total Win</div><div class="stat-count" id="stat-win" style="color:var(--success)">0</div></div>
+        <div class="stat-card"><div class="stat-title">Total Loss</div><div class="stat-count" id="stat-loss" style="color:var(--danger)">0</div></div>
+        <div class="stat-card"><div class="stat-title">Total Jackpot</div><div class="stat-count" id="stat-jackpot" style="color:var(--gold)">0</div></div>
+    </div>
+
+    <div class="glass-box">
+        <div style="color:#aaa; font-size:12px; text-align:center; font-weight: bold;" id="pID">PERIOD: LOADING...</div>
+        
+        <div class="pred-container">
+            <div style="font-size: 10px; color: #888; margin-bottom: 5px; letter-spacing: 2px;">SECURE AI OUTPUT</div>
+            <div class="pred-val" id="pRes">WAITING</div>
+            <div class="big-number" id="bigNum">-- , --</div>
+            <div id="safeguard-status" class="safeguard-badge status-ok">🛡️ LEVEL GUARD SYSTEM ACTIVE</div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr><th>PERIOD</th><th>PRED</th><th>NO</th><th>RES</th></tr>
+                </thead>
+                <tbody id="logs"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="music-control" onclick="toggleMusic()">🎵 Tap to Play/Pause Slow Bollywood Track</div>
+</div>
+
+<script>
+const currentBase = 18.0;
+const cloudSyncedVersion = (currentBase + (new Date().getDate() * 0.03)).toFixed(2);
+
+let totalWins = 0;
+let totalLosses = 0;
+let totalJackpots = 0;
+
+window.onload = function() {
+    document.getElementById('version-display').innerText = `VERSION: V${cloudSyncedVersion}`;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlKey = urlParams.get('key');
+    if(urlKey) {
+        document.getElementById("password").value = urlKey.trim();
+        setTimeout(checkPassword, 500);
+    } else {
+        const savedKey = localStorage.getItem('marco_session_active_key');
+        if(savedKey) validateKeyStructure(savedKey, true);
+    }
+};
+
+async function pasteFromClipboard() {
+    try {
+        const text = await navigator.clipboard.readText();
+        if (text) document.getElementById("password").value = text.trim();
+    } catch (err) {
+        let fallbackText = prompt("Paste your key:");
+        if(fallbackText) document.getElementById("password").value = fallbackText.trim();
+    }
+}
+
+function checkPassword(){
+    const inputKey = document.getElementById("password").value.trim();
+    // Updated Password check
+    if(inputKey === "PANDA"){ 
+        localStorage.setItem('marco_session_active_key', "PANDA");
+        launchApp(); return; 
+    }
+    // Failed
+    document.getElementById("error").innerText = "INVALID KEY";
+}
+
+function validateKeyStructure(key, isAutoLoad) {
+    if(key === "PANDA") {
+        launchApp();
+    }
+}
+
+function launchApp() {
+    document.getElementById('lock-screen').style.display='none';
+    document.getElementById('main-app').style.display='block';
+    
+    try {
+        document.getElementById('bg-music').play().catch(e => console.log("Click page to play song"));
+    } catch(err) {}
+
+    runAntiLossLogic();
+}
+
+function toggleMusic() {
+    const audio = document.getElementById('bg-music');
+    if(audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
+
+function syncDataToFirebase(period, prediction, numbers, result) {
+    const firebase_url = "YOUR_FIREBASE_REALTIME_DATABASE_URL_HERE"; 
+    if (firebase_url.startsWith("YOUR_")) return; 
+    
+    const payload = {
+        period: period,
+        prediction: prediction,
+        numbers: numbers,
+        result: result,
+        timestamp: new Date().toISOString()
+    };
+    
+    fetch(`${firebase_url}/predictions/${period}.json`, {
+        method: 'PUT',
+        body: JSON.stringify(payload)
+    }).catch(e => console.log("Firebase sync omitted"));
+}
+
+const B_POOL=[5,6,7,8,9], S_POOL=[0,1,2,3,4];
+let lastId=null, savedPrediction=null, savedNumbers=[], lossCounter = 0;
+let isVirtualMode = false; 
+let virtualWinStreak = 0;
+
+async function runAntiLossLogic(){
+    setInterval(async()=>{
+        try{
+            const res=await fetch('https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json');
+            const json=await res.json();
+            const latest=json.data.list[0];
+            const fullHistory = json.data.list.slice(0, 10);
+            const sizeHistory = fullHistory.map(x => parseInt(x.number) >= 5 ? "BIG" : "SMALL");
+            const numHistory = fullHistory.map(x => parseInt(x.number));
+
+            let calculatedNext = "BIG";
+            
+            if(sizeHistory[0] === sizeHistory[1] && sizeHistory[1] === sizeHistory[2]) {
+                calculatedNext = sizeHistory[0];
+            } else if(sizeHistory[0] !== sizeHistory[1] && sizeHistory[1] !== sizeHistory[2]) {
+                calculatedNext = sizeHistory[0] === "BIG" ? "SMALL" : "BIG"; 
+            } else {
+                let bigCount = sizeHistory.slice(0, 5).filter(x => x === "BIG").length;
+                calculatedNext = bigCount >= 3 ? "SMALL" : "BIG";
+            }
+
+            if(lastId !== latest.issueNumber){
+                const actualNum = parseInt(latest.number);
+                const actualSize = actualNum >= 5 ? "BIG" : "SMALL";
+
+                if(lastId){
+                    let isWin = false;
+                    let isJackpot = false;
+
+                    if (savedPrediction === actualSize) {
+                        isWin = true;
+                        if (savedNumbers.includes(actualNum)) {
+                            isJackpot = true;
+                        }
+                    }
+
+                    let logRow = "";
+                    let finalResStr = "";
+
+                    if(isVirtualMode) {
+                        if(isWin) virtualWinStreak++; else virtualWinStreak = 0;
+                        logRow = `<tr class="virtual-log"><td>${lastId.slice(-3)}</td><td>${savedPrediction} (V)</td><td>${actualNum}</td><td style="color:#ffaa00">V-SKIP</td></tr>`;
+                        finalResStr = "V-SKIP";
+                        if(virtualWinStreak >= 1) { isVirtualMode = false; lossCounter = 0; }
+                    } else {
+                        if (isJackpot) {
+                            totalJackpots++;
+                            document.getElementById('stat-jackpot').innerText = totalJackpots;
+                            logRow = `<tr><td>${lastId.slice(-3)}</td><td>${savedPrediction}</td><td>${actualNum}</td><td class="jackpot-style">JACKPOT</td></tr>`;
+                            finalResStr = "JACKPOT";
+                            const pop = document.getElementById('jackpot-popup');
+                            pop.style.display = 'block';
+                            setTimeout(() => { pop.style.display = 'none'; }, 5000);
+                            lossCounter = 0;
+                        } else if(isWin) {
+                            totalWins++;
+                            document.getElementById('stat-win').innerText = totalWins;
+                            lossCounter = 0;
+                            logRow = `<tr><td>${lastId.slice(-3)}</td><td>${savedPrediction}</td><td>${actualNum}</td><td class="win">WIN</td></tr>`;
+                            finalResStr = "WIN";
+                        } else {
+                            totalLosses++;
+                            document.getElementById('stat-loss').innerText = totalLosses;
+                            lossCounter++;
+                            logRow = `<tr><td>${lastId.slice(-3)}</td><td>${savedPrediction}</td><td>${actualNum}</td><td class="loss">LOSS</td></tr>`;
+                            finalResStr = "LOSS";
+                        }
+                    }
+                    document.getElementById('logs').innerHTML = logRow + document.getElementById('logs').innerHTML;
+                    syncDataToFirebase(lastId, savedPrediction, savedNumbers, finalResStr);
+                    if(lossCounter >= 3) { isVirtualMode = true; virtualWinStreak = 0; }
+                }
+
+                lastId = latest.issueNumber;
+                savedPrediction = calculatedNext;
+                const targetPool = calculatedNext === "BIG" ? [...B_POOL] : [...S_POOL];
+                let dynamicShuffle = targetPool.sort(() => Math.random() - 0.5);
+                
+                if(!numHistory.slice(0,3).includes(dynamicShuffle[0])) {
+                    savedNumbers = [dynamicShuffle[0], dynamicShuffle[1]].sort((a,b)=>a-b);
+                } else {
+                    savedNumbers = [dynamicShuffle[2], dynamicShuffle[3]].sort((a,b)=>a-b);
+                }
+            }
+
+            document.getElementById('pID').innerText = "PERIOD: " + (BigInt(latest.issueNumber) + 1n).toString();
+            
+            if(isVirtualMode) {
+                document.getElementById('pRes').innerText = "WAIT";
+                document.getElementById('bigNum').innerText = "TRAP DETECTED";
+                document.getElementById('safeguard-status').className = "safeguard-badge status-block";
+            } else {
+                document.getElementById('pRes').innerText = savedPrediction;
+                document.getElementById('bigNum').innerText = savedNumbers.join(" , ");
+                document.getElementById('safeguard-status').className = "safeguard-badge status-ok";
+            }
+        } catch(e){}
+    }, 2000);
+}
+</script>
+</body>
+</html>
